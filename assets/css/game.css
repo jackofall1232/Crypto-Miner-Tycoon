@@ -1,0 +1,70 @@
+#crypto-miner-tycoon-root {
+    font-family: 'Rajdhani', sans-serif;
+    color: #fff;
+    background: linear-gradient(135deg, #1a0033, #0a0a1f);
+    padding: 20px;
+}
+
+#crypto-miner-tycoon-root * {
+    box-sizing: border-box;
+}
+
+#crypto-miner-tycoon-root header {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+#crypto-miner-tycoon-root h1 {
+    font-family: 'Orbitron', sans-serif;
+    font-size: 2.5rem;
+    background: linear-gradient(45deg, #00ffff, #ff00ff, #ffff00);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+#crypto-miner-tycoon-root .main-game {
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    gap: 20px;
+}
+
+#crypto-miner-tycoon-root .game-area,
+#crypto-miner-tycoon-root .upgrades,
+#crypto-miner-tycoon-root .prestige-section {
+    background: rgba(255,255,255,0.05);
+    border: 1px solid rgba(255,255,255,0.1);
+    border-radius: 15px;
+    padding: 20px;
+}
+
+#crypto-miner-tycoon-root .stat-item {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 10px;
+}
+
+#crypto-miner-tycoon-root .mine-button {
+    width: 200px;
+    margin: 30px auto;
+    cursor: pointer;
+}
+
+#crypto-miner-tycoon-root .upgrade-item {
+    border: 1px solid #00ffff;
+    border-radius: 10px;
+    padding: 10px;
+    margin-bottom: 10px;
+    cursor: pointer;
+}
+
+#crypto-miner-tycoon-root .upgrade-item.disabled {
+    opacity: 0.4;
+    cursor: not-allowed;
+}
+
+#crypto-miner-tycoon-root .prestige-button {
+    width: 100%;
+    padding: 15px;
+    font-family: 'Orbitron', sans-serif;
+    cursor: pointer;
+}
