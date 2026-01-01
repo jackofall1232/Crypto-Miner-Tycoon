@@ -1,6 +1,6 @@
 /**
  * Crypto Miner Tycoon - Game Styles
- * Version: 1.0.0
+ * Version: 0.3.0
  */
 
 /* Reset and base styles */
@@ -51,6 +51,27 @@
 @keyframes cmt-gridMove {
     0% { transform: translate(0, 0); }
     100% { transform: translate(50px, 50px); }
+}
+
+/* Login notice */
+.cmt-login-notice {
+    background: rgba(255, 193, 7, 0.2);
+    border: 2px solid #ffc107;
+    border-radius: 10px;
+    padding: 15px;
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+.cmt-login-notice p {
+    margin: 0;
+    color: #ffc107;
+    font-size: 1rem;
+}
+
+.cmt-login-notice a {
+    color: var(--cmt-neon-cyan);
+    text-decoration: underline;
 }
 
 /* Header */
@@ -541,4 +562,161 @@
 .cmt-close-modal:hover {
     box-shadow: var(--cmt-glow-magenta);
     transform: scale(1.05);
+}
+
+/* ============================================
+   LEADERBOARD STYLES
+   ============================================ */
+
+.cmt-leaderboard-container {
+    /* Define variables for standalone use */
+    --cmt-neon-cyan: #00ffff;
+    --cmt-neon-magenta: #ff00ff;
+    --cmt-neon-yellow: #ffff00;
+    --cmt-deep-purple: #1a0033;
+    --cmt-dark-blue: #0a0a1f;
+    --cmt-glass-bg: rgba(255, 255, 255, 0.05);
+    --cmt-glass-border: rgba(255, 255, 255, 0.1);
+    --cmt-glow-cyan: 0 0 20px var(--cmt-neon-cyan), 0 0 40px var(--cmt-neon-cyan);
+    
+    font-family: 'Rajdhani', sans-serif;
+    background: linear-gradient(135deg, var(--cmt-deep-purple) 0%, var(--cmt-dark-blue) 100%);
+    backdrop-filter: blur(10px);
+    border: 2px solid var(--cmt-glass-border);
+    border-radius: 20px;
+    padding: 30px;
+    margin: 20px 0;
+    position: relative;
+    color: #fff;
+}
+
+.cmt-leaderboard-title {
+    font-family: 'Orbitron', sans-serif;
+    font-size: 2rem;
+    color: var(--cmt-neon-cyan);
+    text-align: center;
+    margin-bottom: 30px;
+    text-transform: uppercase;
+    letter-spacing: 3px;
+    text-shadow: var(--cmt-glow-cyan);
+}
+
+.cmt-leaderboard-empty,
+.cmt-leaderboard-disabled {
+    text-align: center;
+    color: rgba(255, 255, 255, 0.6);
+    font-size: 1.1rem;
+    padding: 40px 20px;
+}
+
+.cmt-leaderboard-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.cmt-leaderboard-table thead th {
+    font-family: 'Orbitron', sans-serif;
+    font-weight: 700;
+    font-size: 0.9rem;
+    color: var(--cmt-neon-magenta);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    padding: 15px 10px;
+    border-bottom: 2px solid var(--cmt-neon-cyan);
+    text-align: left;
+}
+
+.cmt-leaderboard-table thead th.cmt-rank {
+    width: 80px;
+    text-align: center;
+}
+
+.cmt-leaderboard-table tbody td {
+    padding: 15px 10px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    font-size: 1rem;
+    color: #fff;
+}
+
+.cmt-leaderboard-table tbody td.cmt-rank {
+    text-align: center;
+    font-family: 'Orbitron', sans-serif;
+    font-weight: 700;
+    font-size: 1.2rem;
+}
+
+.cmt-medal {
+    font-size: 1.5rem;
+}
+
+.cmt-leaderboard-table tbody td.cmt-player {
+    font-weight: 600;
+    color: var(--cmt-neon-cyan);
+}
+
+.cmt-you-badge {
+    display: inline-block;
+    background: var(--cmt-neon-magenta);
+    color: #fff;
+    font-size: 0.7rem;
+    padding: 2px 8px;
+    border-radius: 10px;
+    margin-left: 8px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.cmt-leaderboard-table tbody td.cmt-satoshis,
+.cmt-leaderboard-table tbody td.cmt-prestige,
+.cmt-leaderboard-table tbody td.cmt-score {
+    font-family: 'Orbitron', sans-serif;
+    color: var(--cmt-neon-yellow);
+}
+
+.cmt-leaderboard-table tbody tr.cmt-rank-1 {
+    background: rgba(255, 215, 0, 0.15);
+}
+
+.cmt-leaderboard-table tbody tr.cmt-rank-2 {
+    background: rgba(192, 192, 192, 0.15);
+}
+
+.cmt-leaderboard-table tbody tr.cmt-rank-3 {
+    background: rgba(205, 127, 50, 0.15);
+}
+
+.cmt-leaderboard-table tbody tr.cmt-current-user {
+    background: rgba(0, 255, 255, 0.2);
+    border-left: 3px solid var(--cmt-neon-cyan);
+    border-right: 3px solid var(--cmt-neon-cyan);
+}
+
+.cmt-leaderboard-table tbody tr:hover {
+    background: rgba(255, 255, 255, 0.08);
+}
+
+@media (max-width: 768px) {
+    .cmt-leaderboard-container {
+        padding: 20px;
+    }
+    
+    .cmt-leaderboard-title {
+        font-size: 1.5rem;
+    }
+    
+    .cmt-leaderboard-table thead th,
+    .cmt-leaderboard-table tbody td {
+        padding: 10px 5px;
+        font-size: 0.85rem;
+    }
+    
+    .cmt-leaderboard-table thead th {
+        font-size: 0.75rem;
+    }
+    
+    .cmt-you-badge {
+        font-size: 0.6rem;
+        padding: 1px 5px;
+    }
 }
