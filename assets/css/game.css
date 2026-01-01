@@ -1,70 +1,544 @@
-#crypto-miner-tycoon-root {
-    font-family: 'Rajdhani', sans-serif;
-    color: #fff;
-    background: linear-gradient(135deg, #1a0033, #0a0a1f);
-    padding: 20px;
-}
+/**
+ * Crypto Miner Tycoon - Game Styles
+ * Version: 1.0.0
+ */
 
-#crypto-miner-tycoon-root * {
+/* Reset and base styles */
+.cmt-container * {
+    margin: 0;
+    padding: 0;
     box-sizing: border-box;
 }
 
-#crypto-miner-tycoon-root header {
-    text-align: center;
-    margin-bottom: 20px;
+.cmt-container {
+    --cmt-neon-cyan: #00ffff;
+    --cmt-neon-magenta: #ff00ff;
+    --cmt-neon-yellow: #ffff00;
+    --cmt-deep-purple: #1a0033;
+    --cmt-dark-blue: #0a0a1f;
+    --cmt-glass-bg: rgba(255, 255, 255, 0.05);
+    --cmt-glass-border: rgba(255, 255, 255, 0.1);
+    --cmt-glow-cyan: 0 0 20px var(--cmt-neon-cyan), 0 0 40px var(--cmt-neon-cyan);
+    --cmt-glow-magenta: 0 0 20px var(--cmt-neon-magenta), 0 0 40px var(--cmt-neon-magenta);
+    
+    font-family: 'Rajdhani', sans-serif;
+    background: linear-gradient(135deg, var(--cmt-deep-purple) 0%, var(--cmt-dark-blue) 100%);
+    color: #fff;
+    min-height: 100vh;
+    padding: 20px;
+    position: relative;
+    overflow: hidden;
+    border-radius: 10px;
 }
 
-#crypto-miner-tycoon-root h1 {
+/* Animated background grid */
+.cmt-container::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: 
+        linear-gradient(rgba(0, 255, 255, 0.1) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(0, 255, 255, 0.1) 1px, transparent 1px);
+    background-size: 50px 50px;
+    animation: cmt-gridMove 20s linear infinite;
+    pointer-events: none;
+    z-index: 0;
+}
+
+@keyframes cmt-gridMove {
+    0% { transform: translate(0, 0); }
+    100% { transform: translate(50px, 50px); }
+}
+
+/* Header */
+.cmt-header {
+    text-align: center;
+    padding: 30px 20px;
+    margin-bottom: 30px;
+    background: var(--cmt-glass-bg);
+    backdrop-filter: blur(10px);
+    border: 1px solid var(--cmt-glass-border);
+    border-radius: 20px;
+    box-shadow: var(--cmt-glow-cyan);
+    position: relative;
+    z-index: 1;
+}
+
+.cmt-title {
     font-family: 'Orbitron', sans-serif;
-    font-size: 2.5rem;
-    background: linear-gradient(45deg, #00ffff, #ff00ff, #ffff00);
+    font-size: 3rem;
+    font-weight: 900;
+    text-transform: uppercase;
+    letter-spacing: 4px;
+    background: linear-gradient(45deg, var(--cmt-neon-cyan), var(--cmt-neon-magenta), var(--cmt-neon-yellow));
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
+    background-clip: text;
+    animation: cmt-glow 2s ease-in-out infinite alternate;
+    margin-bottom: 10px;
 }
 
-#crypto-miner-tycoon-root .main-game {
+@keyframes cmt-glow {
+    from { filter: drop-shadow(0 0 10px var(--cmt-neon-cyan)); }
+    to { filter: drop-shadow(0 0 30px var(--cmt-neon-magenta)); }
+}
+
+.cmt-subtitle {
+    font-size: 1.2rem;
+    color: var(--cmt-neon-cyan);
+    opacity: 0.8;
+    letter-spacing: 2px;
+}
+
+/* Main game grid */
+.cmt-main-game {
     display: grid;
     grid-template-columns: 2fr 1fr;
     gap: 20px;
+    margin-bottom: 20px;
+    position: relative;
+    z-index: 1;
 }
 
-#crypto-miner-tycoon-root .game-area,
-#crypto-miner-tycoon-root .upgrades,
-#crypto-miner-tycoon-root .prestige-section {
-    background: rgba(255,255,255,0.05);
-    border: 1px solid rgba(255,255,255,0.1);
-    border-radius: 15px;
-    padding: 20px;
+@media (max-width: 768px) {
+    .cmt-main-game {
+        grid-template-columns: 1fr;
+    }
+    .cmt-title {
+        font-size: 2rem;
+    }
 }
 
-#crypto-miner-tycoon-root .stat-item {
+/* Game area */
+.cmt-game-area {
+    background: var(--cmt-glass-bg);
+    backdrop-filter: blur(10px);
+    border: 2px solid var(--cmt-glass-border);
+    border-radius: 20px;
+    padding: 40px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+}
+
+.cmt-game-area::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: radial-gradient(circle, rgba(0, 255, 255, 0.1) 0%, transparent 70%);
+    animation: cmt-pulse 3s ease-in-out infinite;
+}
+
+@keyframes cmt-pulse {
+    0%, 100% { transform: scale(1); opacity: 0.5; }
+    50% { transform: scale(1.2); opacity: 0.8; }
+}
+
+/* Stats */
+.cmt-stats {
+    position: relative;
+    z-index: 2;
+    margin-bottom: 40px;
+}
+
+.cmt-stat-item {
     display: flex;
     justify-content: space-between;
-    margin-bottom: 10px;
-}
-
-#crypto-miner-tycoon-root .mine-button {
-    width: 200px;
-    margin: 30px auto;
-    cursor: pointer;
-}
-
-#crypto-miner-tycoon-root .upgrade-item {
-    border: 1px solid #00ffff;
+    align-items: center;
+    padding: 15px;
+    margin: 10px 0;
+    background: rgba(0, 0, 0, 0.3);
+    border: 1px solid var(--cmt-neon-cyan);
     border-radius: 10px;
-    padding: 10px;
-    margin-bottom: 10px;
-    cursor: pointer;
+    font-size: 1.3rem;
 }
 
-#crypto-miner-tycoon-root .upgrade-item.disabled {
-    opacity: 0.4;
+.cmt-stat-label {
+    font-weight: 600;
+    color: var(--cmt-neon-cyan);
+}
+
+.cmt-stat-value {
+    font-family: 'Orbitron', sans-serif;
+    font-weight: 700;
+    color: var(--cmt-neon-yellow);
+    text-shadow: var(--cmt-glow-cyan);
+}
+
+/* Mine button */
+.cmt-mine-button {
+    position: relative;
+    z-index: 2;
+    width: 250px;
+    height: 250px;
+    margin: 0 auto;
+    cursor: pointer;
+    transition: transform 0.1s;
+    filter: drop-shadow(var(--cmt-glow-magenta));
+}
+
+.cmt-mine-button:hover {
+    transform: scale(1.05);
+}
+
+.cmt-mine-button:active {
+    transform: scale(0.95);
+    filter: drop-shadow(0 0 40px var(--cmt-neon-magenta)) brightness(1.5);
+}
+
+.cmt-mine-button svg {
+    width: 100%;
+    height: 100%;
+    animation: cmt-float 3s ease-in-out infinite;
+}
+
+@keyframes cmt-float {
+    0%, 100% { transform: translateY(0px); }
+    50% { transform: translateY(-10px); }
+}
+
+/* Click particle effects */
+.cmt-click-particle {
+    position: fixed;
+    pointer-events: none;
+    font-family: 'Orbitron', sans-serif;
+    font-weight: 700;
+    font-size: 1.5rem;
+    color: var(--cmt-neon-yellow);
+    text-shadow: var(--cmt-glow-cyan);
+    animation: cmt-floatUp 1s ease-out forwards;
+    z-index: 9999;
+}
+
+@keyframes cmt-floatUp {
+    0% {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+    100% {
+        opacity: 0;
+        transform: translateY(-100px) scale(1.5);
+    }
+}
+
+/* Upgrades section */
+.cmt-upgrades {
+    background: var(--cmt-glass-bg);
+    backdrop-filter: blur(10px);
+    border: 2px solid var(--cmt-glass-border);
+    border-radius: 20px;
+    padding: 20px;
+    max-height: 600px;
+    overflow-y: auto;
+}
+
+.cmt-upgrades::-webkit-scrollbar {
+    width: 8px;
+}
+
+.cmt-upgrades::-webkit-scrollbar-track {
+    background: rgba(0, 0, 0, 0.3);
+    border-radius: 10px;
+}
+
+.cmt-upgrades::-webkit-scrollbar-thumb {
+    background: var(--cmt-neon-cyan);
+    border-radius: 10px;
+}
+
+.cmt-upgrades h2 {
+    font-family: 'Orbitron', sans-serif;
+    font-size: 1.8rem;
+    color: var(--cmt-neon-magenta);
+    margin-bottom: 20px;
+    text-align: center;
+    letter-spacing: 2px;
+}
+
+/* Upgrade items */
+.cmt-upgrade-item {
+    background: rgba(0, 0, 0, 0.4);
+    border: 1px solid var(--cmt-neon-cyan);
+    border-radius: 15px;
+    padding: 15px;
+    margin-bottom: 15px;
+    cursor: pointer;
+    transition: all 0.3s;
+    position: relative;
+    overflow: hidden;
+}
+
+.cmt-upgrade-item::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(0, 255, 255, 0.2), transparent);
+    transition: left 0.5s;
+}
+
+.cmt-upgrade-item:hover::before {
+    left: 100%;
+}
+
+.cmt-upgrade-item:hover {
+    border-color: var(--cmt-neon-magenta);
+    transform: translateX(5px);
+    box-shadow: var(--cmt-glow-magenta);
+}
+
+.cmt-upgrade-item.cmt-disabled {
+    opacity: 0.5;
     cursor: not-allowed;
 }
 
-#crypto-miner-tycoon-root .prestige-button {
-    width: 100%;
-    padding: 15px;
+.cmt-upgrade-item.cmt-disabled:hover {
+    transform: none;
+    box-shadow: none;
+}
+
+.cmt-upgrade-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 8px;
+}
+
+.cmt-upgrade-name {
     font-family: 'Orbitron', sans-serif;
+    font-weight: 700;
+    font-size: 1.2rem;
+    color: var(--cmt-neon-cyan);
+}
+
+.cmt-upgrade-cost {
+    font-family: 'Orbitron', sans-serif;
+    font-weight: 700;
+    color: var(--cmt-neon-yellow);
+}
+
+.cmt-upgrade-description {
+    font-size: 0.9rem;
+    color: rgba(255, 255, 255, 0.7);
+    margin-bottom: 5px;
+}
+
+.cmt-upgrade-owned {
+    font-size: 0.85rem;
+    color: var(--cmt-neon-magenta);
+}
+
+/* Prestige section */
+.cmt-prestige-section {
+    background: var(--cmt-glass-bg);
+    backdrop-filter: blur(10px);
+    border: 2px solid var(--cmt-neon-magenta);
+    border-radius: 20px;
+    padding: 30px;
+    margin-bottom: 20px;
+    text-align: center;
+    box-shadow: var(--cmt-glow-magenta);
+    position: relative;
+    z-index: 1;
+}
+
+.cmt-prestige-button {
+    font-family: 'Orbitron', sans-serif;
+    font-size: 1.2rem;
+    font-weight: 700;
+    padding: 15px 40px;
+    background: linear-gradient(45deg, var(--cmt-neon-magenta), var(--cmt-neon-cyan));
+    border: 2px solid var(--cmt-neon-yellow);
+    border-radius: 10px;
+    color: #fff;
     cursor: pointer;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    transition: all 0.3s;
+    box-shadow: var(--cmt-glow-magenta);
+}
+
+.cmt-prestige-button:hover {
+    transform: scale(1.1);
+    box-shadow: 0 0 30px var(--cmt-neon-magenta), 0 0 60px var(--cmt-neon-magenta);
+}
+
+.cmt-prestige-button:disabled {
+    opacity: 0.3;
+    cursor: not-allowed;
+    transform: none;
+}
+
+.cmt-prestige-info {
+    margin-bottom: 20px;
+    font-size: 1.1rem;
+    color: var(--cmt-neon-cyan);
+}
+
+/* Ad container */
+.cmt-ad-container {
+    background: rgba(0, 0, 0, 0.5);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 10px;
+    padding: 20px;
+    text-align: center;
+    margin-top: 30px;
+    position: relative;
+    z-index: 1;
+}
+
+.cmt-ad-label {
+    font-size: 0.8rem;
+    color: rgba(255, 255, 255, 0.5);
+    margin-bottom: 10px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.cmt-ad-placeholder {
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px dashed rgba(255, 255, 255, 0.3);
+    border-radius: 5px;
+    padding: 20px;
+    min-height: 90px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: rgba(255, 255, 255, 0.4);
+    font-size: 0.9rem;
+}
+
+.cmt-ad-content {
+    min-height: 90px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* Footer */
+.cmt-footer {
+    text-align: center;
+    padding: 20px;
+    color: rgba(255, 255, 255, 0.5);
+    font-size: 0.9rem;
+    position: relative;
+    z-index: 1;
+}
+
+/* Save indicator */
+.cmt-save-indicator {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    background: var(--cmt-glass-bg);
+    backdrop-filter: blur(10px);
+    border: 1px solid var(--cmt-neon-cyan);
+    border-radius: 10px;
+    padding: 10px 20px;
+    font-family: 'Orbitron', sans-serif;
+    font-size: 0.9rem;
+    color: var(--cmt-neon-cyan);
+    opacity: 0;
+    transition: opacity 0.3s;
+    z-index: 9999;
+}
+
+.cmt-save-indicator.cmt-show {
+    opacity: 1;
+}
+
+/* Info button */
+.cmt-info-button {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background: var(--cmt-glass-bg);
+    backdrop-filter: blur(10px);
+    border: 2px solid var(--cmt-neon-cyan);
+    color: var(--cmt-neon-cyan);
+    font-family: 'Orbitron', sans-serif;
+    font-size: 1.5rem;
+    cursor: pointer;
+    transition: all 0.3s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 10;
+}
+
+.cmt-info-button:hover {
+    box-shadow: var(--cmt-glow-cyan);
+    transform: scale(1.1);
+}
+
+/* Modal */
+.cmt-modal {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.8);
+    backdrop-filter: blur(5px);
+    z-index: 10000;
+    justify-content: center;
+    align-items: center;
+}
+
+.cmt-modal.cmt-show {
+    display: flex;
+}
+
+.cmt-modal-content {
+    background: var(--cmt-glass-bg);
+    backdrop-filter: blur(10px);
+    border: 2px solid var(--cmt-neon-cyan);
+    border-radius: 20px;
+    padding: 40px;
+    max-width: 600px;
+    max-height: 80vh;
+    overflow-y: auto;
+    box-shadow: var(--cmt-glow-cyan);
+    color: #fff;
+}
+
+.cmt-modal-content h2 {
+    font-family: 'Orbitron', sans-serif;
+    color: var(--cmt-neon-cyan);
+    margin-bottom: 20px;
+}
+
+.cmt-modal-content p {
+    margin-bottom: 15px;
+    line-height: 1.6;
+}
+
+.cmt-close-modal {
+    font-family: 'Orbitron', sans-serif;
+    font-weight: 700;
+    padding: 10px 30px;
+    background: var(--cmt-neon-magenta);
+    border: none;
+    border-radius: 10px;
+    color: #fff;
+    cursor: pointer;
+    margin-top: 20px;
+    transition: all 0.3s;
+}
+
+.cmt-close-modal:hover {
+    box-shadow: var(--cmt-glow-magenta);
+    transform: scale(1.05);
 }
