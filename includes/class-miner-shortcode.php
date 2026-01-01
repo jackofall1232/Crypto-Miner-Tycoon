@@ -2,7 +2,7 @@
 /**
  * Shortcode Handler Class
  * 
- * Handles the [crypto_miner_tycoon] shortcode
+ * Handles the [crypto_miner_tycoon] and [crypto_miner_leaderboard] shortcodes
  */
 
 // Exit if accessed directly
@@ -17,6 +17,7 @@ class CMT_Miner_Shortcode {
      */
     public function __construct() {
         add_shortcode('crypto_miner_tycoon', array($this, 'render_game'));
+        add_shortcode('crypto_miner_leaderboard', array($this, 'render_leaderboard'));
         add_action('wp_enqueue_scripts', array($this, 'enqueue_assets'));
     }
     
@@ -27,7 +28,7 @@ class CMT_Miner_Shortcode {
         // Only enqueue if shortcode is present on the page
         global $post;
         
-        if (is_a($post, 'WP_Post') && has_shortcode($post->post_content, 'crypto_miner_tycoon')) {
+        if (is_a($post, 'WP_Post') && (has_shortcode($post->post_content, 'crypto_miner_tycoon') || has_shortcode($post->post_content, 'crypto_miner_leaderboard'))) {
             // Enqueue Google Fonts
             wp_enqueue_style(
                 'cmt-google-fonts',
@@ -44,17 +45,19 @@ class CMT_Miner_Shortcode {
                 CMT_VERSION
             );
             
-            // Enqueue game JS
-            wp_enqueue_script(
-                'cmt-game-js',
-                CMT_PLUGIN_URL . 'assets/js/game.js',
-                array(),
-                CMT_VERSION,
-                true
-            );
-            
-            // Pass settings to JavaScript
-            $this->localize_script();
+            // Only enqueue JS for the game shortcode
+            if (has_shortcode($post->post_content, 'crypto_miner_tycoon')) {
+                wp_enqueue_script(
+                    'cmt-game-js',
+                    CMT_PLUGIN_URL . 'assets/js/game.js',
+                    array(),
+                    CMT_VERSION,
+                    true
+                );
+                
+                // Pass settings to JavaScript
+                $this->localize_script();
+            }
         }
     }
     
@@ -206,6 +209,107 @@ class CMT_Miner_Shortcode {
         </div>
         
         <?php
+        return ob_get_clean();
+    }
+    
+    /**
+     * Render leaderboard
+     */
+    public function render_leaderboard($atts) {
+        // Check if leaderboard is enabled
+        if (!get_option('cmt_enable_leaderboard', false)) {
+            return '<p class="cmt-leaderboard-disabled">Leaderboard is not enabled.</p>';
+        }
+        
+        // Parse attributes
+        $atts = shortcode_atts(
+            array(
+                'limit' => get_option('cmt_leaderboard_limit', 10),
+            ),
+            $atts,
+            'crypto_miner_leaderboard'
+        );
+        
+        // Get leaderboard data
+        global $wpdb;
+        $table_name = $wpdb->prefix . 'cmt_saves';
+        $limit = intval($atts['limit']);
+        
+        $results = $wpdb->get_results($wpdb->prepare(
+            "SELECT 
+                s.user_id,
+                s.total_satoshis,
+                s.prestige_level,
+                s.rank_score,
+                s.last_updated,
+                u.display_name
+            FROM $table_name s
+            LEFT JOIN {$wpdb->users} u ON s.user_id = u.ID
+            ORDER BY s.rank_score DESC
+            LIMIT %d",
+            $limit
+        ), ARRAY_A);
+        
+        // Start output
+        ob_start();
+        ?>
+        <div class="cmt-leaderboard-container">
+            <h2 class="cmt-leaderboard-title">🏆 Top Miners</h2>
+            
+            <?php if (empty($results)): ?>
+                <p class="cmt-leaderboard-empty">No players yet. Be the first!</p>
+            <?php else: ?>
+                <table class="cmt-leaderboard-table">
+                    <thead>
+                        <tr>
+                            <th class="cmt-rank">Rank</th>
+                            <th class="cmt-player">Player</th>
+                            <th class="cmt-satoshis">Satoshis</th>
+                            <th class="cmt-prestige">Prestige</th>
+                            <th class="cmt-score">Score</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <?php 
+                        $rank = 1;
+                        foreach ($results as $row): 
+                            $rank_class = '';
+                            if ($rank === 1) $rank_class = 'cmt-rank-1';
+                            elseif ($rank === 2) $rank_class = 'cmt-rank-2';
+                            elseif ($rank === 3) $rank_class = 'cmt-rank-3';
+                            
+                            $is_current_user = is_user_logged_in() && get_current_user_id() == $row['user_id'];
+                        ?>
+                        <tr class="<?php echo esc_attr($rank_class); ?> <?php echo $is_current_user ? 'cmt-current-user' : ''; ?>">
+                            <td class="cmt-rank">
+                                <?php if ($rank <= 3): ?>
+                                    <span class="cmt-medal">
+                                        <?php echo $rank === 1 ? '🥇' : ($rank === 2 ? '🥈' : '🥉'); ?>
+                                    </span>
+                                <?php else: ?>
+                                    <?php echo esc_html($rank); ?>
+                                <?php endif; ?>
+                            </td>
+                            <td class="cmt-player">
+                                <?php echo esc_html($row['display_name']); ?>
+                                <?php if ($is_current_user): ?>
+                                    <span class="cmt-you-badge">You</span>
+                                <?php endif; ?>
+                            </td>
+                            <td class="cmt-satoshis"><?php echo esc_html(number_format($row['total_satoshis'], 2)); ?></td>
+                            <td class="cmt-prestige">Level <?php echo esc_html($row['prestige_level']); ?></td>
+                            <td class="cmt-score"><?php echo esc_html(number_format($row['rank_score'], 0)); ?></td>
+                        </tr>
+                        <?php 
+                        $rank++;
+                        endforeach; 
+                        ?>
+                    </tbody>
+                </table>
+            <?php endif; ?>
+        </div>
+        <?php
+        
         return ob_get_clean();
     }
 }
