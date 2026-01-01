@@ -1,318 +1,245 @@
-
 /**
- * Crypto Miner Tycoon - Admin Styles
+ * Crypto Miner Tycoon - Admin JavaScript
  * Version: 1.0.0
  */
 
-.cmt-admin-wrap {
-    margin: 20px 20px 20px 0;
-}
-
-.cmt-admin-wrap h1 {
-    font-size: 23px;
-    font-weight: 400;
-    margin: 0 0 20px;
-    padding: 9px 0 4px;
-    line-height: 1.3;
-}
-
-.cmt-admin-container {
-    display: grid;
-    grid-template-columns: 2fr 1fr;
-    gap: 20px;
-    margin-top: 20px;
-}
-
-@media (max-width: 1200px) {
-    .cmt-admin-container {
-        grid-template-columns: 1fr;
-    }
-}
-
-/* Main content area */
-.cmt-admin-main {
-    background: #fff;
-}
-
-.cmt-admin-main form {
-    background: #fff;
-    border: 1px solid #c3c4c7;
-    box-shadow: 0 1px 1px rgba(0, 0, 0, 0.04);
-    padding: 20px;
-    margin-bottom: 20px;
-}
-
-.cmt-admin-main h2 {
-    margin-top: 0;
-    font-size: 1.3em;
-    padding-bottom: 10px;
-    border-bottom: 1px solid #dcdcde;
-}
-
-.cmt-admin-main table.form-table {
-    margin-top: 20px;
-}
-
-.cmt-admin-main .form-table th {
-    padding: 20px 10px 20px 0;
-    width: 200px;
-}
-
-.cmt-admin-main .form-table td {
-    padding: 15px 10px;
-}
-
-.cmt-admin-main .description {
-    margin-top: 8px;
-    font-size: 13px;
-    color: #646970;
-    font-style: normal;
-}
-
-.cmt-warning {
-    color: #d63638;
-    font-weight: 600;
-}
-
-/* Info boxes */
-.cmt-info-box {
-    background: #fff;
-    border: 1px solid #c3c4c7;
-    box-shadow: 0 1px 1px rgba(0, 0, 0, 0.04);
-    padding: 20px;
-    margin-bottom: 20px;
-}
-
-.cmt-info-box h3 {
-    margin-top: 0;
-    margin-bottom: 15px;
-    font-size: 14px;
-    font-weight: 600;
-    color: #1d2327;
-}
-
-.cmt-info-box p {
-    margin: 10px 0;
-    font-size: 13px;
-    line-height: 1.5;
-}
-
-.cmt-info-box code {
-    background: #f0f0f1;
-    padding: 3px 6px;
-    border-radius: 3px;
-    font-size: 12px;
-    font-family: Consolas, Monaco, monospace;
-}
-
-.cmt-info-box strong {
-    color: #1d2327;
-    font-weight: 600;
-}
-
-/* Sidebar */
-.cmt-admin-sidebar {
-    display: flex;
-    flex-direction: column;
-    gap: 20px;
-}
-
-.cmt-sidebar-box {
-    background: #fff;
-    border: 1px solid #c3c4c7;
-    box-shadow: 0 1px 1px rgba(0, 0, 0, 0.04);
-    padding: 20px;
-}
-
-.cmt-sidebar-box h3 {
-    margin-top: 0;
-    margin-bottom: 15px;
-    font-size: 14px;
-    font-weight: 600;
-    color: #1d2327;
-    border-bottom: 1px solid #dcdcde;
-    padding-bottom: 10px;
-}
-
-.cmt-sidebar-box p {
-    margin: 10px 0;
-    font-size: 13px;
-    line-height: 1.5;
-    color: #50575e;
-}
-
-.cmt-sidebar-box ul {
-    margin: 10px 0;
-    padding-left: 20px;
-    list-style: disc;
-}
-
-.cmt-sidebar-box ul li {
-    margin: 8px 0;
-    font-size: 13px;
-    line-height: 1.5;
-    color: #50575e;
-}
-
-.cmt-sidebar-box ul li strong {
-    color: #1d2327;
-    font-weight: 600;
-}
-
-/* Input fields */
-.cmt-admin-main input[type="number"] {
-    width: 80px;
-}
-
-.cmt-admin-main input[type="checkbox"] {
-    margin-right: 8px;
-}
-
-.cmt-admin-main label {
-    font-size: 13px;
-    color: #1d2327;
-    cursor: pointer;
-}
-
-/* Submit button */
-.cmt-admin-main .submit {
-    padding: 0;
-    margin: 20px 0 0;
-}
-
-/* Settings updated message */
-.cmt-admin-wrap .notice {
-    margin: 20px 0;
-}
-
-/* Stats display in info box */
-.cmt-info-box .cmt-stat {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 10px 0;
-    border-bottom: 1px solid #f0f0f1;
-}
-
-.cmt-info-box .cmt-stat:last-child {
-    border-bottom: none;
-}
-
-.cmt-info-box .cmt-stat-label {
-    font-weight: 600;
-    color: #1d2327;
-}
-
-.cmt-info-box .cmt-stat-value {
-    color: #2271b1;
-    font-weight: 600;
-    font-size: 18px;
-}
-
-/* Responsive adjustments */
-@media (max-width: 782px) {
-    .cmt-admin-wrap {
-        margin: 20px 10px 10px 0;
-    }
+(function($) {
+    'use strict';
     
-    .cmt-admin-container {
-        gap: 10px;
-    }
+    $(document).ready(function() {
+        
+        /**
+         * Handle cloud saves checkbox dependency
+         */
+        function handleCloudSavesDependency() {
+            const $cloudSaves = $('input[name="cmt_enable_cloud_saves"]');
+            const $leaderboard = $('input[name="cmt_enable_leaderboard"]');
+            
+            if (!$cloudSaves.length || !$leaderboard.length) {
+                return;
+            }
+            
+            function updateLeaderboardState() {
+                if ($cloudSaves.is(':checked')) {
+                    $leaderboard.prop('disabled', false);
+                    $leaderboard.closest('label').css('opacity', '1');
+                } else {
+                    $leaderboard.prop('disabled', true);
+                    $leaderboard.prop('checked', false);
+                    $leaderboard.closest('label').css('opacity', '0.5');
+                }
+            }
+            
+            // Initial state
+            updateLeaderboardState();
+            
+            // Update on change
+            $cloudSaves.on('change', updateLeaderboardState);
+        }
+        
+        /**
+         * Confirm before disabling cloud saves if data exists
+         */
+        function handleCloudSavesDisableWarning() {
+            const $cloudSaves = $('input[name="cmt_enable_cloud_saves"]');
+            const $form = $cloudSaves.closest('form');
+            
+            if (!$cloudSaves.length) {
+                return;
+            }
+            
+            // Store initial state
+            const initialState = $cloudSaves.is(':checked');
+            
+            $form.on('submit', function(e) {
+                const currentState = $cloudSaves.is(':checked');
+                
+                // If changing from enabled to disabled
+                if (initialState && !currentState) {
+                    const confirmed = confirm(
+                        'Warning: Disabling cloud saves will prevent users from saving/loading their games.\n\n' +
+                        'Existing saved games will remain in the database but will be inaccessible.\n\n' +
+                        'Are you sure you want to disable cloud saves?'
+                    );
+                    
+                    if (!confirmed) {
+                        e.preventDefault();
+                        $cloudSaves.prop('checked', true);
+                        return false;
+                    }
+                }
+            });
+        }
+        
+        /**
+         * Leaderboard limit validation
+         */
+        function handleLeaderboardLimitValidation() {
+            const $limitInput = $('input[name="cmt_leaderboard_limit"]');
+            
+            if (!$limitInput.length) {
+                return;
+            }
+            
+            $limitInput.on('change', function() {
+                let value = parseInt($(this).val());
+                
+                if (isNaN(value) || value < 5) {
+                    value = 5;
+                } else if (value > 100) {
+                    value = 100;
+                }
+                
+                $(this).val(value);
+            });
+        }
+        
+        /**
+         * Add helpful tooltips
+         */
+        function addTooltips() {
+            // Add tooltip to cloud saves checkbox
+            const $cloudSavesLabel = $('input[name="cmt_enable_cloud_saves"]').closest('label');
+            if ($cloudSavesLabel.length && !$cloudSavesLabel.find('.cmt-help-icon').length) {
+                $cloudSavesLabel.append(' <span class="cmt-help-icon dashicons dashicons-info" title="Saves game data to WordPress database. Requires users to be logged in."></span>');
+            }
+            
+            // Add tooltip to leaderboard checkbox
+            const $leaderboardLabel = $('input[name="cmt_enable_leaderboard"]').closest('label');
+            if ($leaderboardLabel.length && !$leaderboardLabel.find('.cmt-help-icon').length) {
+                $leaderboardLabel.append(' <span class="cmt-help-icon dashicons dashicons-info" title="Display top players using the [crypto_miner_leaderboard] shortcode."></span>');
+            }
+            
+            // Make dashicons visible
+            $('.cmt-help-icon').css({
+                'cursor': 'help',
+                'color': '#787c82',
+                'font-size': '16px',
+                'vertical-align': 'middle'
+            });
+        }
+        
+        /**
+         * Copy shortcode to clipboard
+         */
+        function handleShortcodeCopy() {
+            $('.cmt-info-box code').on('click', function() {
+                const $code = $(this);
+                const text = $code.text();
+                
+                // Create temporary input
+                const $temp = $('<input>');
+                $('body').append($temp);
+                $temp.val(text).select();
+                document.execCommand('copy');
+                $temp.remove();
+                
+                // Visual feedback
+                const originalBg = $code.css('background-color');
+                $code.css('background-color', '#46b450');
+                
+                setTimeout(function() {
+                    $code.css('background-color', originalBg);
+                }, 200);
+                
+                // Show tooltip
+                const $tooltip = $('<span class="cmt-copied-tooltip">Copied!</span>');
+                $tooltip.css({
+                    'position': 'absolute',
+                    'background': '#1d2327',
+                    'color': '#fff',
+                    'padding': '4px 8px',
+                    'border-radius': '3px',
+                    'font-size': '11px',
+                    'margin-left': '8px',
+                    'z-index': '1000'
+                });
+                
+                $code.after($tooltip);
+                
+                setTimeout(function() {
+                    $tooltip.fadeOut(function() {
+                        $(this).remove();
+                    });
+                }, 1500);
+            });
+            
+            // Add cursor pointer to codes
+            $('.cmt-info-box code').css('cursor', 'pointer');
+        }
+        
+        /**
+         * Animate stats on page load
+         */
+        function animateStats() {
+            $('.cmt-stat-value').each(function() {
+                const $this = $(this);
+                const finalValue = parseInt($this.text());
+                
+                if (isNaN(finalValue)) {
+                    return;
+                }
+                
+                $this.text('0');
+                
+                $({ counter: 0 }).animate({ counter: finalValue }, {
+                    duration: 1000,
+                    easing: 'swing',
+                    step: function() {
+                        $this.text(Math.ceil(this.counter));
+                    },
+                    complete: function() {
+                        $this.text(finalValue);
+                    }
+                });
+            });
+        }
+        
+        /**
+         * Settings form unsaved changes warning
+         */
+        function handleUnsavedChanges() {
+            const $form = $('form');
+            let formChanged = false;
+            
+            if (!$form.length) {
+                return;
+            }
+            
+            // Track changes
+            $form.on('change', 'input, select, textarea', function() {
+                formChanged = true;
+            });
+            
+            // Warn on page leave
+            $(window).on('beforeunload', function() {
+                if (formChanged) {
+                    return 'You have unsaved changes. Are you sure you want to leave?';
+                }
+            });
+            
+            // Don't warn on form submit
+            $form.on('submit', function() {
+                formChanged = false;
+            });
+        }
+        
+        /**
+         * Initialize all admin functionality
+         */
+        function init() {
+            handleCloudSavesDependency();
+            handleCloudSavesDisableWarning();
+            handleLeaderboardLimitValidation();
+            addTooltips();
+            handleShortcodeCopy();
+            animateStats();
+            handleUnsavedChanges();
+        }
+        
+        // Initialize
+        init();
+        
+    });
     
-    .cmt-admin-main form,
-    .cmt-info-box,
-    .cmt-sidebar-box {
-        padding: 15px;
-    }
-    
-    .cmt-admin-main .form-table th {
-        width: auto;
-        padding: 10px 0;
-    }
-    
-    .cmt-admin-main .form-table td {
-        padding: 10px 0;
-    }
-}
-
-/* Dark mode support */
-@media (prefers-color-scheme: dark) {
-    .cmt-admin-main form,
-    .cmt-info-box,
-    .cmt-sidebar-box {
-        background: #1d2327;
-        border-color: #3c434a;
-    }
-    
-    .cmt-admin-main h2 {
-        color: #f0f0f1;
-        border-bottom-color: #3c434a;
-    }
-    
-    .cmt-info-box h3,
-    .cmt-sidebar-box h3 {
-        color: #f0f0f1;
-        border-bottom-color: #3c434a;
-    }
-    
-    .cmt-info-box code {
-        background: #2c3338;
-    }
-    
-    .cmt-admin-main .description,
-    .cmt-sidebar-box p,
-    .cmt-sidebar-box ul li {
-        color: #b5bcc2;
-    }
-    
-    .cmt-info-box .cmt-stat {
-        border-bottom-color: #2c3338;
-    }
-    
-    .cmt-info-box .cmt-stat-label,
-    .cmt-info-box strong,
-    .cmt-sidebar-box ul li strong {
-        color: #f0f0f1;
-    }
-}
-
-/* Icons/emojis in headings */
-.cmt-sidebar-box h3::first-letter,
-.cmt-info-box h3::first-letter {
-    margin-right: 5px;
-}
-
-/* Tooltip styles */
-.cmt-tooltip {
-    position: relative;
-    display: inline-block;
-    cursor: help;
-    border-bottom: 1px dotted #646970;
-}
-
-.cmt-tooltip:hover::after {
-    content: attr(data-tooltip);
-    position: absolute;
-    bottom: 100%;
-    left: 50%;
-    transform: translateX(-50%);
-    background: #1d2327;
-    color: #fff;
-    padding: 8px 12px;
-    border-radius: 4px;
-    white-space: nowrap;
-    font-size: 12px;
-    z-index: 1000;
-    margin-bottom: 5px;
-}
-
-.cmt-tooltip:hover::before {
-    content: '';
-    position: absolute;
-    bottom: 100%;
-    left: 50%;
-    transform: translateX(-50%);
-    border: 5px solid transparent;
-    border-top-color: #1d2327;
-    z-index: 1000;
-}
+})(jQuery);
