@@ -54,11 +54,11 @@ class Crypto_Miner_Tycoon {
      * Initialize plugin
      */
     private function init() {
-        // Load shortcode class
-        require_once CMT_PLUGIN_DIR . 'includes/class-miner-shortcode.php';
+        // Load required files
+        $this->load_dependencies();
         
-        // Initialize shortcode
-        new CMT_Miner_Shortcode();
+        // Initialize components
+        $this->init_components();
         
         // Activation/deactivation hooks
         register_activation_hook(__FILE__, array($this, 'activate'));
@@ -66,9 +66,37 @@ class Crypto_Miner_Tycoon {
     }
     
     /**
+     * Load plugin dependencies
+     */
+    private function load_dependencies() {
+        require_once CMT_PLUGIN_DIR . 'includes/class-miner-shortcode.php';
+        require_once CMT_PLUGIN_DIR . 'includes/class-cmt-admin.php';
+        require_once CMT_PLUGIN_DIR . 'includes/class-cmt-cloud-save.php';
+    }
+    
+    /**
+     * Initialize plugin components
+     */
+    private function init_components() {
+        // Initialize shortcode handler
+        new CMT_Miner_Shortcode();
+        
+        // Initialize admin (only in admin area)
+        if (is_admin()) {
+            new CMT_Admin();
+        }
+        
+        // Initialize cloud save REST API
+        new CMT_Cloud_Save();
+    }
+    
+    /**
      * Plugin activation
      */
     public function activate() {
+        // Create database table if cloud saves are enabled
+        $this->maybe_create_table();
+        
         // Flush rewrite rules
         flush_rewrite_rules();
     }
@@ -79,6 +107,32 @@ class Crypto_Miner_Tycoon {
     public function deactivate() {
         // Flush rewrite rules
         flush_rewrite_rules();
+    }
+    
+    /**
+     * Maybe create database table for cloud saves
+     */
+    private function maybe_create_table() {
+        global $wpdb;
+        $table_name = $wpdb->prefix . 'cmt_saves';
+        $charset_collate = $wpdb->get_charset_collate();
+        
+        $sql = "CREATE TABLE IF NOT EXISTS $table_name (
+            user_id bigint(20) UNSIGNED NOT NULL,
+            save_data longtext NOT NULL,
+            base_click_power decimal(20,6) DEFAULT 1,
+            base_passive_income decimal(20,6) DEFAULT 0,
+            prestige_level int DEFAULT 0,
+            total_satoshis decimal(30,6) DEFAULT 0,
+            rank_score decimal(30,6) DEFAULT 0,
+            last_updated datetime DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+            PRIMARY KEY (user_id),
+            KEY rank_score (rank_score DESC),
+            KEY last_updated (last_updated)
+        ) $charset_collate;";
+        
+        require_once(ABSPATH . 'wp-admin/includes/upgrade.php');
+        dbDelta($sql);
     }
 }
 
