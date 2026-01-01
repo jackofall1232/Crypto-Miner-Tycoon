@@ -300,7 +300,7 @@ class CMT_Admin {
         
         wp_enqueue_script(
             'cmt-admin-js',
-            CMT_PLUGIN_URL . 'assets/js/admin.js',
+            CMT_PLUGIN_URL . 'assets/js/cmt-admin.js',
             array('jquery'),
             CMT_VERSION,
             true
