@@ -186,7 +186,7 @@ Major update! Added cloud saves, leaderboards, and offline progress. Cloud saves
 == Credits ==
 
 **Developed by:** jackofall1232  
-**Website:** [AskAdam.IT](https://askadamit.com) | [CryptoNerd.com](https://cryptonerd.com)  
+**Website:** [AskAdamIT](https://askadamit.com) | [CryptoNerd.net]**Website:** [AskAdam.IT](
 **Other Projects:** Ask Adam Pro - Multi-AI Orchestration for WordPress
 
 **Special Thanks:**
@@ -197,7 +197,7 @@ Major update! Added cloud saves, leaderboards, and offline progress. Cloud saves
 This plugin is provided 100% free to the WordPress community. If you find it useful, please:
 * Leave a 5-star review
 * Share with other crypto enthusiasts
-* Check out my other plugins at [AskAdam.IT](https://askadamit.com)
+* Check out my other plugins at [AskAdamIT](https://askadamit.com)
 
 **Feature Requests & Bug Reports:**
 Visit the plugin support forum or contact me directly through AskAdam.IT
