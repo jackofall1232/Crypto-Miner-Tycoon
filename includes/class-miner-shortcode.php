@@ -52,7 +52,27 @@ class CMT_Miner_Shortcode {
                 CMT_VERSION,
                 true
             );
+            
+            // Pass settings to JavaScript
+            $this->localize_script();
         }
+    }
+    
+    /**
+     * Localize script with settings and data
+     */
+    private function localize_script() {
+        $cloud_saves_enabled = get_option('cmt_enable_cloud_saves', false);
+        
+        $script_data = array(
+            'cloudSavesEnabled' => $cloud_saves_enabled,
+            'isUserLoggedIn' => is_user_logged_in(),
+            'restUrl' => rest_url('cmt/v1/'),
+            'nonce' => wp_create_nonce('wp_rest'),
+            'userId' => get_current_user_id()
+        );
+        
+        wp_localize_script('cmt-game-js', 'cmtSettings', $script_data);
     }
     
     /**
@@ -68,9 +88,19 @@ class CMT_Miner_Shortcode {
             'crypto_miner_tycoon'
         );
         
+        // Check if cloud saves are enabled and user is not logged in
+        $cloud_saves_enabled = get_option('cmt_enable_cloud_saves', false);
+        $show_login_notice = $cloud_saves_enabled && !is_user_logged_in();
+        
         // Start output buffering
         ob_start();
         ?>
+        
+        <?php if ($show_login_notice): ?>
+            <div class="cmt-login-notice">
+                <p><strong>Note:</strong> Cloud saves are enabled. Please <a href="<?php echo esc_url(wp_login_url(get_permalink())); ?>">log in</a> to save your progress.</p>
+            </div>
+        <?php endif; ?>
         
         <div class="cmt-container">
             <button class="cmt-info-button" onclick="cmtShowModal()">?</button>
@@ -168,6 +198,9 @@ class CMT_Miner_Shortcode {
                 <p><strong>Elo Rating System:</strong> As you progress, your miner rating increases. Higher ratings unlock more powerful upgrades, but they also cost more based on the difficulty curve.</p>
                 <p><strong>Hard Fork (Prestige):</strong> Once you reach 1,000,000 satoshis, you can perform a "Hard Fork" to reset your progress with a permanent +10% production bonus. This multiplier stacks!</p>
                 <p><strong>Strategy:</strong> Balance between manual clicking upgrades and passive income generators for optimal growth.</p>
+                <?php if ($cloud_saves_enabled && is_user_logged_in()): ?>
+                    <p><strong>Cloud Saves:</strong> Your progress is automatically saved to the cloud!</p>
+                <?php endif; ?>
                 <button class="cmt-close-modal" onclick="cmtHideModal()">Start Mining!</button>
             </div>
         </div>
