@@ -293,7 +293,7 @@ class CMT_Admin {
         
         wp_enqueue_style(
             'cmt-admin-css',
-            CMT_PLUGIN_URL . 'assets/css/admin.css',
+            CMT_PLUGIN_URL . 'assets/css/cmt-admin.css',
             array(),
             CMT_VERSION
         );
