@@ -1,10 +1,10 @@
 === Crypto Miner Tycoon ===
 Contributors: jackofall1232
-Donate link: https://askadamit.com
+Donate link: https://ShortcodeArcade.com
 Tags: game, idle game, crypto, clicker game, mining game
 Requires at least: 5.0
 Tested up to: 6.9
-Stable tag: 0.3.0
+Stable tag: 0.3.1
 Requires PHP: 7.4
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
@@ -186,7 +186,7 @@ Major update! Added cloud saves, leaderboards, and offline progress. Cloud saves
 == Credits ==
 
 **Developed by:** jackofall1232  
-**Website:** [AskAdamIT](https://askadamit.com) | [CryptoNerd.net]**Website:** [AskAdam.IT](
+**Website:** [ShortcodeArcade](https://ShortcodeArcade.com)
 **Other Projects:** Ask Adam Pro - Multi-AI Orchestration for WordPress
 
 **Special Thanks:**
@@ -197,10 +197,10 @@ Major update! Added cloud saves, leaderboards, and offline progress. Cloud saves
 This plugin is provided 100% free to the WordPress community. If you find it useful, please:
 * Leave a 5-star review
 * Share with other crypto enthusiasts
-* Check out my other plugins at [AskAdamIT](https://askadamit.com)
+* Check out my other plugins at [AskAdamIT](https://askadamit.com)|[ShortcodeArcade](https://ShortcodeArcade.com)
 
 **Feature Requests & Bug Reports:**
-Visit the plugin support forum or contact me directly through AskAdam.IT
+Visit the plugin support forum or contact me directly through admin@askadamit.com
 
 == Privacy Policy ==
 
