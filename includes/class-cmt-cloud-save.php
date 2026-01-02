@@ -23,7 +23,6 @@ class CMT_Cloud_Save {
      * Register REST API routes
      */
     public function register_routes() {
-        // Save game endpoint
         register_rest_route('cmt/v1', '/save', array(
             'methods' => 'POST',
             'callback' => array($this, 'save_game'),
@@ -37,26 +36,23 @@ class CMT_Cloud_Save {
             )
         ));
         
-        // Load game endpoint
         register_rest_route('cmt/v1', '/load', array(
             'methods' => 'GET',
             'callback' => array($this, 'load_game'),
             'permission_callback' => array($this, 'check_cloud_save_permission')
         ));
         
-        // Get leaderboard endpoint
         register_rest_route('cmt/v1', '/leaderboard', array(
             'methods' => 'GET',
             'callback' => array($this, 'get_leaderboard'),
-            'permission_callback' => '__return_true' // Public endpoint
+            'permission_callback' => '__return_true'
         ));
     }
     
     /**
-     * Check if user has permission for cloud saves
+     * Permission check
      */
     public function check_cloud_save_permission() {
-        // Cloud saves must be enabled
         if (!get_option('cmt_enable_cloud_saves', false)) {
             return new WP_Error(
                 'cloud_saves_disabled',
@@ -65,7 +61,6 @@ class CMT_Cloud_Save {
             );
         }
         
-        // User must be logged in
         if (!is_user_logged_in()) {
             return new WP_Error(
                 'not_logged_in',
@@ -78,10 +73,9 @@ class CMT_Cloud_Save {
     }
     
     /**
-     * Validate save data structure
+     * Validate save data
      */
     public function validate_save_data($value, $request, $param) {
-        // Check required fields exist
         $required_fields = array(
             'satoshis',
             'clickPower',
@@ -102,7 +96,6 @@ class CMT_Cloud_Save {
             }
         }
         
-        // Validate data types
         if (!is_numeric($value['satoshis']) || $value['satoshis'] < 0) {
             return new WP_Error('invalid_save_data', 'Invalid satoshis value', array('status' => 400));
         }
@@ -123,35 +116,36 @@ class CMT_Cloud_Save {
             return new WP_Error('invalid_save_data', 'Upgrades must be an object', array('status' => 400));
         }
         
-        // Anti-cheat: Basic sanity check
-        $max_reasonable_satoshis = $this->calculate_max_possible_earnings($value);
-        if ($value['satoshis'] > $max_reasonable_satoshis * 2) {
-            // Flag suspicious but allow (for now - you can make this stricter)
-            error_log("CMT: Suspicious save data for user " . get_current_user_id() . " - earnings exceed theoretical maximum");
+        // Anti-cheat sanity check (debug only)
+        $max_reasonable = $this->calculate_max_possible_earnings($value);
+        if ($value['satoshis'] > $max_reasonable * 2 && defined('WP_DEBUG') && WP_DEBUG) {
+            error_log(
+                sprintf(
+                    'CMT debug: Suspicious save data for user %d (satoshis: %f)',
+                    get_current_user_id(),
+                    $value['satoshis']
+                )
+            );
         }
         
         return true;
     }
     
     /**
-     * Calculate theoretical maximum earnings (anti-cheat)
+     * Anti-cheat calculation
      */
     private function calculate_max_possible_earnings($save_data) {
-        // Rough calculation: assume 30 days of 24/7 play with max possible production
-        $max_days = 30;
         $seconds_per_day = 86400;
+        $days = 30;
         
-        // Assume max 10 clicks per second for click power
-        $max_click_earnings = $save_data['clickPower'] * $save_data['prestigeMultiplier'] * 10 * $seconds_per_day * $max_days;
+        $click = $save_data['clickPower'] * $save_data['prestigeMultiplier'] * 10 * $seconds_per_day * $days;
+        $passive = $save_data['passiveIncome'] * $save_data['prestigeMultiplier'] * $seconds_per_day * $days;
         
-        // Passive income over 30 days
-        $max_passive_earnings = $save_data['passiveIncome'] * $save_data['prestigeMultiplier'] * $seconds_per_day * $max_days;
-        
-        return $max_click_earnings + $max_passive_earnings;
+        return $click + $passive;
     }
     
     /**
-     * Save game data
+     * Save game
      */
     public function save_game($request) {
         global $wpdb;
@@ -159,45 +153,42 @@ class CMT_Cloud_Save {
         $user_id = get_current_user_id();
         $save_data = $request->get_param('save_data');
         
-        // Calculate rank score (logarithmic + prestige weighted)
         $rank_score = $this->calculate_rank_score(
             $save_data['satoshis'],
             $save_data['prestigeLevel']
         );
         
-        $table_name = $wpdb->prefix . 'cmt_saves';
+        $table_name = esc_sql($wpdb->prefix . 'cmt_saves');
         
-        // Prepare data for insertion
         $data = array(
             'user_id' => $user_id,
             'save_data' => wp_json_encode($save_data),
-            'base_click_power' => floatval($save_data['clickPower']),
-            'base_passive_income' => floatval($save_data['passiveIncome']),
-            'prestige_level' => intval($save_data['prestigeLevel']),
-            'total_satoshis' => floatval($save_data['satoshis']),
-            'rank_score' => floatval($rank_score)
+            'base_click_power' => (float) $save_data['clickPower'],
+            'base_passive_income' => (float) $save_data['passiveIncome'],
+            'prestige_level' => (int) $save_data['prestigeLevel'],
+            'total_satoshis' => (float) $save_data['satoshis'],
+            'rank_score' => (float) $rank_score
         );
         
-        $format = array('%d', '%s', '%f', '%f', '%d', '%f', '%f');
+        $formats = array('%d', '%s', '%f', '%f', '%d', '%f', '%f');
         
-        // Insert or update
-        $existing = $wpdb->get_var($wpdb->prepare(
-            "SELECT user_id FROM $table_name WHERE user_id = %d",
-            $user_id
-        ));
+        $existing = $wpdb->get_var(
+            $wpdb->prepare(
+                "SELECT user_id FROM {$table_name} WHERE user_id = %d",
+                $user_id
+            )
+        );
         
         if ($existing) {
-            // Update existing save
             $result = $wpdb->update(
                 $table_name,
                 $data,
                 array('user_id' => $user_id),
-                $format,
+                $formats,
                 array('%d')
             );
         } else {
-            // Insert new save
-            $result = $wpdb->insert($table_name, $data, $format);
+            $result = $wpdb->insert($table_name, $data, $formats);
         }
         
         if ($result === false) {
@@ -210,36 +201,36 @@ class CMT_Cloud_Save {
         
         return array(
             'success' => true,
-            'message' => 'Game saved successfully.',
             'rank_score' => $rank_score
         );
     }
     
     /**
-     * Load game data
+     * Load game
      */
     public function load_game($request) {
         global $wpdb;
         
         $user_id = get_current_user_id();
-        $table_name = $wpdb->prefix . 'cmt_saves';
+        $table_name = esc_sql($wpdb->prefix . 'cmt_saves');
         
-        $save_data = $wpdb->get_var($wpdb->prepare(
-            "SELECT save_data FROM $table_name WHERE user_id = %d",
-            $user_id
-        ));
+        $save_data = $wpdb->get_var(
+            $wpdb->prepare(
+                "SELECT save_data FROM {$table_name} WHERE user_id = %d",
+                $user_id
+            )
+        );
         
         if (!$save_data) {
             return array(
                 'success' => false,
-                'message' => 'No saved game found.',
                 'data' => null
             );
         }
         
-        $decoded_data = json_decode($save_data, true);
+        $decoded = json_decode($save_data, true);
         
-        if (!$decoded_data) {
+        if (!$decoded) {
             return new WP_Error(
                 'corrupt_save',
                 'Save data is corrupted.',
@@ -249,8 +240,7 @@ class CMT_Cloud_Save {
         
         return array(
             'success' => true,
-            'message' => 'Game loaded successfully.',
-            'data' => $decoded_data
+            'data' => $decoded
         );
     }
     
@@ -258,52 +248,48 @@ class CMT_Cloud_Save {
      * Get leaderboard
      */
     public function get_leaderboard($request) {
-        // Check if leaderboard is enabled
         if (!get_option('cmt_enable_leaderboard', false)) {
             return new WP_Error(
                 'leaderboard_disabled',
-                'Leaderboard is not enabled on this site.',
+                'Leaderboard is not enabled.',
                 array('status' => 403)
             );
         }
         
         global $wpdb;
-        $table_name = $wpdb->prefix . 'cmt_saves';
-        $limit = get_option('cmt_leaderboard_limit', 10);
         
-        $results = $wpdb->get_results($wpdb->prepare(
-            "SELECT 
-                s.user_id,
-                s.total_satoshis,
-                s.prestige_level,
-                s.rank_score,
-                s.last_updated,
-                u.display_name
-            FROM $table_name s
-            LEFT JOIN {$wpdb->users} u ON s.user_id = u.ID
-            ORDER BY s.rank_score DESC
-            LIMIT %d",
-            $limit
-        ), ARRAY_A);
+        $table = esc_sql($wpdb->prefix . 'cmt_saves');
+        $users = esc_sql($wpdb->users);
+        $limit = (int) get_option('cmt_leaderboard_limit', 10);
         
-        if (!$results) {
-            return array(
-                'success' => true,
-                'leaderboard' => array()
-            );
-        }
+        $results = $wpdb->get_results(
+            $wpdb->prepare(
+                "SELECT
+                    s.user_id,
+                    s.total_satoshis,
+                    s.prestige_level,
+                    s.rank_score,
+                    s.last_updated,
+                    u.display_name
+                FROM {$table} s
+                LEFT JOIN {$users} u ON s.user_id = u.ID
+                ORDER BY s.rank_score DESC
+                LIMIT %d",
+                $limit
+            ),
+            ARRAY_A
+        );
         
-        // Format leaderboard data
         $leaderboard = array();
         $rank = 1;
         
-        foreach ($results as $row) {
+        foreach ((array) $results as $row) {
             $leaderboard[] = array(
                 'rank' => $rank++,
                 'username' => sanitize_text_field($row['display_name']),
-                'satoshis' => floatval($row['total_satoshis']),
-                'prestige_level' => intval($row['prestige_level']),
-                'rank_score' => floatval($row['rank_score']),
+                'satoshis' => (float) $row['total_satoshis'],
+                'prestige_level' => (int) $row['prestige_level'],
+                'rank_score' => (float) $row['rank_score'],
                 'last_updated' => $row['last_updated']
             );
         }
@@ -315,16 +301,11 @@ class CMT_Cloud_Save {
     }
     
     /**
-     * Calculate rank score
-     * Uses logarithmic scaling + prestige weighting to prevent raw currency inflation
+     * Rank score calculation
      */
     private function calculate_rank_score($satoshis, $prestige_level) {
-        // Logarithmic base score (prevents inflation)
-        $base_score = log10($satoshis + 1) * 1000;
-        
-        // Prestige bonus (linear bonus for each prestige level)
-        $prestige_bonus = $prestige_level * 10000;
-        
-        return $base_score + $prestige_bonus;
+        $base = log10($satoshis + 1) * 1000;
+        $prestige = $prestige_level * 10000;
+        return $base + $prestige;
     }
 }
