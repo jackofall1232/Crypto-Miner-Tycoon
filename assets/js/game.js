@@ -1,6 +1,10 @@
 /**
  * Crypto Miner Tycoon - Game Logic
- * Version: 1.0.0
+ * Version: 0.4.0 - Balanced Edition
+ * 
+ * Changes in 0.4.0:
+ * - Exponential prestige cost scaling (5x multiplier each fork)
+ * - Diminishing returns on duplicate upgrades (80%, 60%, 40%, 20%)
  */
 
 (function() {
@@ -15,7 +19,7 @@
         prestigeLevel: 0,
         prestigeMultiplier: 1,
         upgrades: {},
-        version: '1.0.0'
+        version: '0.4.0'
     };
     
     // Cloud save settings (passed from WordPress)
@@ -30,94 +34,177 @@
         {
             id: 'betterClicker',
             name: 'Better Pickaxe',
-            baseDescription: 'Increases click power by 1',
+            baseEffect: 1,
+            baseDescription: 'Increases click power',
             baseCost: 10,
             rating: 1000,
-            effect: (state) => state.clickPower += 1,
+            type: 'click',
             costMultiplier: 1.15
         },
         {
             id: 'cpuMiner',
             name: 'CPU Miner',
-            baseDescription: 'Generates 0.1 satoshis/sec',
+            baseEffect: 0.1,
+            baseDescription: 'Generates satoshis/sec',
             baseCost: 50,
             rating: 1050,
-            effect: (state) => state.passiveIncome += 0.1,
+            type: 'passive',
             costMultiplier: 1.2
         },
         {
             id: 'powerfulClicker',
             name: 'Diamond Pickaxe',
-            baseDescription: 'Increases click power by 5',
+            baseEffect: 5,
+            baseDescription: 'Increases click power',
             baseCost: 100,
             rating: 1100,
-            effect: (state) => state.clickPower += 5,
+            type: 'click',
             costMultiplier: 1.15
         },
         {
             id: 'gpuRig',
             name: 'GPU Mining Rig',
-            baseDescription: 'Generates 1 satoshi/sec',
+            baseEffect: 1,
+            baseDescription: 'Generates satoshis/sec',
             baseCost: 500,
             rating: 1200,
-            effect: (state) => state.passiveIncome += 1,
+            type: 'passive',
             costMultiplier: 1.25
         },
         {
             id: 'megaClicker',
             name: 'Quantum Pickaxe',
-            baseDescription: 'Increases click power by 25',
+            baseEffect: 25,
+            baseDescription: 'Increases click power',
             baseCost: 1000,
             rating: 1300,
-            effect: (state) => state.clickPower += 25,
+            type: 'click',
             costMultiplier: 1.15
         },
         {
             id: 'asicMiner',
             name: 'ASIC Miner',
-            baseDescription: 'Generates 10 satoshis/sec',
+            baseEffect: 10,
+            baseDescription: 'Generates satoshis/sec',
             baseCost: 5000,
             rating: 1400,
-            effect: (state) => state.passiveIncome += 10,
+            type: 'passive',
             costMultiplier: 1.3
         },
         {
             id: 'ultraClicker',
             name: 'Neutron Star Drill',
-            baseDescription: 'Increases click power by 100',
+            baseEffect: 100,
+            baseDescription: 'Increases click power',
             baseCost: 10000,
             rating: 1500,
-            effect: (state) => state.clickPower += 100,
+            type: 'click',
             costMultiplier: 1.15
         },
         {
             id: 'miningFarm',
             name: 'Mining Farm',
-            baseDescription: 'Generates 50 satoshis/sec',
+            baseEffect: 50,
+            baseDescription: 'Generates satoshis/sec',
             baseCost: 50000,
             rating: 1600,
-            effect: (state) => state.passiveIncome += 50,
+            type: 'passive',
             costMultiplier: 1.35
         },
         {
             id: 'godClicker',
             name: 'Black Hole Extractor',
-            baseDescription: 'Increases click power by 500',
+            baseEffect: 500,
+            baseDescription: 'Increases click power',
             baseCost: 100000,
             rating: 1700,
-            effect: (state) => state.clickPower += 500,
+            type: 'click',
             costMultiplier: 1.15
         },
         {
             id: 'datacenter',
             name: 'Data Center',
-            baseDescription: 'Generates 250 satoshis/sec',
+            baseEffect: 250,
+            baseDescription: 'Generates satoshis/sec',
             baseCost: 500000,
             rating: 1800,
-            effect: (state) => state.passiveIncome += 250,
+            type: 'passive',
             costMultiplier: 1.4
         }
     ];
+
+    /**
+     * Calculate diminishing returns multiplier
+     * 1st purchase: 100% (1.0)
+     * 2nd purchase: 80% (0.8)
+     * 3rd purchase: 60% (0.6)
+     * 4th purchase: 40% (0.4)
+     * 5th+ purchase: 20% (0.2)
+     */
+    function getDiminishingReturnsMultiplier(ownedCount) {
+        if (ownedCount === 0) return 1.0;  // First purchase: 100%
+        if (ownedCount === 1) return 0.8;  // Second purchase: 80%
+        if (ownedCount === 2) return 0.6;  // Third purchase: 60%
+        if (ownedCount === 3) return 0.4;  // Fourth purchase: 40%
+        return 0.2;                         // Fifth+ purchase: 20%
+    }
+
+    /**
+     * Calculate prestige cost with exponential scaling
+     * Level 0→1: 1,000,000
+     * Level 1→2: 5,000,000 (5x)
+     * Level 2→3: 25,000,000 (5x)
+     * Level 3→4: 125,000,000 (5x)
+     */
+    function getPrestigeCost() {
+        const basePrestigeCost = 1000000;
+        const prestigeMultiplier = 5;
+        
+        if (gameState.prestigeLevel === 0) {
+            return basePrestigeCost;
+        }
+        
+        return basePrestigeCost * Math.pow(prestigeMultiplier, gameState.prestigeLevel);
+    }
+
+    /**
+     * Calculate total effect for an upgrade with diminishing returns
+     */
+    function calculateTotalEffect(upgrade) {
+        const owned = gameState.upgrades[upgrade.id] || 0;
+        if (owned === 0) return 0;
+        
+        let totalEffect = 0;
+        
+        // Calculate effect for each owned upgrade with diminishing returns
+        for (let i = 0; i < owned; i++) {
+            const multiplier = getDiminishingReturnsMultiplier(i);
+            totalEffect += upgrade.baseEffect * multiplier;
+        }
+        
+        return totalEffect;
+    }
+
+    /**
+     * Recalculate production stats with diminishing returns
+     */
+    function recalculateProduction() {
+        let totalClickPower = 1; // Base click power
+        let totalPassiveIncome = 0;
+        
+        upgradeDefinitions.forEach(upgrade => {
+            const effect = calculateTotalEffect(upgrade);
+            
+            if (upgrade.type === 'click') {
+                totalClickPower += effect;
+            } else if (upgrade.type === 'passive') {
+                totalPassiveIncome += effect;
+            }
+        });
+        
+        gameState.clickPower = totalClickPower;
+        gameState.passiveIncome = totalPassiveIncome;
+    }
 
     /**
      * Calculate upgrade cost using Elo-based formula
@@ -168,11 +255,11 @@
         if (gameState.satoshis >= cost) {
             gameState.satoshis -= cost;
             
-            // Apply upgrade effect
-            upgrade.effect(gameState);
-            
             // Track owned count
             gameState.upgrades[upgradeId] = (gameState.upgrades[upgradeId] || 0) + 1;
+            
+            // Recalculate production with diminishing returns
+            recalculateProduction();
             
             // Increase rating based on upgrade tier
             gameState.rating += 10;
@@ -183,23 +270,43 @@
     };
 
     /**
-     * Prestige function
+     * Prestige function with exponential cost scaling
      */
     window.cmtPrestige = function() {
-        if (gameState.satoshis >= 1000000) {
-            if (confirm('Are you sure you want to Hard Fork? This will reset your progress but give you a permanent +10% production bonus!')) {
-                gameState.prestigeLevel++;
-                gameState.prestigeMultiplier = 1 + (gameState.prestigeLevel * 0.1);
-                gameState.satoshis = 0;
-                gameState.clickPower = 1;
-                gameState.passiveIncome = 0;
-                gameState.rating = 1000;
-                gameState.upgrades = {};
-                
-                updateUI();
-                saveGame();
-            }
+        const prestigeCost = getPrestigeCost();
+        
+        if (gameState.satoshis < prestigeCost) {
+            alert(`You need ${formatNumber(prestigeCost)} satoshis to perform a Hard Fork!`);
+            return;
         }
+        
+        const currentPrestige = gameState.prestigeLevel;
+        const nextPrestigeCost = prestigeCost * 5;
+        
+        const confirmed = confirm(
+            `Perform Hard Fork?\n\n` +
+            `Current Level: ${currentPrestige}\n` +
+            `New Level: ${currentPrestige + 1}\n` +
+            `Current Bonus: +${currentPrestige * 10}%\n` +
+            `New Bonus: +${(currentPrestige + 1) * 10}%\n\n` +
+            `Cost: ${formatNumber(prestigeCost)} Satoshis\n` +
+            `Next Fork Cost: ${formatNumber(nextPrestigeCost)} Satoshis\n\n` +
+            `This will reset your progress but give you a permanent +10% production bonus!\n` +
+            `Diminishing returns will also reset.`
+        );
+        
+        if (!confirmed) return;
+        
+        gameState.prestigeLevel++;
+        gameState.prestigeMultiplier = 1 + (gameState.prestigeLevel * 0.1);
+        gameState.satoshis = 0;
+        gameState.clickPower = 1;
+        gameState.passiveIncome = 0;
+        gameState.rating = 1000;
+        gameState.upgrades = {};
+        
+        updateUI();
+        saveGame();
     };
 
     /**
@@ -240,18 +347,37 @@
                 const cost = getUpgradeCost(upgrade);
                 const owned = gameState.upgrades[upgrade.id] || 0;
                 const canAfford = gameState.satoshis >= cost;
+                const totalEffect = calculateTotalEffect(upgrade);
+                
+                // Calculate next purchase effect with diminishing returns
+                const nextMultiplier = getDiminishingReturnsMultiplier(owned);
+                const nextEffect = upgrade.baseEffect * nextMultiplier;
                 
                 const upgradeDiv = document.createElement('div');
                 upgradeDiv.className = 'cmt-upgrade-item' + (canAfford ? '' : ' cmt-disabled');
                 upgradeDiv.onclick = () => window.cmtBuyUpgrade(upgrade.id);
+                
+                // Build effect text
+                let effectText = '';
+                if (upgrade.type === 'click') {
+                    effectText = `+${formatNumber(nextEffect)} per click`;
+                } else {
+                    effectText = `+${formatNumber(nextEffect)}/sec`;
+                }
+                
+                // Show diminishing returns info
+                let diminishingText = '';
+                if (owned > 0 && nextMultiplier < 1.0) {
+                    diminishingText = ` (${Math.round(nextMultiplier * 100)}% effectiveness)`;
+                }
                 
                 upgradeDiv.innerHTML = `
                     <div class="cmt-upgrade-header">
                         <div class="cmt-upgrade-name">${upgrade.name}</div>
                         <div class="cmt-upgrade-cost">${formatNumber(cost)}</div>
                     </div>
-                    <div class="cmt-upgrade-description">${upgrade.baseDescription}</div>
-                    <div class="cmt-upgrade-owned">Owned: ${owned}</div>
+                    <div class="cmt-upgrade-description">${effectText}${diminishingText}</div>
+                    <div class="cmt-upgrade-owned">Owned: ${owned}${owned > 0 ? ` | Total: ${formatNumber(totalEffect * gameState.prestigeMultiplier)}` : ''}</div>
                 `;
                 
                 upgradesList.appendChild(upgradeDiv);
@@ -259,20 +385,30 @@
         }
         
         // Update prestige button
+        const prestigeCost = getPrestigeCost();
         const prestigeButton = document.getElementById('cmt-prestigeButton');
         if (prestigeButton) {
-            prestigeButton.disabled = gameState.satoshis < 1000000;
+            prestigeButton.disabled = gameState.satoshis < prestigeCost;
+            
+            // Update button text with current level
+            if (gameState.prestigeLevel > 0) {
+                prestigeButton.textContent = `HARD FORK (Level ${gameState.prestigeLevel})`;
+            }
         }
         
-        // Update prestige info if prestige level > 0
-        if (gameState.prestigeLevel > 0) {
-            const prestigeInfo = document.querySelector('.cmt-prestige-info');
-            if (prestigeInfo) {
-                prestigeInfo.innerHTML = `
-                    Prestige Level: ${gameState.prestigeLevel} (+${(gameState.prestigeLevel * 10)}% production)<br>
-                    <span style="font-size: 0.9rem; opacity: 0.7;">Next Hard Fork available at 1,000,000 satoshis</span>
-                `;
-            }
+        // Update prestige info
+        const prestigeInfo = document.querySelector('.cmt-prestige-info');
+        if (prestigeInfo) {
+            const nextPrestigeCost = getPrestigeCost();
+            const currentBonus = gameState.prestigeLevel * 10;
+            
+            prestigeInfo.innerHTML = `
+                Hard Fork available at ${formatNumber(nextPrestigeCost)} satoshis<br>
+                <span style="font-size: 0.9rem; opacity: 0.7;">
+                    ${gameState.prestigeLevel > 0 ? `Current Level: ${gameState.prestigeLevel} (+${currentBonus}% bonus)<br>` : ''}
+                    Reset with permanent +10% bonus to all production
+                </span>
+            `;
         }
     }
 
@@ -384,6 +520,9 @@
         } else {
             loadFromLocalStorage();
         }
+        
+        // After loading, recalculate production to apply diminishing returns
+        recalculateProduction();
     }
 
     /**
@@ -398,10 +537,8 @@
                 // Merge loaded state with defaults (for new fields)
                 gameState = Object.assign({}, gameState, loadedState);
                 
-                // Ensure version exists
-                if (!gameState.version) {
-                    gameState.version = '1.0.0';
-                }
+                // Update version
+                gameState.version = '0.4.0';
                 
                 updateUI();
             } catch (e) {
@@ -428,10 +565,8 @@
                 // Cloud save exists, use it
                 gameState = Object.assign({}, gameState, data.data);
                 
-                // Ensure version exists
-                if (!gameState.version) {
-                    gameState.version = '1.0.0';
-                }
+                // Update version
+                gameState.version = '0.4.0';
                 
                 updateUI();
                 console.log('Loaded from cloud');
@@ -476,9 +611,33 @@
     };
 
     /**
+     * Apply custom branding theme
+     */
+    function applyBrandingTheme() {
+        if (!cmtSettings || !cmtSettings.branding || !cmtSettings.branding.enabled) {
+            return;
+        }
+        
+        const branding = cmtSettings.branding;
+        const container = document.querySelector('.cmt-container');
+        
+        if (!container) return;
+        
+        // Apply custom colors
+        if (branding.colors) {
+            container.style.setProperty('--cmt-neon-cyan', branding.colors.primary);
+            container.style.setProperty('--cmt-neon-magenta', branding.colors.secondary);
+            container.style.setProperty('--cmt-neon-yellow', branding.colors.accent);
+        }
+    }
+
+    /**
      * Initialize game when DOM is ready
      */
     async function initGame() {
+        // Apply custom branding theme
+        applyBrandingTheme();
+        
         // Load game state
         await loadGame();
         
