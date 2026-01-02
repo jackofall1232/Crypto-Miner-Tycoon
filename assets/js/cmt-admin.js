@@ -1,5 +1,5 @@
 /**
- * Crypto Miner Tycoon - Admin JavaScript
+ * Crypto Miner Tycoon - Admin JavaScript (Free Version with Pro UI)
  * Version: 1.0.0
  */
 
@@ -7,6 +7,34 @@
     'use strict';
     
     $(document).ready(function() {
+        
+        /**
+         * Tab switching with smooth animation
+         */
+        function handleTabSwitching() {
+            $('.cmt-tab-wrapper .nav-tab').on('click', function(e) {
+                // Let the link work normally, but add animation
+                const $content = $('.cmt-tab-content');
+                
+                // Fade out
+                $content.css('opacity', '0');
+                
+                // Fade back in after page load (handled by browser)
+                setTimeout(function() {
+                    $content.css('opacity', '1');
+                }, 100);
+            });
+            
+            // Initial fade in
+            $('.cmt-tab-content').css({
+                'opacity': '0',
+                'transition': 'opacity 0.3s ease'
+            });
+            
+            setTimeout(function() {
+                $('.cmt-tab-content').css('opacity', '1');
+            }, 100);
+        }
         
         /**
          * Handle cloud saves checkbox dependency
@@ -225,9 +253,29 @@
         }
         
         /**
+         * Animate upgrade CTAs
+         */
+        function animateUpgradeCTAs() {
+            $('.cmt-upgrade-cta, .cmt-upgrade-button').each(function() {
+                const $this = $(this);
+                
+                // Pulse animation on hover
+                $this.hover(
+                    function() {
+                        $(this).css('animation', 'pulse 0.5s ease-in-out');
+                    },
+                    function() {
+                        $(this).css('animation', '');
+                    }
+                );
+            });
+        }
+        
+        /**
          * Initialize all admin functionality
          */
         function init() {
+            handleTabSwitching();
             handleCloudSavesDependency();
             handleCloudSavesDisableWarning();
             handleLeaderboardLimitValidation();
@@ -235,6 +283,7 @@
             handleShortcodeCopy();
             animateStats();
             handleUnsavedChanges();
+            animateUpgradeCTAs();
         }
         
         // Initialize
