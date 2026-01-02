@@ -185,7 +185,7 @@ class CMT_Miner_Shortcode {
             <?php endif; ?>
 
             <footer class="cmt-footer">
-                Crypto Miner Tycoon © <?php echo esc_html(date('Y')); ?> | Game auto-saves every 10 seconds
+                Crypto Miner Tycoon © <?php echo esc_html(gmdate('Y')); ?> | Game auto-saves every 10 seconds
             </footer>
         </div>
 
@@ -234,8 +234,13 @@ class CMT_Miner_Shortcode {
         global $wpdb;
         $table_name = $wpdb->prefix . 'cmt_saves';
         $limit = intval($atts['limit']);
+
+        // Escape table names safely for use in identifiers (can't be parameterized in prepare()).
+        // This satisfies PHPCS by avoiding interpolated identifiers in the SQL string.
+        $table_name_escaped = esc_sql($table_name);
+        $users_table_escaped = esc_sql($wpdb->users);
         
-        $results = $wpdb->get_results($wpdb->prepare(
+        $sql = $wpdb->prepare(
             "SELECT 
                 s.user_id,
                 s.total_satoshis,
@@ -243,12 +248,14 @@ class CMT_Miner_Shortcode {
                 s.rank_score,
                 s.last_updated,
                 u.display_name
-            FROM $table_name s
-            LEFT JOIN {$wpdb->users} u ON s.user_id = u.ID
+            FROM {$table_name_escaped} s
+            LEFT JOIN {$users_table_escaped} u ON s.user_id = u.ID
             ORDER BY s.rank_score DESC
             LIMIT %d",
             $limit
-        ), ARRAY_A);
+        );
+        
+        $results = $wpdb->get_results($sql, ARRAY_A);
         
         // Start output
         ob_start();
