@@ -35,7 +35,7 @@ Crypto Miner Tycoon is an addictive idle clicker game where players build their 
 
 **How the Elo System Works:**
 
-The game uses an innovative Elo rating system (similar to chess ratings) to balance upgrade costs. As your miner rating increases with each purchase, more powerful upgrades become available - but they also cost more based on the difficulty curve. This creates perfectly balanced progression that remains challenging and engaging throughout.
+The game uses an innovative Elo rating system (similar to chess ratings) to balance upgrade costs. As your miner rating increases with each purchase, more powerful upgrades become available - but they also cost more based on the difficulty curve. This creates balanced progression that remains challenging and engaging.
 
 **Shortcodes:**
 
@@ -53,7 +53,7 @@ Display the leaderboard (requires cloud saves enabled):
 * Cryptocurrency blogs and news sites
 * Gaming communities and portals
 * Educational sites teaching about blockchain
-* Crypto exchanges and wallet providers
+* Crypto-related communities
 * Anyone wanting engaging, interactive content
 
 **Cloud Saves & Leaderboards:**
@@ -63,7 +63,7 @@ Enable cloud saves in Settings > Crypto Miner Tycoon to:
 - Require user login for save functionality
 - Enable competitive leaderboards
 - Track top players with medals and rankings
-- All data stays on YOUR server (no third-party dependencies)
+- Keep all data on your own server
 
 == Installation ==
 
@@ -90,126 +90,106 @@ Enable cloud saves in Settings > Crypto Miner Tycoon to:
 
 = How do I display the game on my site? =
 
-Add the shortcode `[crypto_miner_tycoon]` to any page or post where you want the game to appear.
+Add the shortcode `[crypto_miner_tycoon]` to any page or post.
 
 = Does the game save progress? =
 
-Yes! By default, the game saves to the player's browser (localStorage) every 10 seconds. You can optionally enable cloud saves in the admin settings to save progress to your WordPress database.
+Yes. The game auto-saves locally every 10 seconds. Optional cloud saves can be enabled by the site administrator.
 
 = What's the difference between local saves and cloud saves? =
 
-**Local Saves (Default):** Saves to the player's browser. Works immediately with no setup. Players can't access saves on different devices.
-
-**Cloud Saves (Optional):** Saves to your WordPress database. Requires players to be logged in. Players can access saves from any device. Enables leaderboards.
+**Local Saves:** Stored in the browser. No login required.  
+**Cloud Saves:** Stored in the WordPress database. Login required. Enables leaderboards.
 
 = How do I enable the leaderboard? =
 
 1. Go to Settings > Crypto Miner Tycoon
-2. Check "Enable Cloud Saves"
-3. Check "Enable Leaderboard"
-4. Add `[crypto_miner_leaderboard]` shortcode to any page
+2. Enable Cloud Saves
+3. Enable Leaderboard
+4. Add `[crypto_miner_leaderboard]` to a page
 
 = Can I add advertisements? =
 
-Yes! You can pass ad code via the shortcode attribute: `[crypto_miner_tycoon ad_code="<your ad code>"]`
+Yes. Pass ad code via shortcode:
+`[crypto_miner_tycoon ad_code="<your ad code>"]`
 
 = Is the game mobile-friendly? =
 
-Absolutely! The game is fully responsive and optimized for mobile devices, tablets, and desktops.
-
-= What is the Elo rating system? =
-
-The Elo rating system (borrowed from chess) dynamically adjusts upgrade costs based on your progress. Higher-rated upgrades cost more when you're just starting, but become affordable as your miner rating increases. This ensures the game remains balanced regardless of how long you play.
+Yes. The interface is fully responsive.
 
 = How does the prestige system work? =
 
-Once you reach 1,000,000 satoshis, you can perform a "Hard Fork" (prestige). This resets your progress but gives you a permanent +10% production bonus. Each prestige level stacks, so prestige level 5 gives you +50% production on ALL income!
-
-= Does offline progress work? =
-
-Yes! When you return to the game after being away, you'll earn passive income based on your production rate (up to 24 hours maximum).
-
-= Can I customize the game? =
-
-The plugin is GPL licensed, so you're free to modify it as needed. The code is well-organized, commented, and follows WordPress coding standards.
+At 1,000,000 satoshis, players can perform a "Hard Fork", resetting progress for a permanent +10% production bonus per prestige level.
 
 = Where is player data stored? =
 
-**Local Saves:** Stored in the player's browser (localStorage)
-**Cloud Saves:** Stored in your WordPress database in custom tables
-**Privacy:** All data stays on YOUR server - no external services or tracking
-
-= Will this work with caching plugins? =
-
-Yes! The game is designed to work with caching plugins. JavaScript handles all game logic client-side.
+Local saves are stored in the browser. Cloud saves are stored in WordPress custom database tables when enabled.
 
 == Screenshots ==
 
 1. Main game interface with cyberpunk design and glowing Bitcoin mining button
-2. Upgrades panel showing Elo-balanced progression system
-3. Prestige system with permanent production bonuses
-4. Mobile responsive design - play on any device
-5. Leaderboard showing top miners with medals and rankings
-6. Admin settings panel for cloud saves and leaderboards
+2. Upgrades panel with Elo-balanced progression
+3. Prestige system with permanent bonuses
+4. Mobile responsive layout
+5. Leaderboard with medals and rankings
+6. Admin settings panel
 
 == Changelog ==
+
+= 0.3.3 - 2025-01-04 =
+* Fixed: All WordPress Plugin Checker and PHPCS warnings
+* Improved: Database query handling for custom tables
+* Improved: Script and style enqueue versioning for cache reliability
+* Improved: Admin dashboard status checks for cloud saves
+* Improved: Code comments and inline documentation
+* No gameplay or data changes
 
 = 0.3.0 - 2025-01-01 =
 * Added: Cloud save system with WordPress integration
 * Added: Competitive leaderboard with prestige-weighted scoring
 * Added: Admin settings panel
 * Added: REST API for cloud saves and leaderboard
-* Added: Offline progress (earn while away, up to 24 hours)
-* Added: Leaderboard shortcode `[crypto_miner_leaderboard]`
-* Fixed: Prestige multiplier math (now applies at earn-time, not purchase-time)
-* Fixed: Floating point drift prevention
-* Improved: Code organization and WordPress standards compliance
+* Added: Offline progress (up to 24 hours)
+* Added: Leaderboard shortcode
+* Fixed: Prestige multiplier calculation
+* Improved: Code organization and standards compliance
 
 = 0.2.0 - 2024-12-XX =
-* Added: Prestige/Hard Fork system
+* Added: Prestige / Hard Fork system
 * Added: Auto-save functionality
-* Improved: UI animations and visual effects
-* Fixed: Mobile responsiveness issues
+* Improved: UI animations and responsiveness
 
 = 0.1.0 - 2024-12-XX =
 * Initial beta release
 * Click-to-mine mechanics
-* 10 unique upgrades
-* Elo-balanced progression system
+* Elo-balanced progression
 * Cyberpunk UI design
 
 == Upgrade Notice ==
 
+= 0.3.3 =
+Maintenance release. Improves code quality, plugin checker compliance, and admin stability. No gameplay or data changes.
+
 = 0.3.0 =
-Major update! Added cloud saves, leaderboards, and offline progress. Cloud saves are optional and disabled by default. If upgrading from 0.2.0, player saves will continue working via localStorage.
+Major update introducing cloud saves, leaderboards, and offline progress. Cloud saves are optional and disabled by default.
 
 == Credits ==
 
-**Developed by:** jackofall1232  
-**Website:** [ShortcodeArcade](https://ShortcodeArcade.com)
-**Other Projects:** Ask Adam Pro - Multi-AI Orchestration for WordPress
+Developed by: jackofall1232  
+Website: https://ShortcodeArcade.com
 
-**Special Thanks:**
-* Fonts: Orbitron and Rajdhani from Google Fonts
-* WordPress Community for continued support
-
-**Support the Developer:**
-This plugin is provided 100% free to the WordPress community. If you find it useful, please:
-* Leave a 5-star review
-* Share with other crypto enthusiasts
-* Check out my other plugins at [AskAdamIT](https://askadamit.com)|[ShortcodeArcade](https://ShortcodeArcade.com)
-
-**Feature Requests & Bug Reports:**
-Visit the plugin support forum or contact me directly through admin@askadamit.com
+Special Thanks:
+* Google Fonts: Orbitron and Rajdhani
+* WordPress community contributors
 
 == Privacy Policy ==
 
 Crypto Miner Tycoon respects user privacy:
 
-* **Local Saves (Default):** All data stored in browser localStorage. No data sent to external servers.
-* **Cloud Saves (Optional):** Data stored in YOUR WordPress database only when enabled by site admin.
-* **No External Services:** The plugin does not connect to any external APIs or services.
-* **No Tracking:** We don't track player activity or collect analytics.
-* **GDPR Compliant:** Players can delete their data by clearing browser cache (local) or site admin can delete from database (cloud).
+* Local saves are stored in browser localStorage
+* Cloud saves (optional) are stored in WordPress custom tables
+* No external APIs or third-party tracking
+* No analytics or telemetry
+* Administrators control all stored data
 
-Site administrators are responsible for their own privacy policies when enabling cloud saves.
+Site owners are responsible for updating their privacy policy if cloud saves are enabled.
