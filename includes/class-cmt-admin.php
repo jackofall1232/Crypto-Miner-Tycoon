@@ -270,12 +270,13 @@ class CMT_Admin {
         <?php
         global $wpdb;
 
-        $table_name = esc_sql( $wpdb->prefix . 'cmt_saves' );
+$table_name = esc_sql( $wpdb->prefix . 'cmt_saves' );
 
-        // phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching
-        $count = (int) $wpdb->get_var(
-            "SELECT COUNT(*) FROM {$table_name}"
-        );
+// phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching
+$count = (int) $wpdb->get_var(
+    // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
+    "SELECT COUNT(*) FROM {$table_name}"
+);
         ?>
         <p><strong>Total Saved Games:</strong> <?php echo esc_html( $count ); ?></p>
     </div>
