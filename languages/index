@@ -1,1 +1,8 @@
-{silence is golden}
+<?php
+/**
+ * Silence is golden.
+ *
+ * @package AdamBox
+ */
+
+defined( 'ABSPATH' ) || exit;
