@@ -32,11 +32,11 @@ class CMT_Miner_Shortcode {
             // Enqueue Google Fonts
             // phpcs:ignore WordPress.WP.EnqueuedResourceParameters.MissingVersion -- Google Fonts handles versioning via URL parameters
             wp_enqueue_style(
-                'cmt-google-fonts',
-                'https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Rajdhani:wght@300;400;600&display=swap',
-                array(),
-                null
-            );
+    'cmt-google-fonts',
+    'https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Rajdhani:wght@300;400;600&display=swap',
+    array(),
+    CMT_VERSION
+);
             
             // Enqueue game CSS
             wp_enqueue_style(
