@@ -4,7 +4,7 @@ Donate link: https://ShortcodeArcade.com
 Tags: game, idle game, crypto, clicker game, mining game
 Requires at least: 5.0
 Tested up to: 6.9
-Stable tag: 0.3.1
+Stable tag: 0.3.3
 Requires PHP: 7.4
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
