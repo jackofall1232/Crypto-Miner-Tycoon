@@ -264,17 +264,22 @@ class CMT_Admin {
                     <?php endif; ?>
                 </div>
                 
-                <?php if (get_option('cmt_enable_cloud_saves')): ?>
-                    <div class="cmt-info-box">
-                        <h3>☁️ Cloud Saves Status</h3>
-                        <?php
-                        global $wpdb;
-                        $table_name = $wpdb->prefix . 'cmt_saves';
-                        $count = $wpdb->get_var($wpdb->prepare("SELECT COUNT(*) FROM {$wpdb->prefix}cmt_saves"));
-                        ?>
-                        <p><strong>Total Saved Games:</strong> <?php echo esc_html($count); ?></p>
-                    </div>
-                <?php endif; ?>
+                <?php if ( get_option( 'cmt_enable_cloud_saves' ) ) : ?>
+    <div class="cmt-info-box">
+        <h3>☁️ Cloud Saves Status</h3>
+        <?php
+        global $wpdb;
+
+        $table_name = esc_sql( $wpdb->prefix . 'cmt_saves' );
+
+        // phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching
+        $count = (int) $wpdb->get_var(
+            "SELECT COUNT(*) FROM {$table_name}"
+        );
+        ?>
+        <p><strong>Total Saved Games:</strong> <?php echo esc_html( $count ); ?></p>
+    </div>
+<?php endif; ?>
             </div>
             
             <div class="cmt-admin-sidebar">
