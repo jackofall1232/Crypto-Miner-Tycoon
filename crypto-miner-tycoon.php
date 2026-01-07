@@ -3,7 +3,7 @@
  * Plugin Name: Crypto Miner Tycoon
  * Plugin URI: https://ShortcodeArcade.com
  * Description: An engaging crypto-themed idle clicker game with Elo-balanced progression. Use shortcode [crypto_miner_tycoon] to display the game.
- * Version: 0.3.3
+ * Version: 0.3.4
  * Author: Shortcode Arcade
  * Author URI: https://shortcodearcade.com
  * License: GPL v2 or later
@@ -18,7 +18,7 @@ if (!defined('ABSPATH')) {
 }
 
 // Define plugin constants
-define('CMT_VERSION', '0.3.3');
+define('CMT_VERSION', '0.3.4');
 define('CMT_PLUGIN_DIR', plugin_dir_path(__FILE__));
 define('CMT_PLUGIN_URL', plugin_dir_url(__FILE__));
 define('CMT_PLUGIN_BASENAME', plugin_basename(__FILE__));
