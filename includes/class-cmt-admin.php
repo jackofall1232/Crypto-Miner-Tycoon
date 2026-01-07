@@ -303,10 +303,11 @@ $count = (int) $wpdb->get_var(
                 <div class="cmt-sidebar-box">
                     <h3>⚠️ Important Notes</h3>
                     <ul>
-                        <li>Cloud saves require users to be logged in</li>
-                        <li>Leaderboards require cloud saves to be enabled</li>
-                        <li>All data is stored in your WordPress database</li>
-                        <li>Player data is private to your site only</li>
+                        <li>The free version uses standard WordPress user accounts for login.</li>
+<li>Cloud saves require users to be logged in</li>
+<li>Leaderboards require cloud saves to be enabled</li>
+<li>All data is stored in your WordPress database</li>
+<li>Player data is private to your site only</li>
                     </ul>
                 </div>
                 
