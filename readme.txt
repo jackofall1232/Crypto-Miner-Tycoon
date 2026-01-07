@@ -4,7 +4,7 @@ Donate link: https://ShortcodeArcade.com
 Tags: game, idle game, crypto, clicker game, mining game
 Requires at least: 5.0
 Tested up to: 6.9
-Stable tag: 0.3.3
+Stable tag: 0.3.4
 Requires PHP: 7.4
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
@@ -17,35 +17,37 @@ Crypto Miner Tycoon is an addictive idle clicker game where players build their 
 
 **Core Features:**
 
-* **Click-to-Mine Mechanics** - Earn satoshis by clicking the glowing Bitcoin symbol
-* **Elo-Balanced Progression** - Sophisticated rating system ensures balanced gameplay
-* **10 Unique Upgrades** - From Basic Pickaxes to Black Hole Extractors
-* **Prestige System** - "Hard Fork" to reset with permanent +10% production bonuses (stackable!)
-* **Auto-Save** - Game progress saves automatically every 10 seconds
-* **Offline Progress** - Earn passive income while away (up to 24 hours)
-* **Beautiful Design** - Cyberpunk-inspired glassmorphic UI with neon effects
-* **Mobile Responsive** - Play seamlessly on any device
+* **Click-to-Mine Mechanics** – Earn satoshis by clicking the glowing Bitcoin symbol
+* **Elo-Balanced Progression** – Sophisticated rating system ensures balanced gameplay
+* **10 Unique Upgrades** – From Basic Pickaxes to Black Hole Extractors
+* **Prestige System** – "Hard Fork" to reset with permanent +10% production bonuses (stackable!)
+* **Auto-Save** – Game progress saves automatically every 10 seconds
+* **Offline Progress** – Earn passive income while away (up to 24 hours)
+* **Beautiful Design** – Cyberpunk-inspired glassmorphic UI with neon effects
+* **Mobile Responsive** – Play seamlessly on any device
 
 **Advanced Features (Optional):**
 
-* **Cloud Saves** - Save player progress to WordPress database (requires user login)
-* **Leaderboards** - Display top miners with prestige-weighted scoring
-* **Ad Integration** - Built-in ad space for monetization
-* **REST API** - Full API for cloud saves and leaderboard data
+* **Cloud Saves** – Save player progress to WordPress database (requires user login)
+* **Leaderboards** – Display top miners with prestige-weighted scoring
+* **Ad Integration** – Built-in ad space for monetization
+* **REST API** – Full API for cloud saves and leaderboard data
 
 **How the Elo System Works:**
 
-The game uses an innovative Elo rating system (similar to chess ratings) to balance upgrade costs. As your miner rating increases with each purchase, more powerful upgrades become available - but they also cost more based on the difficulty curve. This creates balanced progression that remains challenging and engaging.
+The game uses an Elo-inspired rating system (similar to chess ratings) to balance upgrade costs and progression. As players advance, upgrade costs scale dynamically to maintain a fair difficulty curve while rewarding strategic decisions.
+
+Recent updates further refine this system to prevent runaway scaling and repetitive upgrade stacking.
 
 **Shortcodes:**
 
-Display the game:
+Display the game:  
 `[crypto_miner_tycoon]`
 
-Display the game with custom ad code:
+Display the game with custom ad code:  
 `[crypto_miner_tycoon ad_code="<your ad network code>"]`
 
-Display the leaderboard (requires cloud saves enabled):
+Display the leaderboard (requires cloud saves enabled):  
 `[crypto_miner_leaderboard]`
 
 **Perfect For:**
@@ -58,7 +60,7 @@ Display the leaderboard (requires cloud saves enabled):
 
 **Cloud Saves & Leaderboards:**
 
-Enable cloud saves in Settings > Crypto Miner Tycoon to:
+Enable cloud saves in **Settings > Crypto Miner Tycoon** to:
 - Store player progress in your WordPress database
 - Require user login for save functionality
 - Enable competitive leaderboards
@@ -110,7 +112,7 @@ Yes. The game auto-saves locally every 10 seconds. Optional cloud saves can be e
 
 = Can I add advertisements? =
 
-Yes. Pass ad code via shortcode:
+Yes. Pass ad code via shortcode:  
 `[crypto_miner_tycoon ad_code="<your ad code>"]`
 
 = Is the game mobile-friendly? =
@@ -127,14 +129,21 @@ Local saves are stored in the browser. Cloud saves are stored in WordPress custo
 
 == Screenshots ==
 
-1. Main game interface with cyberpunk design and glowing Bitcoin mining button
-2. Upgrades panel with Elo-balanced progression
-3. Prestige system with permanent bonuses
-4. Mobile responsive layout
-5. Leaderboard with medals and rankings
-6. Admin settings panel
+1. Main game interface with cyberpunk design and glowing Bitcoin mining button  
+2. Upgrades panel with Elo-balanced progression  
+3. Prestige system with permanent bonuses  
+4. Mobile responsive layout  
+5. Leaderboard with medals and rankings  
+6. Admin settings panel  
 
 == Changelog ==
+
+= 0.3.4 - 2025-01-06 =
+* Improved: Elo progression algorithm for fairer long-term gameplay
+* Added: Exponential prestige cost scaling (5x multiplier per prestige)
+* Added: Diminishing returns on duplicate upgrades (80%, 60%, 40%, 20%)
+* Improved: Overall progression pacing and balance
+* No breaking changes or data migrations
 
 = 0.3.3 - 2025-01-04 =
 * Fixed: All WordPress Plugin Checker and PHPCS warnings
@@ -167,8 +176,11 @@ Local saves are stored in the browser. Cloud saves are stored in WordPress custo
 
 == Upgrade Notice ==
 
+= 0.3.4 =
+Gameplay balance update improving progression fairness and prestige scaling. No breaking changes.
+
 = 0.3.3 =
-Maintenance release. Improves code quality, plugin checker compliance, and admin stability. No gameplay or data changes.
+Maintenance release. Improves code quality, plugin checker compliance, and admin stability.
 
 = 0.3.0 =
 Major update introducing cloud saves, leaderboards, and offline progress. Cloud saves are optional and disabled by default.
