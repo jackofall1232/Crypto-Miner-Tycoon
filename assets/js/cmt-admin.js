@@ -1,6 +1,6 @@
 /**
- * Crypto Miner Tycoon - Admin JavaScript (Free Version with Pro UI)
- * Version: 1.0.0
+ * Crypto Miner Tycoon - Admin Styles
+ * @since 0.3.0
  */
 
 (function($) {
