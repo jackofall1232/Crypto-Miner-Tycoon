@@ -1,8 +1,8 @@
 <?php
 /**
  * Shortcode Handler Class
- * 
- * Handles the [crypto_miner_tycoon] and [crypto_miner_leaderboard] shortcodes
+ *
+ * Handles the [crypto_miner], [crypto_miner_tycoon] (legacy), and [crypto_miner_leaderboard] shortcodes
  */
 
 // Exit if accessed directly
@@ -16,7 +16,8 @@ class CMT_Miner_Shortcode {
      * Constructor
      */
     public function __construct() {
-        add_shortcode('crypto_miner_tycoon', array($this, 'render_game'));
+        add_shortcode('crypto_miner', array($this, 'render_game'));
+        add_shortcode('crypto_miner_tycoon', array($this, 'render_game')); // Legacy shortcode for backward compatibility
         add_shortcode('crypto_miner_leaderboard', array($this, 'render_leaderboard'));
         add_action('wp_enqueue_scripts', array($this, 'enqueue_assets'));
     }
@@ -28,7 +29,7 @@ class CMT_Miner_Shortcode {
         // Only enqueue if shortcode is present on the page
         global $post;
         
-        if (is_a($post, 'WP_Post') && (has_shortcode($post->post_content, 'crypto_miner_tycoon') || has_shortcode($post->post_content, 'crypto_miner_leaderboard'))) {
+        if (is_a($post, 'WP_Post') && (has_shortcode($post->post_content, 'crypto_miner') || has_shortcode($post->post_content, 'crypto_miner_tycoon') || has_shortcode($post->post_content, 'crypto_miner_leaderboard'))) {
             // Enqueue Google Fonts
             // phpcs:ignore WordPress.WP.EnqueuedResourceParameters.MissingVersion -- Google Fonts handles versioning via URL parameters
             wp_enqueue_style(
@@ -47,7 +48,7 @@ class CMT_Miner_Shortcode {
             );
             
             // Only enqueue JS for the game shortcode
-            if (has_shortcode($post->post_content, 'crypto_miner_tycoon')) {
+            if (has_shortcode($post->post_content, 'crypto_miner') || has_shortcode($post->post_content, 'crypto_miner_tycoon')) {
                 wp_enqueue_script(
                     'cmt-game-js',
                     CMT_PLUGIN_URL . 'assets/js/game.js',
@@ -110,7 +111,7 @@ class CMT_Miner_Shortcode {
             <button class="cmt-info-button" onclick="cmtShowModal()">?</button>
             
             <header class="cmt-header">
-                <h1 class="cmt-title">Crypto Miner Tycoon</h1>
+                <h1 class="cmt-title">Crypto Idle Game</h1>
                 <div class="cmt-subtitle">Click. Mine. Prosper.</div>
             </header>
 
@@ -186,7 +187,7 @@ class CMT_Miner_Shortcode {
             <?php endif; ?>
 
             <footer class="cmt-footer">
-                Crypto Miner Tycoon © <?php echo esc_html(gmdate('Y')); ?> | Game auto-saves every 10 seconds
+                Crypto Idle Game © <?php echo esc_html(gmdate('Y')); ?> | Game auto-saves every 10 seconds
             </footer>
         </div>
 
