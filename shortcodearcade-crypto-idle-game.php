@@ -1,7 +1,7 @@
 <?php
 /**
  * Plugin Name: Shortcode Arcade Crypto Idle Game
- * Plugin URI: https://shortcodearcade.com
+ * Plugin URI: https://github.com/jackofall1232/shortcodearcade-crypto-idle-game
  * Description: A crypto-themed idle clicker game with Elo-balanced progression, prestige mechanics, and optional leaderboards. Use the [crypto_miner_tycoon] shortcode to display the game.
  * Version: 0.4.2
  * Author: Shortcode Arcade
