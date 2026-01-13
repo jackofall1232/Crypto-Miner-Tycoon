@@ -1,5 +1,5 @@
 /**
- * Crypto Miner Tycoon - Admin Styles
+ * Crypto Idle Game - Admin Styles
  * @since 0.3.0
  */
 

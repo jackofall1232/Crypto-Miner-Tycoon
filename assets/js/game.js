@@ -1,7 +1,7 @@
 /**
- * Crypto Miner Tycoon - Game Logic
+ * Crypto Idle Game - Game Logic
  * Version: 0.4.0 - Balanced Edition
- * 
+ *
  * Changes in 0.4.0:
  * - Exponential prestige cost scaling (5x multiplier each fork)
  * - Diminishing returns on duplicate upgrades (80%, 60%, 40%, 20%)
