@@ -29,7 +29,7 @@ class CMT_Admin {
             'Crypto Miner Tycoon Settings',
             'Crypto Miner Tycoon',
             'manage_options',
-            'crypto-miner-tycoon',
+            'shortcodearcade-crypto-idle-game',
             array($this, 'render_settings_page')
         );
     }
@@ -62,7 +62,7 @@ class CMT_Admin {
             'cmt_main_section',
             'Game Settings',
             array($this, 'render_section_description'),
-            'crypto-miner-tycoon'
+            'shortcodearcade-crypto-idle-game'
         );
         
         // Add settings fields
@@ -70,7 +70,7 @@ class CMT_Admin {
             'cmt_enable_cloud_saves',
             'Enable Cloud Saves',
             array($this, 'render_cloud_saves_field'),
-            'crypto-miner-tycoon',
+            'shortcodearcade-crypto-idle-game',
             'cmt_main_section'
         );
         
@@ -78,7 +78,7 @@ class CMT_Admin {
             'cmt_enable_leaderboard',
             'Enable Leaderboard',
             array($this, 'render_leaderboard_field'),
-            'crypto-miner-tycoon',
+            'shortcodearcade-crypto-idle-game',
             'cmt_main_section'
         );
         
@@ -86,7 +86,7 @@ class CMT_Admin {
             'cmt_leaderboard_limit',
             'Leaderboard Size',
             array($this, 'render_leaderboard_limit_field'),
-            'crypto-miner-tycoon',
+            'shortcodearcade-crypto-idle-game',
             'cmt_main_section'
         );
     }
@@ -198,19 +198,19 @@ class CMT_Admin {
             
             <!-- Tab Navigation -->
             <nav class="nav-tab-wrapper cmt-tab-wrapper">
-                <a href="?page=crypto-miner-tycoon&tab=general" 
+                <a href="?page=shortcodearcade-crypto-idle-game&tab=general" 
                    class="nav-tab <?php echo $active_tab === 'general' ? 'nav-tab-active' : ''; ?>">
                     <span class="dashicons dashicons-admin-generic"></span> General
                 </a>
-                <a href="?page=crypto-miner-tycoon&tab=branding" 
+                <a href="?page=shortcodearcade-crypto-idle-game&tab=branding" 
                    class="nav-tab <?php echo $active_tab === 'branding' ? 'nav-tab-active' : ''; ?>">
                     <span class="dashicons dashicons-art"></span> Branding <span class="cmt-tab-badge">PRO</span>
                 </a>
-                <a href="?page=crypto-miner-tycoon&tab=contests" 
+                <a href="?page=shortcodearcade-crypto-idle-game&tab=contests" 
                    class="nav-tab <?php echo $active_tab === 'contests' ? 'nav-tab-active' : ''; ?>">
                     <span class="dashicons dashicons-awards"></span> Contests <span class="cmt-tab-badge">PRO</span>
                 </a>
-                <a href="?page=crypto-miner-tycoon&tab=login" 
+                <a href="?page=shortcodearcade-crypto-idle-game&tab=login" 
                    class="nav-tab <?php echo $active_tab === 'login' ? 'nav-tab-active' : ''; ?>">
                     <span class="dashicons dashicons-lock"></span> Login Pages <span class="cmt-tab-badge">PRO</span>
                 </a>
@@ -623,7 +623,7 @@ $count = (int) $wpdb->get_var(
      */
     public function enqueue_admin_assets($hook) {
         // Only load on our settings page
-        if ($hook !== 'settings_page_crypto-miner-tycoon') {
+        if ($hook !== 'settings_page_shortcodearcade-crypto-idle-game') {
             return;
         }
         
