@@ -1,4 +1,4 @@
-=== Crypto Miner Tycoon ===
+=== Shortcode Arcade Crypto Idle Game ===
 Contributors: jackofall1232
 Donate link: https://ShortcodeArcade.com
 Tags: game, idle game, crypto, clicker game, mining game
