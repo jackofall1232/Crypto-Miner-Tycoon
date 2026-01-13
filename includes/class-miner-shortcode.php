@@ -1,7 +1,7 @@
 <?php
 /**
  * Shortcode Handler Class
- * 
+ *
  * Handles the [crypto_miner_tycoon] and [crypto_miner_leaderboard] shortcodes
  */
 
@@ -110,8 +110,8 @@ class CMT_Miner_Shortcode {
             <button class="cmt-info-button" onclick="cmtShowModal()">?</button>
             
             <header class="cmt-header">
-                <h1 class="cmt-title">Crypto Miner Tycoon</h1>
-                <div class="cmt-subtitle">Click. Mine. Prosper.</div>
+                <h1 class="cmt-title">Crypto Idle Game</h1>
+                <div class="cmt-subtitle">by Shortcode Arcade</div>
             </header>
 
             <div class="cmt-main-game">
@@ -186,7 +186,7 @@ class CMT_Miner_Shortcode {
             <?php endif; ?>
 
             <footer class="cmt-footer">
-                Crypto Miner Tycoon © <?php echo esc_html(gmdate('Y')); ?> | Game auto-saves every 10 seconds
+                Shortcode Arcade © <?php echo esc_html(gmdate('Y')); ?> | Game auto-saves every 10 seconds
             </footer>
         </div>
 

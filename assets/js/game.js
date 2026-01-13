@@ -1,6 +1,6 @@
 /**
- * Crypto Miner Tycoon - Game Logic
- * Version: 0.4.0 - Balanced Edition
+ * Shortcode Arcade Crypto Idle Game - Game Logic
+ * Version: 0.4.2
  * 
  * Changes in 0.4.0:
  * - Exponential prestige cost scaling (5x multiplier each fork)

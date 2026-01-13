@@ -1,5 +1,5 @@
 /**
- * Crypto Miner Tycoon - Admin Styles
+ * Shortcode Arcade Crypto Idle Game - Admin Scripts
  * @since 0.3.0
  */
 

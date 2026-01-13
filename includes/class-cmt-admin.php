@@ -1,8 +1,8 @@
 <?php
 /**
  * Admin Settings Class
- * 
- * Handles the admin settings page for Crypto Miner Tycoon (Free Version)
+ *
+ * Handles the admin settings page for Shortcode Arcade Crypto Idle Game (Free Version)
  */
 
 // Exit if accessed directly
@@ -26,8 +26,8 @@ class CMT_Admin {
      */
     public function add_admin_menu() {
         add_options_page(
-            'Crypto Miner Tycoon Settings',
-            'Crypto Miner Tycoon',
+            'Shortcode Arcade Crypto Idle Game Settings',
+            'Crypto Idle Game',
             'manage_options',
             'shortcodearcade-crypto-idle-game',
             array($this, 'render_settings_page')
@@ -110,7 +110,7 @@ class CMT_Admin {
      * Render section description
      */
     public function render_section_description() {
-        echo '<p>Configure cloud saves and leaderboard features for Crypto Miner Tycoon.</p>';
+        echo '<p>Configure cloud saves and leaderboard features for Crypto Idle Game.</p>';
     }
     
     /**
@@ -251,7 +251,7 @@ class CMT_Admin {
                 <form action="options.php" method="post">
                     <?php
                     settings_fields('cmt_settings_group');
-                    do_settings_sections('crypto-miner-tycoon');
+                    do_settings_sections('shortcodearcade-crypto-idle-game');
                     submit_button('Save Settings');
                     ?>
                 </form>
@@ -286,7 +286,7 @@ $count = (int) $wpdb->get_var(
             <div class="cmt-admin-sidebar">
                 <div class="cmt-sidebar-box">
                     <h3>ℹ️ About</h3>
-                    <p><strong>Crypto Miner Tycoon</strong></p>
+                    <p><strong>Shortcode Arcade Crypto Idle Game</strong></p>
                     <p>Version: <?php echo esc_html(CMT_VERSION); ?></p>
                     <p>An idle clicker game with Elo-balanced progression.</p>
                 </div>

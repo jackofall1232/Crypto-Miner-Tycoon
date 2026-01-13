@@ -1,2 +1,2 @@
-# Crypto-Miner-Tycoon
-Crypto miner Tycoon is an idle game for WordPress 
+# Shortcode Arcade Crypto Idle Game
+Shortcode Arcade Crypto Idle Game is an idle clicker game for WordPress 

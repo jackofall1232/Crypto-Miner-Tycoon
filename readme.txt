@@ -4,7 +4,7 @@ Donate link: https://ShortcodeArcade.com
 Tags: game, idle game, crypto, clicker game, mining game
 Requires at least: 5.0
 Tested up to: 6.9
-Stable tag: 0.4.0
+Stable tag: 0.4.2
 Requires PHP: 7.4
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
@@ -13,7 +13,7 @@ A crypto-themed idle clicker game with Elo-balanced progression, prestige mechan
 
 == Description ==
 
-Crypto Miner Tycoon is an idle clicker game where players build their cryptocurrency mining empire from scratch. Click to mine satoshis, purchase upgrades, and grow passive income over time.
+Shortcode Arcade Crypto Idle Game is an idle clicker game where players build their cryptocurrency mining empire from scratch. Click to mine satoshis, purchase upgrades, and grow passive income over time.
 
 The game focuses on fair, long-term progression using an Elo-inspired difficulty curve combined with prestige mechanics to prevent runaway scaling and repetitive upgrade stacking.
 
@@ -48,7 +48,7 @@ Display the leaderboard (requires cloud saves):
 
 **Cloud Saves & Leaderboards:**
 
-Enable cloud saves in **Settings → Crypto Miner Tycoon** to:
+Enable cloud saves in **Settings → Crypto Idle Game** to:
 - Store player progress in your WordPress database
 - Require user login for saving and loading games
 - Enable competitive leaderboards
@@ -60,13 +60,13 @@ Enable cloud saves in **Settings → Crypto Miner Tycoon** to:
 
 1. Log in to your WordPress admin panel
 2. Go to Plugins → Add New
-3. Search for "Crypto Miner Tycoon"
+3. Search for "Shortcode Arcade Crypto Idle Game"
 4. Click "Install Now" and then "Activate"
 
 = Manual Installation =
 
 1. Download the plugin ZIP file
-2. Upload the `crypto-miner-tycoon` folder to `/wp-content/plugins/`
+2. Upload the `shortcodearcade-crypto-idle-game` folder to `/wp-content/plugins/`
 3. Activate the plugin through the Plugins menu
 
 = After Installation =
@@ -88,9 +88,9 @@ Yes. Progress is saved locally in the browser every 10 seconds. Optional cloud s
 
 = How do I enable the leaderboard? =
 
-1. Go to Settings → Crypto Miner Tycoon  
-2. Enable Cloud Saves  
-3. Enable Leaderboard  
+1. Go to Settings → Crypto Idle Game
+2. Enable Cloud Saves
+3. Enable Leaderboard
 4. Add `[crypto_miner_leaderboard]` to a page  
 
 = Is the game mobile-friendly? =
@@ -112,6 +112,12 @@ Local saves are stored in browser localStorage. Cloud saves are stored in WordPr
 
 == Changelog ==
 
+= 0.4.2 - 2025-01-13 =
+* Renamed plugin to Shortcode Arcade Crypto Idle Game
+* Updated all admin and frontend UI labels
+* Improved branding clarity for WordPress.org compliance
+* No functional or data changes
+
 = 0.4.0 - 2025-01-06 =
 * Stable release
 * Improved: Elo progression algorithm for fair long-term gameplay
@@ -131,6 +137,9 @@ Local saves are stored in browser localStorage. Cloud saves are stored in WordPr
 
 == Upgrade Notice ==
 
+= 0.4.2 =
+Branding update for WordPress.org compliance. Plugin renamed to Shortcode Arcade Crypto Idle Game. No functional changes or data migration required.
+
 = 0.4.0 =
 Stable release with improved gameplay balance, refined progression mechanics, and admin UX improvements. No breaking changes.
 
@@ -141,7 +150,7 @@ Website: https://ShortcodeArcade.com
 
 == Privacy Policy ==
 
-Crypto Miner Tycoon respects user privacy:
+Shortcode Arcade Crypto Idle Game respects user privacy:
 
 * Local saves are stored in browser localStorage
 * Cloud saves (optional) are stored in WordPress custom tables

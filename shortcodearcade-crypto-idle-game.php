@@ -3,7 +3,7 @@
  * Plugin Name: Shortcode Arcade Crypto Idle Game
  * Plugin URI: https://shortcodearcade.com
  * Description: A crypto-themed idle clicker game with Elo-balanced progression, prestige mechanics, and optional leaderboards. Use the [crypto_miner_tycoon] shortcode to display the game.
- * Version: 0.4.0
+ * Version: 0.4.2
  * Author: Shortcode Arcade
  * Author URI: https://shortcodearcade.com
  * License: GPL v2 or later
@@ -18,7 +18,7 @@ if (!defined('ABSPATH')) {
 }
 
 // Define plugin constants
-define('CMT_VERSION', '0.4.0');
+define('CMT_VERSION', '0.4.2');
 define('CMT_PLUGIN_DIR', plugin_dir_path(__FILE__));
 define('CMT_PLUGIN_URL', plugin_dir_url(__FILE__));
 define('CMT_PLUGIN_BASENAME', plugin_basename(__FILE__));
@@ -26,7 +26,7 @@ define('CMT_PLUGIN_BASENAME', plugin_basename(__FILE__));
 /**
  * Main Plugin Class
  */
-class Crypto_Miner_Tycoon {
+class ShortcodeArcade_Crypto_Idle_Game {
     
     /**
      * Single instance of the class
@@ -137,9 +137,9 @@ class Crypto_Miner_Tycoon {
 }
 
 // Initialize plugin
-function crypto_miner_tycoon() {
-    return Crypto_Miner_Tycoon::get_instance();
+function shortcodearcade_crypto_idle_game() {
+    return ShortcodeArcade_Crypto_Idle_Game::get_instance();
 }
 
 // Start the plugin
-crypto_miner_tycoon();
+shortcodearcade_crypto_idle_game();
