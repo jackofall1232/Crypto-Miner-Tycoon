@@ -147,7 +147,7 @@ class SACIG_Admin {
             <?php if ($disabled): ?>
                 <span class="sacig-warning">⚠️ Cloud Saves must be enabled first</span><br>
             <?php endif; ?>
-            Use shortcode: <code>[crypto_miner_leaderboard]</code>
+            Use shortcode: <code>[sacig_crypto_idle_leaderboard]</code>
         </p>
         <?php
     }
@@ -258,9 +258,9 @@ class SACIG_Admin {
                 
                 <div class="sacig-info-box">
                     <h3>📋 Shortcodes</h3>
-                    <p><strong>Game:</strong> <code>[crypto_miner]</code></p>
+                    <p><strong>Game:</strong> <code>[sacig_crypto_idle_game]</code></p>
                     <?php if (get_option('sacig_enable_leaderboard')): ?>
-                        <p><strong>Leaderboard:</strong> <code>[crypto_miner_leaderboard]</code></p>
+                        <p><strong>Leaderboard:</strong> <code>[sacig_crypto_idle_leaderboard]</code></p>
                     <?php endif; ?>
                 </div>
                 
