@@ -4,13 +4,22 @@
  *
  * Handles REST API endpoints for saving/loading game data.
  *
+ * REST API Namespace: sacig/v1
+ * Endpoints:
+ * - POST /wp-json/sacig/v1/save - Save game progress (requires auth)
+ * - GET /wp-json/sacig/v1/load - Load game progress (requires auth)
+ * - GET /wp-json/sacig/v1/leaderboard - Public leaderboard data
+ *
  * @package Shortcode_Arcade_Crypto_Idle_Game
+ * @since 0.4.6
  */
 
 defined( 'ABSPATH' ) || exit;
 
 /**
- * Cloud save REST handler.
+ * Cloud save REST API handler.
+ *
+ * Registers and handles REST endpoints in the sacig/v1 namespace.
  */
 class SACIG_Cloud_Save {
 
@@ -370,6 +379,8 @@ class SACIG_Cloud_Save {
 		$table_name  = $wpdb->prefix . 'sacig_saves';
 		$users_table = $wpdb->users;
 
+		// Direct query required: leaderboard aggregation with JOIN and ORDER BY on custom table.
+		// No WP_Query or equivalent API supports cross-table aggregation with custom tables.
 		// phpcs:disable WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching
 		// phpcs:disable WordPress.DB.PreparedSQL.InterpolatedNotPrepared, PluginCheck.Security.DirectDB.UnescapedDBParameter
 		// Table names are safely constructed using $wpdb->prefix and $wpdb->users constants.

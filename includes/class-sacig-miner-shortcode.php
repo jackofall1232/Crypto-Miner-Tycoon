@@ -241,6 +241,8 @@ class SACIG_Miner_Shortcode {
         $users_table = $wpdb->users;
         $limit       = intval($atts['limit']);
 
+        // Direct query required: leaderboard aggregation with JOIN and ORDER BY on custom table.
+        // No WP_Query or equivalent API supports cross-table aggregation with custom tables.
         // phpcs:disable WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching
         // phpcs:disable WordPress.DB.PreparedSQL.InterpolatedNotPrepared, WordPress.DB.PreparedSQL.NotPrepared
         // phpcs:disable PluginCheck.Security.DirectDB.UnescapedDBParameter
