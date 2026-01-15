@@ -4,7 +4,7 @@ Donate link: https://shortcodearcade.com
 Tags: game, idle game, crypto, clicker game, mining game
 Requires at least: 5.0
 Tested up to: 6.9
-Stable tag: 0.4.3
+Stable tag: 0.4.4
 Requires PHP: 7.4
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
@@ -13,7 +13,7 @@ A crypto-themed idle clicker game with balanced progression, prestige mechanics,
 
 == Description ==
 
-**Shortcode Arcade Crypto Idle Game** is an idle clicker game where players grow a virtual crypto mining operation over time. Players click to generate currency, purchase upgrades, and unlock passive income systems.
+**Shortcode Arcade Crypto Idle Game** is an idle clicker game where players grow a virtual crypto mining operation over time. Players click to generate in-game currency, purchase upgrades, and unlock passive income systems.
 
 The game is designed for **fair, long-term progression**, using a carefully tuned scaling curve combined with a prestige (“Hard Fork”) system to prevent runaway inflation and repetitive upgrade stacking.
 
@@ -115,12 +115,19 @@ Local saves are stored in browser localStorage. Cloud saves are stored in WordPr
 
 == Changelog ==
 
+= 0.4.4 - 2026-01-14 =
+* Completed full namespace and prefix refactor using a unique `SACIG` prefix
+* Renamed internal class files to match new naming conventions
+* Updated root plugin loader to reflect new structure
+* Verified compliance with WordPress.org Plugin Review requirements
+* No gameplay changes
+* No data migrations
+
 = 0.4.3 - 2026-01-14 =
-* Refactored all plugin-specific functions, classes, constants, and options to use a unique, uniform prefix
+* Refactored plugin-specific functions, classes, constants, and options to use a uniform prefix
 * Resolved naming collisions identified during manual review
 * Corrected plugin ZIP filename to meet WordPress.org requirements
 * No gameplay changes
-* No data migrations
 
 = 0.4.2 - 2026-01-13 =
 * Renamed plugin to Shortcode Arcade Crypto Idle Game
@@ -144,8 +151,8 @@ Local saves are stored in browser localStorage. Cloud saves are stored in WordPr
 
 == Upgrade Notice ==
 
-= 0.4.3 =
-Internal code refactor for WordPress.org compliance. No functional or data changes.
+= 0.4.4 =
+Internal refactor to fully comply with WordPress.org plugin review guidelines. No functional or data changes.
 
 == Credits ==
 
