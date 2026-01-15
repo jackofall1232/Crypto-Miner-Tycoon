@@ -1,5 +1,5 @@
 /**
- * Crypto Idle Game - Admin Styles
+ * Shortcode Arcade Crypto Idle Game - Admin JavaScript
  * @since 0.3.0
  */
 

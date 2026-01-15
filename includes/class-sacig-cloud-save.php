@@ -4,7 +4,7 @@
  *
  * Handles REST API endpoints for saving/loading game data.
  *
- * @package Crypto_Miner_Tycoon
+ * @package Shortcode_Arcade_Crypto_Idle_Game
  */
 
 defined( 'ABSPATH' ) || exit;

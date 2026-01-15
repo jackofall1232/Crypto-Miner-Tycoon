@@ -2,7 +2,7 @@
 /**
  * Admin Settings Class
  *
- * Handles the admin settings page for Crypto Idle Game (Free Version)
+ * Handles the admin settings page for Shortcode Arcade Crypto Idle Game
  */
 
 // Exit if accessed directly
@@ -110,7 +110,7 @@ class SACIG_Admin {
      * Render section description
      */
     public function render_section_description() {
-        echo '<p>Configure cloud saves and leaderboard features for Crypto Idle Game.</p>';
+        echo '<p>Configure cloud saves and leaderboard features for Shortcode Arcade Crypto Idle Game.</p>';
     }
     
     /**
@@ -321,7 +321,7 @@ $count = (int) $wpdb->get_var(
                         <li>🔐 Custom Login Pages</li>
                         <li>🎨 White Label Options</li>
                     </ul>
-                    <a href="https://shortcodearcade.com/crypto-miner-tycoon-pro" target="_blank" class="button button-primary button-large sacig-upgrade-button">
+                    <a href="https://shortcodearcade.com/shortcodearcade-crypto-idle-game-pro" target="_blank" class="button button-primary button-large sacig-upgrade-button">
                         Get Pro - Only $10
                     </a>
                 </div>
@@ -381,7 +381,7 @@ $count = (int) $wpdb->get_var(
                         </div>
                     </div>
                     
-                    <a href="https://shortcodearcade.com/crypto-miner-tycoon-pro" target="_blank" class="button button-primary button-hero sacig-upgrade-cta">
+                    <a href="https://shortcodearcade.com/shortcodearcade-crypto-idle-game-pro" target="_blank" class="button button-primary button-hero sacig-upgrade-cta">
                         <span class="dashicons dashicons-unlock"></span> Unlock Branding Features - Get Pro
                     </a>
                 </div>
@@ -473,7 +473,7 @@ $count = (int) $wpdb->get_var(
                         </div>
                     </div>
                     
-                    <a href="https://shortcodearcade.com/crypto-miner-tycoon-pro" target="_blank" class="button button-primary button-hero sacig-upgrade-cta">
+                    <a href="https://shortcodearcade.com/shortcodearcade-crypto-idle-game-pro" target="_blank" class="button button-primary button-hero sacig-upgrade-cta">
                         <span class="dashicons dashicons-unlock"></span> Unlock Contest Features - Get Pro
                     </a>
                 </div>
@@ -558,7 +558,7 @@ $count = (int) $wpdb->get_var(
                         </div>
                     </div>
                     
-                    <a href="https://shortcodearcade.com/crypto-miner-tycoon-pro" target="_blank" class="button button-primary button-hero sacig-upgrade-cta">
+                    <a href="https://shortcodearcade.com/shortcodearcade-crypto-idle-game-pro" target="_blank" class="button button-primary button-hero sacig-upgrade-cta">
                         <span class="dashicons dashicons-unlock"></span> Unlock Login Features - Get Pro
                     </a>
                 </div>

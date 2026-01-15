@@ -3,7 +3,7 @@
  * Plugin Name: Shortcode Arcade Crypto Idle Game
  * Plugin URI: https://github.com/jackofall1232/shortcodearcade-crypto-idle-game
  * Description: A crypto-themed idle clicker game with balanced progression, prestige mechanics, and optional leaderboards. Use the [sacig_crypto_idle_game] shortcode to display the game.
- * Version: 0.4.5
+ * Version: 0.4.6
  * Author: Shortcode Arcade
  * Author URI: https://shortcodearcade.com
  * License: GPL v2 or later
@@ -19,7 +19,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 /**
  * Plugin constants
  */
-define( 'SACIG_VERSION', '0.4.5' );
+define( 'SACIG_VERSION', '0.4.6' );
 define( 'SACIG_PLUGIN_DIR', plugin_dir_path( __FILE__ ) );
 define( 'SACIG_PLUGIN_URL', plugin_dir_url( __FILE__ ) );
 define( 'SACIG_PLUGIN_BASENAME', plugin_basename( __FILE__ ) );
@@ -118,7 +118,7 @@ final class SACIG_Bootstrap {
 			base_click_power decimal(20,6) DEFAULT 1,
 			base_passive_income decimal(20,6) DEFAULT 0,
 			prestige_level int DEFAULT 0,
-			total_currency decimal(30,6) DEFAULT 0,
+			total_satoshis decimal(30,6) DEFAULT 0,
 			rank_score decimal(30,6) DEFAULT 0,
 			last_updated datetime DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
 			PRIMARY KEY  (user_id),
