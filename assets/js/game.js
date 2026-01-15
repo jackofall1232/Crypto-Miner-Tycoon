@@ -23,8 +23,8 @@
     };
     
     // Cloud save settings (passed from WordPress)
-    const cloudSavesEnabled = typeof cmtSettings !== 'undefined' && cmtSettings.cloudSavesEnabled;
-    const isUserLoggedIn = typeof cmtSettings !== 'undefined' && cmtSettings.isUserLoggedIn;
+    const cloudSavesEnabled = typeof sacigSettings !== 'undefined' && sacigSettings.cloudSavesEnabled;
+    const isUserLoggedIn = typeof sacigSettings !== 'undefined' && sacigSettings.isUserLoggedIn;
     const useCloudSaves = cloudSavesEnabled && isUserLoggedIn;
 
     // Upgrade Definitions with Elo-based balancing
@@ -482,11 +482,11 @@
      */
     async function saveToCloud() {
         try {
-            const response = await fetch(cmtSettings.restUrl + 'save', {
+            const response = await fetch(sacigSettings.restUrl + 'save', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
-                    'X-WP-Nonce': cmtSettings.nonce
+                    'X-WP-Nonce': sacigSettings.nonce
                 },
                 body: JSON.stringify({
                     save_data: gameState
@@ -552,10 +552,10 @@
      */
     async function loadFromCloud() {
         try {
-            const response = await fetch(cmtSettings.restUrl + 'load', {
+            const response = await fetch(sacigSettings.restUrl + 'load', {
                 method: 'GET',
                 headers: {
-                    'X-WP-Nonce': cmtSettings.nonce
+                    'X-WP-Nonce': sacigSettings.nonce
                 }
             });
             
@@ -614,11 +614,11 @@
      * Apply custom branding theme
      */
     function applyBrandingTheme() {
-        if (!cmtSettings || !cmtSettings.branding || !cmtSettings.branding.enabled) {
+        if (!sacigSettings || !sacigSettings.branding || !sacigSettings.branding.enabled) {
             return;
         }
         
-        const branding = cmtSettings.branding;
+        const branding = sacigSettings.branding;
         const container = document.querySelector('.cmt-container');
         
         if (!container) return;
