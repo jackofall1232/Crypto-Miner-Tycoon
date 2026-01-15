@@ -40,8 +40,8 @@
          * Handle cloud saves checkbox dependency
          */
         function handleCloudSavesDependency() {
-            const $cloudSaves = $('input[name="cmt_enable_cloud_saves"]');
-            const $leaderboard = $('input[name="cmt_enable_leaderboard"]');
+            const $cloudSaves = $('input[name="sacig_enable_cloud_saves"]');
+            const $leaderboard = $('input[name="sacig_enable_leaderboard"]');
             
             if (!$cloudSaves.length || !$leaderboard.length) {
                 return;
@@ -69,7 +69,7 @@
          * Confirm before disabling cloud saves if data exists
          */
         function handleCloudSavesDisableWarning() {
-            const $cloudSaves = $('input[name="cmt_enable_cloud_saves"]');
+            const $cloudSaves = $('input[name="sacig_enable_cloud_saves"]');
             const $form = $cloudSaves.closest('form');
             
             if (!$cloudSaves.length) {
@@ -103,7 +103,7 @@
          * Leaderboard limit validation
          */
         function handleLeaderboardLimitValidation() {
-            const $limitInput = $('input[name="cmt_leaderboard_limit"]');
+            const $limitInput = $('input[name="sacig_leaderboard_limit"]');
             
             if (!$limitInput.length) {
                 return;
@@ -127,13 +127,13 @@
          */
         function addTooltips() {
             // Add tooltip to cloud saves checkbox
-            const $cloudSavesLabel = $('input[name="cmt_enable_cloud_saves"]').closest('label');
+            const $cloudSavesLabel = $('input[name="sacig_enable_cloud_saves"]').closest('label');
             if ($cloudSavesLabel.length && !$cloudSavesLabel.find('.cmt-help-icon').length) {
                 $cloudSavesLabel.append(' <span class="cmt-help-icon dashicons dashicons-info" title="Saves game data to WordPress database. Requires users to be logged in."></span>');
             }
             
             // Add tooltip to leaderboard checkbox
-            const $leaderboardLabel = $('input[name="cmt_enable_leaderboard"]').closest('label');
+            const $leaderboardLabel = $('input[name="sacig_enable_leaderboard"]').closest('label');
             if ($leaderboardLabel.length && !$leaderboardLabel.find('.cmt-help-icon').length) {
                 $leaderboardLabel.append(' <span class="cmt-help-icon dashicons dashicons-info" title="Display top players using the [crypto_miner_leaderboard] shortcode."></span>');
             }

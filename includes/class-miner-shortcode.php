@@ -10,7 +10,7 @@ if (!defined('ABSPATH')) {
     exit;
 }
 
-class CMT_Miner_Shortcode {
+class SACIG_Miner_Shortcode {
     
     /**
      * Constructor
@@ -33,30 +33,30 @@ class CMT_Miner_Shortcode {
             // Enqueue Google Fonts
             // phpcs:ignore WordPress.WP.EnqueuedResourceParameters.MissingVersion -- Google Fonts handles versioning via URL parameters
             wp_enqueue_style(
-    'cmt-google-fonts',
+    'sacig-google-fonts',
     'https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Rajdhani:wght@300;400;600&display=swap',
     array(),
-    CMT_VERSION
+    SACIG_VERSION
 );
-            
+
             // Enqueue game CSS
             wp_enqueue_style(
-                'cmt-game-css',
-                CMT_PLUGIN_URL . 'assets/css/game.css',
+                'sacig-game-css',
+                SACIG_PLUGIN_URL . 'assets/css/game.css',
                 array(),
-                CMT_VERSION
+                SACIG_VERSION
             );
             
             // Only enqueue JS for the game shortcode
             if (has_shortcode($post->post_content, 'crypto_miner') || has_shortcode($post->post_content, 'crypto_miner_tycoon')) {
                 wp_enqueue_script(
-                    'cmt-game-js',
-                    CMT_PLUGIN_URL . 'assets/js/game.js',
+                    'sacig-game-js',
+                    SACIG_PLUGIN_URL . 'assets/js/game.js',
                     array(),
-                    CMT_VERSION,
+                    SACIG_VERSION,
                     true
                 );
-                
+
                 // Pass settings to JavaScript
                 $this->localize_script();
             }
@@ -67,17 +67,17 @@ class CMT_Miner_Shortcode {
      * Localize script with settings and data
      */
     private function localize_script() {
-        $cloud_saves_enabled = get_option('cmt_enable_cloud_saves', false);
-        
+        $cloud_saves_enabled = get_option('sacig_enable_cloud_saves', false);
+
         $script_data = array(
             'cloudSavesEnabled' => $cloud_saves_enabled,
             'isUserLoggedIn' => is_user_logged_in(),
-            'restUrl' => rest_url('cmt/v1/'),
+            'restUrl' => rest_url('sacig/v1/'),
             'nonce' => wp_create_nonce('wp_rest'),
             'userId' => get_current_user_id()
         );
-        
-        wp_localize_script('cmt-game-js', 'cmtSettings', $script_data);
+
+        wp_localize_script('sacig-game-js', 'sacigSettings', $script_data);
     }
     
     /**
@@ -94,7 +94,7 @@ class CMT_Miner_Shortcode {
         );
         
         // Check if cloud saves are enabled and user is not logged in
-        $cloud_saves_enabled = get_option('cmt_enable_cloud_saves', false);
+        $cloud_saves_enabled = get_option('sacig_enable_cloud_saves', false);
         $show_login_notice = $cloud_saves_enabled && !is_user_logged_in();
         
         // Start output buffering
@@ -219,22 +219,22 @@ class CMT_Miner_Shortcode {
      */
     public function render_leaderboard($atts) {
         // Check if leaderboard is enabled
-        if (!get_option('cmt_enable_leaderboard', false)) {
+        if (!get_option('sacig_enable_leaderboard', false)) {
             return '<p class="cmt-leaderboard-disabled">Leaderboard is not enabled.</p>';
         }
-        
+
         // Parse attributes
         $atts = shortcode_atts(
             array(
-                'limit' => get_option('cmt_leaderboard_limit', 10),
+                'limit' => get_option('sacig_leaderboard_limit', 10),
             ),
             $atts,
             'crypto_miner_leaderboard'
         );
-        
+
         // Get leaderboard data
         global $wpdb;
-        $table_name  = $wpdb->prefix . 'cmt_saves';
+        $table_name  = $wpdb->prefix . 'sacig_saves';
         $users_table = $wpdb->users;
         $limit       = intval($atts['limit']);
 

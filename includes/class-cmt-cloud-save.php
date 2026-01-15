@@ -12,7 +12,7 @@ defined( 'ABSPATH' ) || exit;
 /**
  * Cloud save REST handler.
  */
-class CMT_Cloud_Save {
+class SACIG_Cloud_Save {
 
 	/**
 	 * Constructor.
@@ -30,7 +30,7 @@ class CMT_Cloud_Save {
 
 		// Save game endpoint.
 		register_rest_route(
-			'cmt/v1',
+			'sacig/v1',
 			'/save',
 			array(
 				'methods'             => 'POST',
@@ -48,7 +48,7 @@ class CMT_Cloud_Save {
 
 		// Load game endpoint.
 		register_rest_route(
-			'cmt/v1',
+			'sacig/v1',
 			'/load',
 			array(
 				'methods'             => 'GET',
@@ -59,7 +59,7 @@ class CMT_Cloud_Save {
 
 		// Get leaderboard endpoint (public).
 		register_rest_route(
-			'cmt/v1',
+			'sacig/v1',
 			'/leaderboard',
 			array(
 				'methods'             => 'GET',
@@ -77,7 +77,7 @@ class CMT_Cloud_Save {
 	public function check_cloud_save_permission() {
 
 		// Cloud saves must be enabled.
-		$enabled = (bool) get_option( 'cmt_enable_cloud_saves', false );
+		$enabled = (bool) get_option( 'sacig_enable_cloud_saves', false );
 		if ( ! $enabled ) {
 			return new WP_Error(
 				'cloud_saves_disabled',
@@ -165,7 +165,7 @@ class CMT_Cloud_Save {
 			if ( (float) $value['satoshis'] > ( (float) $max_reasonable_satoshis * 2 ) ) {
 				if ( defined( 'WP_DEBUG' ) && WP_DEBUG ) {
 					// phpcs:ignore WordPress.PHP.DevelopmentFunctions.error_log_error_log -- Debug-only anti-cheat monitoring.
-					error_log( 'CMT: Suspicious save data for user ' . get_current_user_id() . ' - earnings exceed theoretical maximum' );
+					error_log( 'SACIG: Suspicious save data for user ' . get_current_user_id() . ' - earnings exceed theoretical maximum' );
 				}
 			}
 		}
@@ -224,7 +224,7 @@ class CMT_Cloud_Save {
 			(int) $save_data['prestigeLevel']
 		);
 
-		$table_name = $wpdb->prefix . 'cmt_saves';
+		$table_name = $wpdb->prefix . 'sacig_saves';
 
 		$encoded = wp_json_encode( $save_data );
 		if ( false === $encoded ) {
@@ -301,7 +301,7 @@ class CMT_Cloud_Save {
 		global $wpdb;
 
 		$user_id    = get_current_user_id();
-		$table_name = $wpdb->prefix . 'cmt_saves';
+		$table_name = $wpdb->prefix . 'sacig_saves';
 
 		// phpcs:disable WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching
 		// phpcs:disable WordPress.DB.PreparedSQL.InterpolatedNotPrepared, PluginCheck.Security.DirectDB.UnescapedDBParameter
@@ -348,7 +348,7 @@ class CMT_Cloud_Save {
 	public function get_leaderboard( $request ) {
 
 		// Check if leaderboard is enabled.
-		$enabled = (bool) get_option( 'cmt_enable_leaderboard', false );
+		$enabled = (bool) get_option( 'sacig_enable_leaderboard', false );
 		if ( ! $enabled ) {
 			return new WP_Error(
 				'leaderboard_disabled',
@@ -359,7 +359,7 @@ class CMT_Cloud_Save {
 
 		global $wpdb;
 
-		$limit = (int) get_option( 'cmt_leaderboard_limit', 10 );
+		$limit = (int) get_option( 'sacig_leaderboard_limit', 10 );
 		if ( $limit < 1 ) {
 			$limit = 10;
 		}
@@ -367,7 +367,7 @@ class CMT_Cloud_Save {
 			$limit = 100;
 		}
 
-		$table_name  = $wpdb->prefix . 'cmt_saves';
+		$table_name  = $wpdb->prefix . 'sacig_saves';
 		$users_table = $wpdb->users;
 
 		// phpcs:disable WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching
@@ -443,5 +443,3 @@ class CMT_Cloud_Save {
 		return (float) ( $base_score + $prestige_bonus );
 	}
 }
-
-new CMT_Cloud_Save();

@@ -2,8 +2,8 @@
 /**
  * Plugin Name: Shortcode Arcade Crypto Idle Game
  * Plugin URI: https://github.com/jackofall1232/shortcodearcade-crypto-idle-game
- * Description: A crypto-themed idle clicker game with Elo-balanced progression, prestige mechanics, and optional leaderboards. Use the [crypto_miner_tycoon] shortcode to display the game.
- * Version: 0.4.2
+ * Description: A crypto-themed idle clicker game with Elo-balanced progression, prestige mechanics, and optional leaderboards. Use the [crypto_miner] shortcode to display the game.
+ * Version: 0.4.3
  * Author: Shortcode Arcade
  * Author URI: https://shortcodearcade.com
  * License: GPL v2 or later
@@ -18,15 +18,15 @@ if (!defined('ABSPATH')) {
 }
 
 // Define plugin constants
-define('CMT_VERSION', '0.4.2');
-define('CMT_PLUGIN_DIR', plugin_dir_path(__FILE__));
-define('CMT_PLUGIN_URL', plugin_dir_url(__FILE__));
-define('CMT_PLUGIN_BASENAME', plugin_basename(__FILE__));
+define('SACIG_VERSION', '0.4.3');
+define('SACIG_PLUGIN_DIR', plugin_dir_path(__FILE__));
+define('SACIG_PLUGIN_URL', plugin_dir_url(__FILE__));
+define('SACIG_PLUGIN_BASENAME', plugin_basename(__FILE__));
 
 /**
  * Main Plugin Class
  */
-class Crypto_Miner_Tycoon {
+class SACIG_Bootstrap {
     
     /**
      * Single instance of the class
@@ -69,9 +69,9 @@ class Crypto_Miner_Tycoon {
      * Load plugin dependencies
      */
     private function load_dependencies() {
-        require_once CMT_PLUGIN_DIR . 'includes/class-miner-shortcode.php';
-        require_once CMT_PLUGIN_DIR . 'includes/class-cmt-admin.php';
-        require_once CMT_PLUGIN_DIR . 'includes/class-cmt-cloud-save.php';
+        require_once SACIG_PLUGIN_DIR . 'includes/class-miner-shortcode.php';
+        require_once SACIG_PLUGIN_DIR . 'includes/class-cmt-admin.php';
+        require_once SACIG_PLUGIN_DIR . 'includes/class-cmt-cloud-save.php';
     }
     
     /**
@@ -79,15 +79,15 @@ class Crypto_Miner_Tycoon {
      */
     private function init_components() {
         // Initialize shortcode handler
-        new CMT_Miner_Shortcode();
-        
+        new SACIG_Miner_Shortcode();
+
         // Initialize admin (only in admin area)
         if (is_admin()) {
-            new CMT_Admin();
+            new SACIG_Admin();
         }
-        
+
         // Initialize cloud save REST API
-        new CMT_Cloud_Save();
+        new SACIG_Cloud_Save();
     }
     
     /**
@@ -114,7 +114,7 @@ class Crypto_Miner_Tycoon {
      */
     private function maybe_create_table() {
         global $wpdb;
-        $table_name = $wpdb->prefix . 'cmt_saves';
+        $table_name = $wpdb->prefix . 'sacig_saves';
         $charset_collate = $wpdb->get_charset_collate();
         
         $sql = "CREATE TABLE IF NOT EXISTS $table_name (
@@ -137,9 +137,9 @@ class Crypto_Miner_Tycoon {
 }
 
 // Initialize plugin
-function crypto_miner_tycoon() {
-    return Crypto_Miner_Tycoon::get_instance();
+function sacig_bootstrap() {
+    return SACIG_Bootstrap::get_instance();
 }
 
 // Start the plugin
-crypto_miner_tycoon();
+sacig_bootstrap();
