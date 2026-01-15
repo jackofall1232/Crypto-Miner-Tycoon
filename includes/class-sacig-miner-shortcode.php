@@ -249,7 +249,7 @@ class SACIG_Miner_Shortcode {
             $wpdb->prepare(
                 "SELECT
                     s.user_id,
-                    s.total_currency,
+                    s.total_satoshis,
                     s.prestige_level,
                     s.rank_score,
                     s.last_updated,
@@ -310,7 +310,7 @@ class SACIG_Miner_Shortcode {
                                     <span class="sacig-you-badge">You</span>
                                 <?php endif; ?>
                             </td>
-                            <td class="sacig-satoshis"><?php echo esc_html(number_format($row['total_currency'], 2)); ?></td>
+                            <td class="sacig-satoshis"><?php echo esc_html(number_format($row['total_satoshis'], 2)); ?></td>
                             <td class="sacig-prestige">Level <?php echo esc_html($row['prestige_level']); ?></td>
                             <td class="sacig-score"><?php echo esc_html(number_format($row['rank_score'], 0)); ?></td>
                         </tr>
