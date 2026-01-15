@@ -1,6 +1,6 @@
 /**
  * Shortcode Arcade Crypto Idle Game - Admin JavaScript
- * @since 0.3.0
+ * @since 0.4.6
  */
 
 (function($) {
