@@ -57,6 +57,22 @@ When enabled in **Settings → Crypto Idle Game**, cloud saves allow you to:
 - Enable competitive leaderboards
 - Keep all player data on your own server
 
+== External Services ==
+
+This plugin uses the following external services:
+
+**Google Fonts CDN**
+
+* Service: Google Fonts API
+* Purpose: Loads custom fonts (Orbitron, Rajdhani) for game UI styling
+* Endpoint: https://fonts.googleapis.com/
+* Privacy Policy: https://policies.google.com/privacy
+* Data Shared: Your IP address and browser information when loading fonts
+* When Used: Only on pages where the game shortcode is displayed
+* User Choice: No opt-out available (required for proper game display)
+
+All font requests are made directly from the user's browser to Google's servers. No personal data is collected or stored by this plugin.
+
 == Installation ==
 
 = Automatic Installation =

@@ -30,8 +30,8 @@ class SACIG_Admin {
      */
     public function add_admin_menu() {
         add_options_page(
-            'Shortcode Arcade Crypto Idle Game Settings',
-            'Shortcode Arcade Crypto Idle Game',
+            __( 'Shortcode Arcade Crypto Idle Game Settings', 'shortcodearcade-crypto-idle-game' ),
+            __( 'Shortcode Arcade Crypto Idle Game', 'shortcodearcade-crypto-idle-game' ),
             'manage_options',
             'shortcodearcade-crypto-idle-game',
             array($this, 'render_settings_page')
@@ -114,7 +114,7 @@ class SACIG_Admin {
      * Render section description
      */
     public function render_section_description() {
-        echo '<p>Configure cloud saves and leaderboard features for Shortcode Arcade Crypto Idle Game.</p>';
+        echo '<p>' . esc_html__( 'Configure cloud saves and leaderboard features for Shortcode Arcade Crypto Idle Game.', 'shortcodearcade-crypto-idle-game' ) . '</p>';
     }
     
     /**
@@ -190,7 +190,7 @@ class SACIG_Admin {
             add_settings_error(
                 'sacig_messages',
                 'sacig_message',
-                'Settings Saved',
+                __( 'Settings Saved', 'shortcodearcade-crypto-idle-game' ),
                 'updated'
             );
         }
@@ -276,6 +276,7 @@ class SACIG_Admin {
 
 $table_name = esc_sql( $wpdb->prefix . 'sacig_saves' );
 
+// Direct query required: aggregate COUNT on custom table; no WP core API exists for custom table statistics.
 // phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching
 $count = (int) $wpdb->get_var(
     // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
@@ -644,6 +645,21 @@ $count = (int) $wpdb->get_var(
             array('jquery'),
             SACIG_VERSION,
             true
+        );
+
+        // Localize strings for JavaScript
+        wp_localize_script(
+            'sacig-admin-js',
+            'sacigAdminStrings',
+            array(
+                'confirmDisableCloudTitle' => __( 'Warning: Disabling Cloud Saves', 'shortcodearcade-crypto-idle-game' ),
+                'confirmDisableCloudBody' => __( 'Disabling cloud saves will prevent users from saving game progress to your WordPress database. Players will only be able to use local browser storage.', 'shortcodearcade-crypto-idle-game' ),
+                'confirmDisableCloudQuestion' => __( 'Are you sure you want to disable cloud saves?', 'shortcodearcade-crypto-idle-game' ),
+                'unsavedChangesWarning' => __( 'You have unsaved changes. Are you sure you want to leave?', 'shortcodearcade-crypto-idle-game' ),
+                'copiedLabel' => __( 'Copied!', 'shortcodearcade-crypto-idle-game' ),
+                'tooltipCloudSaves' => __( 'Saves game data to WordPress database. Requires users to be logged in.', 'shortcodearcade-crypto-idle-game' ),
+                'tooltipLeaderboard' => __( 'Display top players using the [sacig_crypto_idle_leaderboard] shortcode.', 'shortcodearcade-crypto-idle-game' ),
+            )
         );
     }
 }

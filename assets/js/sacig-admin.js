@@ -84,12 +84,11 @@
                 
                 // If changing from enabled to disabled
                 if (initialState && !currentState) {
-                    const confirmed = confirm(
-                        'Warning: Disabling cloud saves will prevent users from saving/loading their games.\n\n' +
-                        'Existing saved games will remain in the database but will be inaccessible.\n\n' +
-                        'Are you sure you want to disable cloud saves?'
-                    );
-                    
+                    const message = sacigAdminStrings.confirmDisableCloudTitle + '\n\n' +
+                                  sacigAdminStrings.confirmDisableCloudBody + '\n\n' +
+                                  sacigAdminStrings.confirmDisableCloudQuestion;
+                    const confirmed = confirm(message);
+
                     if (!confirmed) {
                         e.preventDefault();
                         $cloudSaves.prop('checked', true);
@@ -129,15 +128,17 @@
             // Add tooltip to cloud saves checkbox
             const $cloudSavesLabel = $('input[name="sacig_enable_cloud_saves"]').closest('label');
             if ($cloudSavesLabel.length && !$cloudSavesLabel.find('.sacig-help-icon').length) {
-                $cloudSavesLabel.append(' <span class="sacig-help-icon dashicons dashicons-info" title="Saves game data to WordPress database. Requires users to be logged in."></span>');
+                $cloudSavesLabel.append(' <span class="sacig-help-icon dashicons dashicons-info"></span>');
+                $cloudSavesLabel.find('.sacig-help-icon').attr('title', sacigAdminStrings.tooltipCloudSaves);
             }
-            
+
             // Add tooltip to leaderboard checkbox
             const $leaderboardLabel = $('input[name="sacig_enable_leaderboard"]').closest('label');
             if ($leaderboardLabel.length && !$leaderboardLabel.find('.sacig-help-icon').length) {
-                $leaderboardLabel.append(' <span class="sacig-help-icon dashicons dashicons-info" title="Display top players using the [sacig_crypto_idle_leaderboard] shortcode."></span>');
+                $leaderboardLabel.append(' <span class="sacig-help-icon dashicons dashicons-info"></span>');
+                $leaderboardLabel.find('.sacig-help-icon').attr('title', sacigAdminStrings.tooltipLeaderboard);
             }
-            
+
             // Make dashicons visible
             $('.sacig-help-icon').css({
                 'cursor': 'help',
@@ -149,51 +150,76 @@
         
         /**
          * Copy shortcode to clipboard
+         * Uses modern Clipboard API with fallback to execCommand
          */
         function handleShortcodeCopy() {
             $('.sacig-info-box code').on('click', function() {
                 const $code = $(this);
                 const text = $code.text();
-                
-                // Create temporary input
-                const $temp = $('<input>');
-                $('body').append($temp);
-                $temp.val(text).select();
-                document.execCommand('copy');
-                $temp.remove();
-                
-                // Visual feedback
-                const originalBg = $code.css('background-color');
-                $code.css('background-color', '#46b450');
-                
-                setTimeout(function() {
-                    $code.css('background-color', originalBg);
-                }, 200);
-                
-                // Show tooltip
-                const $tooltip = $('<span class="sacig-copied-tooltip">Copied!</span>');
-                $tooltip.css({
-                    'position': 'absolute',
-                    'background': '#1d2327',
-                    'color': '#fff',
-                    'padding': '4px 8px',
-                    'border-radius': '3px',
-                    'font-size': '11px',
-                    'margin-left': '8px',
-                    'z-index': '1000'
-                });
-                
-                $code.after($tooltip);
-                
-                setTimeout(function() {
-                    $tooltip.fadeOut(function() {
-                        $(this).remove();
+
+                // Try modern Clipboard API first
+                if (navigator.clipboard && navigator.clipboard.writeText) {
+                    navigator.clipboard.writeText(text).then(function() {
+                        showCopyFeedback($code);
+                    }).catch(function() {
+                        // Fallback to execCommand
+                        copyViaExecCommand(text);
+                        showCopyFeedback($code);
                     });
-                }, 1500);
+                } else {
+                    // Fallback for older browsers
+                    copyViaExecCommand(text);
+                    showCopyFeedback($code);
+                }
             });
-            
+
             // Add cursor pointer to codes
             $('.sacig-info-box code').css('cursor', 'pointer');
+        }
+
+        /**
+         * Fallback clipboard copy using execCommand
+         */
+        function copyViaExecCommand(text) {
+            const $temp = $('<input>');
+            $('body').append($temp);
+            $temp.val(text).select();
+            document.execCommand('copy');
+            $temp.remove();
+        }
+
+        /**
+         * Show visual feedback for copy action
+         */
+        function showCopyFeedback($code) {
+            // Visual feedback
+            const originalBg = $code.css('background-color');
+            $code.css('background-color', '#46b450');
+
+            setTimeout(function() {
+                $code.css('background-color', originalBg);
+            }, 200);
+
+            // Show tooltip with localized text
+            const $tooltip = $('<span class="sacig-copied-tooltip"></span>').text(sacigAdminStrings.copiedLabel);
+            $tooltip.css({
+                'position': 'absolute',
+                'background': '#1d2327',
+                'color': '#fff',
+                'padding': '4px 8px',
+                'border-radius': '3px',
+                'font-size': '11px',
+                'margin-left': '8px',
+                'z-index': '1000'
+            });
+
+            $code.after($tooltip);
+
+            setTimeout(function() {
+                $tooltip.fadeOut(function() {
+                    $(this).remove();
+                });
+            }, 1500);
         }
         
         /**
@@ -242,7 +268,7 @@
             // Warn on page leave
             $(window).on('beforeunload', function() {
                 if (formChanged) {
-                    return 'You have unsaved changes. Are you sure you want to leave?';
+                    return sacigAdminStrings.unsavedChangesWarning;
                 }
             });
             
