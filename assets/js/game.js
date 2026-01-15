@@ -221,17 +221,17 @@
      * Mining click function
      * Prestige multiplier is applied HERE at earn-time, not at upgrade purchase time
      */
-    window.cmtMine = function() {
+    window.sacigMine = function() {
         const earnedAmount = gameState.clickPower * gameState.prestigeMultiplier;
         gameState.satoshis += earnedAmount;
         gameState.satoshis = Number(gameState.satoshis.toFixed(6)); // Prevent floating point drift
         
         // Create floating particle effect
-        const button = document.getElementById('cmt-mineButton');
+        const button = document.getElementById('sacig-mineButton');
         if (button) {
             const rect = button.getBoundingClientRect();
             const particle = document.createElement('div');
-            particle.className = 'cmt-click-particle';
+            particle.className = 'sacig-click-particle';
             particle.textContent = '+' + formatNumber(earnedAmount);
             particle.style.left = (rect.left + rect.width / 2 - 30) + 'px';
             particle.style.top = (rect.top + rect.height / 2) + 'px';
@@ -246,7 +246,7 @@
     /**
      * Buy upgrade function
      */
-    window.cmtBuyUpgrade = function(upgradeId) {
+    window.sacigBuyUpgrade = function(upgradeId) {
         const upgrade = upgradeDefinitions.find(u => u.id === upgradeId);
         if (!upgrade) return;
         
@@ -272,7 +272,7 @@
     /**
      * Prestige function with exponential cost scaling
      */
-    window.cmtPrestige = function() {
+    window.sacigPrestige = function() {
         const prestigeCost = getPrestigeCost();
         
         if (gameState.satoshis < prestigeCost) {
@@ -328,10 +328,10 @@
         const effectivePassiveIncome = gameState.passiveIncome * gameState.prestigeMultiplier;
         
         // Update stats
-        const satoshisEl = document.getElementById('cmt-satoshis');
-        const clickPowerEl = document.getElementById('cmt-clickPower');
-        const passiveIncomeEl = document.getElementById('cmt-passiveIncome');
-        const ratingEl = document.getElementById('cmt-rating');
+        const satoshisEl = document.getElementById('sacig-satoshis');
+        const clickPowerEl = document.getElementById('sacig-clickPower');
+        const passiveIncomeEl = document.getElementById('sacig-passiveIncome');
+        const ratingEl = document.getElementById('sacig-rating');
         
         if (satoshisEl) satoshisEl.textContent = formatNumber(gameState.satoshis);
         if (clickPowerEl) clickPowerEl.textContent = formatNumber(effectiveClickPower);
@@ -339,7 +339,7 @@
         if (ratingEl) ratingEl.textContent = Math.floor(gameState.rating);
         
         // Update upgrades list
-        const upgradesList = document.getElementById('cmt-upgradesList');
+        const upgradesList = document.getElementById('sacig-upgradesList');
         if (upgradesList) {
             upgradesList.innerHTML = '';
             
@@ -354,8 +354,8 @@
                 const nextEffect = upgrade.baseEffect * nextMultiplier;
                 
                 const upgradeDiv = document.createElement('div');
-                upgradeDiv.className = 'cmt-upgrade-item' + (canAfford ? '' : ' cmt-disabled');
-                upgradeDiv.onclick = () => window.cmtBuyUpgrade(upgrade.id);
+                upgradeDiv.className = 'sacig-upgrade-item' + (canAfford ? '' : ' sacig-disabled');
+                upgradeDiv.onclick = () => window.sacigBuyUpgrade(upgrade.id);
                 
                 // Build effect text
                 let effectText = '';
@@ -372,12 +372,12 @@
                 }
                 
                 upgradeDiv.innerHTML = `
-                    <div class="cmt-upgrade-header">
-                        <div class="cmt-upgrade-name">${upgrade.name}</div>
-                        <div class="cmt-upgrade-cost">${formatNumber(cost)}</div>
+                    <div class="sacig-upgrade-header">
+                        <div class="sacig-upgrade-name">${upgrade.name}</div>
+                        <div class="sacig-upgrade-cost">${formatNumber(cost)}</div>
                     </div>
-                    <div class="cmt-upgrade-description">${effectText}${diminishingText}</div>
-                    <div class="cmt-upgrade-owned">Owned: ${owned}${owned > 0 ? ` | Total: ${formatNumber(totalEffect * gameState.prestigeMultiplier)}` : ''}</div>
+                    <div class="sacig-upgrade-description">${effectText}${diminishingText}</div>
+                    <div class="sacig-upgrade-owned">Owned: ${owned}${owned > 0 ? ` | Total: ${formatNumber(totalEffect * gameState.prestigeMultiplier)}` : ''}</div>
                 `;
                 
                 upgradesList.appendChild(upgradeDiv);
@@ -386,7 +386,7 @@
         
         // Update prestige button
         const prestigeCost = getPrestigeCost();
-        const prestigeButton = document.getElementById('cmt-prestigeButton');
+        const prestigeButton = document.getElementById('sacig-prestigeButton');
         if (prestigeButton) {
             prestigeButton.disabled = gameState.satoshis < prestigeCost;
             
@@ -397,7 +397,7 @@
         }
         
         // Update prestige info
-        const prestigeInfo = document.querySelector('.cmt-prestige-info');
+        const prestigeInfo = document.querySelector('.sacig-prestige-info');
         if (prestigeInfo) {
             const nextPrestigeCost = getPrestigeCost();
             const currentBonus = gameState.prestigeLevel * 10;
@@ -427,7 +427,7 @@
      * Calculate offline progress
      */
     function calculateOfflineProgress() {
-        const lastSaveTime = localStorage.getItem('cmtLastSaveTime');
+        const lastSaveTime = localStorage.getItem('sacigLastSaveTime');
         if (!lastSaveTime) return;
         
         const now = Date.now();
@@ -460,7 +460,7 @@
      */
     function saveGame() {
         // Always save timestamp for offline progress
-        localStorage.setItem('cmtLastSaveTime', Date.now().toString());
+        localStorage.setItem('sacigLastSaveTime', Date.now().toString());
         
         if (useCloudSaves) {
             saveToCloud();
@@ -473,7 +473,7 @@
      * Save to localStorage
      */
     function saveToLocalStorage() {
-        localStorage.setItem('cmtCryptoMinerSave', JSON.stringify(gameState));
+        localStorage.setItem('sacigCryptoMinerSave', JSON.stringify(gameState));
         showSaveIndicator();
     }
 
@@ -529,7 +529,7 @@
      * Load from localStorage
      */
     function loadFromLocalStorage() {
-        const saved = localStorage.getItem('cmtCryptoMinerSave');
+        const saved = localStorage.getItem('sacigCryptoMinerSave');
         if (saved) {
             try {
                 const loadedState = JSON.parse(saved);
@@ -585,28 +585,28 @@
      * Show save indicator
      */
     function showSaveIndicator(message = 'Game Saved') {
-        const indicator = document.getElementById('cmt-saveIndicator');
+        const indicator = document.getElementById('sacig-saveIndicator');
         if (indicator) {
             indicator.textContent = message;
-            indicator.classList.add('cmt-show');
-            setTimeout(() => indicator.classList.remove('cmt-show'), 2000);
+            indicator.classList.add('sacig-show');
+            setTimeout(() => indicator.classList.remove('sacig-show'), 2000);
         }
     }
 
     /**
      * Modal functions
      */
-    window.cmtShowModal = function() {
-        const modal = document.getElementById('cmt-infoModal');
+    window.sacigShowModal = function() {
+        const modal = document.getElementById('sacig-infoModal');
         if (modal) {
-            modal.classList.add('cmt-show');
+            modal.classList.add('sacig-show');
         }
     };
 
-    window.cmtHideModal = function() {
-        const modal = document.getElementById('cmt-infoModal');
+    window.sacigHideModal = function() {
+        const modal = document.getElementById('sacig-infoModal');
         if (modal) {
-            modal.classList.remove('cmt-show');
+            modal.classList.remove('sacig-show');
         }
     };
 
@@ -619,15 +619,15 @@
         }
         
         const branding = sacigSettings.branding;
-        const container = document.querySelector('.cmt-container');
+        const container = document.querySelector('.sacig-container');
         
         if (!container) return;
         
         // Apply custom colors
         if (branding.colors) {
-            container.style.setProperty('--cmt-neon-cyan', branding.colors.primary);
-            container.style.setProperty('--cmt-neon-magenta', branding.colors.secondary);
-            container.style.setProperty('--cmt-neon-yellow', branding.colors.accent);
+            container.style.setProperty('--sacig-neon-cyan', branding.colors.primary);
+            container.style.setProperty('--sacig-neon-magenta', branding.colors.secondary);
+            container.style.setProperty('--sacig-neon-yellow', branding.colors.accent);
         }
     }
 
@@ -654,9 +654,9 @@
         setInterval(saveGame, 10000);
         
         // Show info modal on first visit
-        if (!localStorage.getItem('cmtCryptoMinerVisited')) {
-            setTimeout(() => window.cmtShowModal(), 500);
-            localStorage.setItem('cmtCryptoMinerVisited', 'true');
+        if (!localStorage.getItem('sacigCryptoMinerVisited')) {
+            setTimeout(() => window.sacigShowModal(), 500);
+            localStorage.setItem('sacigCryptoMinerVisited', 'true');
         }
     }
 

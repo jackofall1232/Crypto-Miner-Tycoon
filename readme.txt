@@ -4,7 +4,7 @@ Donate link: https://shortcodearcade.com
 Tags: game, idle game, crypto, clicker game, mining game
 Requires at least: 5.0
 Tested up to: 6.9
-Stable tag: 0.4.4
+Stable tag: 0.4.5
 Requires PHP: 7.4
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
@@ -39,14 +39,14 @@ This plugin is self-contained and runs entirely inside WordPress, making it idea
 
 **Shortcodes:**
 
-Display the game:  
-`[crypto_idle_game]`
+Display the game:
+`[sacig_crypto_idle_game]`
 
-Display the game with custom ad code:  
-`[crypto_idle_game ad_code="<your ad network code>"]`
+Display the game with custom ad code:
+`[sacig_crypto_idle_game ad_code="<your ad network code>"]`
 
-Display the leaderboard (requires cloud saves):  
-`[crypto_idle_leaderboard]`
+Display the leaderboard (requires cloud saves):
+`[sacig_crypto_idle_leaderboard]`
 
 **Cloud Saves & Leaderboards:**
 
@@ -74,7 +74,7 @@ When enabled in **Settings → Crypto Idle Game**, cloud saves allow you to:
 
 = After Installation =
 
-1. Add `[crypto_idle_game]` to any page or post
+1. Add `[sacig_crypto_idle_game]` to any page or post
 2. (Optional) Enable cloud saves and leaderboards in plugin settings
 3. (Optional) Add ad code using the shortcode attribute
 
@@ -91,10 +91,10 @@ Yes. Progress is saved locally in the browser at regular intervals. Optional clo
 
 = How do I enable the leaderboard? =
 
-1. Go to Settings → Crypto Idle Game  
-2. Enable Cloud Saves  
-3. Enable Leaderboards  
-4. Add `[crypto_idle_leaderboard]` to a page  
+1. Go to Settings → Crypto Idle Game
+2. Enable Cloud Saves
+3. Enable Leaderboards
+4. Add `[sacig_crypto_idle_leaderboard]` to a page  
 
 = Is the game mobile-friendly? =
 
@@ -114,6 +114,14 @@ Local saves are stored in browser localStorage. Cloud saves are stored in WordPr
 6. Admin settings panel  
 
 == Changelog ==
+
+= 0.4.5 - 2026-01-15 =
+* Completed full namespace and prefixing audit for WordPress.org compliance
+* Updated all shortcodes to use sacig_ prefix for clear attribution
+* Standardized all CSS classes, IDs, and JavaScript functions with sacig prefix
+* Renamed asset files to match plugin namespace
+* Removed legacy shortcode aliases per review guidelines
+* No gameplay or data changes
 
 = 0.4.4 - 2026-01-14 =
 * Completed full namespace and prefix refactor using a unique `SACIG` prefix
@@ -150,6 +158,9 @@ Local saves are stored in browser localStorage. Cloud saves are stored in WordPr
 * Improved database handling
 
 == Upgrade Notice ==
+
+= 0.4.5 =
+Final namespace and prefix audit for WordPress.org compliance. Shortcodes updated to sacig_ prefix. Update shortcode references in your pages. No gameplay or data changes.
 
 = 0.4.4 =
 Internal refactor to fully comply with WordPress.org plugin review guidelines. No functional or data changes.

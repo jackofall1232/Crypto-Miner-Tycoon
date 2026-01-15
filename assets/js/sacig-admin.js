@@ -12,9 +12,9 @@
          * Tab switching with smooth animation
          */
         function handleTabSwitching() {
-            $('.cmt-tab-wrapper .nav-tab').on('click', function(e) {
+            $('.sacig-tab-wrapper .nav-tab').on('click', function(e) {
                 // Let the link work normally, but add animation
-                const $content = $('.cmt-tab-content');
+                const $content = $('.sacig-tab-content');
                 
                 // Fade out
                 $content.css('opacity', '0');
@@ -26,13 +26,13 @@
             });
             
             // Initial fade in
-            $('.cmt-tab-content').css({
+            $('.sacig-tab-content').css({
                 'opacity': '0',
                 'transition': 'opacity 0.3s ease'
             });
             
             setTimeout(function() {
-                $('.cmt-tab-content').css('opacity', '1');
+                $('.sacig-tab-content').css('opacity', '1');
             }, 100);
         }
         
@@ -128,18 +128,18 @@
         function addTooltips() {
             // Add tooltip to cloud saves checkbox
             const $cloudSavesLabel = $('input[name="sacig_enable_cloud_saves"]').closest('label');
-            if ($cloudSavesLabel.length && !$cloudSavesLabel.find('.cmt-help-icon').length) {
-                $cloudSavesLabel.append(' <span class="cmt-help-icon dashicons dashicons-info" title="Saves game data to WordPress database. Requires users to be logged in."></span>');
+            if ($cloudSavesLabel.length && !$cloudSavesLabel.find('.sacig-help-icon').length) {
+                $cloudSavesLabel.append(' <span class="sacig-help-icon dashicons dashicons-info" title="Saves game data to WordPress database. Requires users to be logged in."></span>');
             }
             
             // Add tooltip to leaderboard checkbox
             const $leaderboardLabel = $('input[name="sacig_enable_leaderboard"]').closest('label');
-            if ($leaderboardLabel.length && !$leaderboardLabel.find('.cmt-help-icon').length) {
-                $leaderboardLabel.append(' <span class="cmt-help-icon dashicons dashicons-info" title="Display top players using the [crypto_miner_leaderboard] shortcode."></span>');
+            if ($leaderboardLabel.length && !$leaderboardLabel.find('.sacig-help-icon').length) {
+                $leaderboardLabel.append(' <span class="sacig-help-icon dashicons dashicons-info" title="Display top players using the [sacig_crypto_idle_leaderboard] shortcode."></span>');
             }
             
             // Make dashicons visible
-            $('.cmt-help-icon').css({
+            $('.sacig-help-icon').css({
                 'cursor': 'help',
                 'color': '#787c82',
                 'font-size': '16px',
@@ -151,7 +151,7 @@
          * Copy shortcode to clipboard
          */
         function handleShortcodeCopy() {
-            $('.cmt-info-box code').on('click', function() {
+            $('.sacig-info-box code').on('click', function() {
                 const $code = $(this);
                 const text = $code.text();
                 
@@ -171,7 +171,7 @@
                 }, 200);
                 
                 // Show tooltip
-                const $tooltip = $('<span class="cmt-copied-tooltip">Copied!</span>');
+                const $tooltip = $('<span class="sacig-copied-tooltip">Copied!</span>');
                 $tooltip.css({
                     'position': 'absolute',
                     'background': '#1d2327',
@@ -193,14 +193,14 @@
             });
             
             // Add cursor pointer to codes
-            $('.cmt-info-box code').css('cursor', 'pointer');
+            $('.sacig-info-box code').css('cursor', 'pointer');
         }
         
         /**
          * Animate stats on page load
          */
         function animateStats() {
-            $('.cmt-stat-value').each(function() {
+            $('.sacig-stat-value').each(function() {
                 const $this = $(this);
                 const finalValue = parseInt($this.text());
                 
@@ -256,7 +256,7 @@
          * Animate upgrade CTAs
          */
         function animateUpgradeCTAs() {
-            $('.cmt-upgrade-cta, .cmt-upgrade-button').each(function() {
+            $('.sacig-upgrade-cta, .sacig-upgrade-button').each(function() {
                 const $this = $(this);
                 
                 // Pulse animation on hover

@@ -2,7 +2,7 @@
 /**
  * Shortcode Handler Class
  *
- * Handles the [crypto_miner], [crypto_miner_tycoon] (legacy), and [crypto_miner_leaderboard] shortcodes
+ * Handles the [sacig_crypto_idle_game] and [sacig_crypto_idle_leaderboard] shortcodes
  */
 
 // Exit if accessed directly
@@ -16,9 +16,8 @@ class SACIG_Miner_Shortcode {
      * Constructor
      */
     public function __construct() {
-        add_shortcode('crypto_miner', array($this, 'render_game'));
-        add_shortcode('crypto_miner_tycoon', array($this, 'render_game')); // Legacy shortcode for backward compatibility
-        add_shortcode('crypto_miner_leaderboard', array($this, 'render_leaderboard'));
+        add_shortcode('sacig_crypto_idle_game', array($this, 'render_game'));
+        add_shortcode('sacig_crypto_idle_leaderboard', array($this, 'render_leaderboard'));
         add_action('wp_enqueue_scripts', array($this, 'enqueue_assets'));
     }
     
@@ -29,7 +28,7 @@ class SACIG_Miner_Shortcode {
         // Only enqueue if shortcode is present on the page
         global $post;
         
-        if (is_a($post, 'WP_Post') && (has_shortcode($post->post_content, 'crypto_miner') || has_shortcode($post->post_content, 'crypto_miner_tycoon') || has_shortcode($post->post_content, 'crypto_miner_leaderboard'))) {
+        if (is_a($post, 'WP_Post') && (has_shortcode($post->post_content, 'sacig_crypto_idle_game') || has_shortcode($post->post_content, 'sacig_crypto_idle_leaderboard'))) {
             // Enqueue Google Fonts
             // phpcs:ignore WordPress.WP.EnqueuedResourceParameters.MissingVersion -- Google Fonts handles versioning via URL parameters
             wp_enqueue_style(
@@ -48,7 +47,7 @@ class SACIG_Miner_Shortcode {
             );
             
             // Only enqueue JS for the game shortcode
-            if (has_shortcode($post->post_content, 'crypto_miner') || has_shortcode($post->post_content, 'crypto_miner_tycoon')) {
+            if (has_shortcode($post->post_content, 'sacig_crypto_idle_game')) {
                 wp_enqueue_script(
                     'sacig-game-js',
                     SACIG_PLUGIN_URL . 'assets/js/game.js',
@@ -90,7 +89,7 @@ class SACIG_Miner_Shortcode {
                 'ad_code' => '', // Allow custom ad code via shortcode attribute
             ),
             $atts,
-            'crypto_miner_tycoon'
+            'sacig_crypto_idle_game'
         );
         
         // Check if cloud saves are enabled and user is not logged in
@@ -102,100 +101,100 @@ class SACIG_Miner_Shortcode {
         ?>
         
         <?php if ($show_login_notice): ?>
-            <div class="cmt-login-notice">
+            <div class="sacig-login-notice">
                 <p><strong>Note:</strong> Cloud saves are enabled. Please <a href="<?php echo esc_url(wp_login_url(get_permalink())); ?>">log in</a> to save your progress.</p>
             </div>
         <?php endif; ?>
         
-        <div class="cmt-container">
-            <button class="cmt-info-button" onclick="cmtShowModal()">?</button>
+        <div class="sacig-container">
+            <button class="sacig-info-button" onclick="sacigShowModal()">?</button>
             
-            <header class="cmt-header">
-                <h1 class="cmt-title">Crypto Idle Game</h1>
-                <div class="cmt-subtitle">Click. Mine. Prosper.</div>
+            <header class="sacig-header">
+                <h1 class="sacig-title">Crypto Idle Game</h1>
+                <div class="sacig-subtitle">Click. Mine. Prosper.</div>
             </header>
 
-            <div class="cmt-main-game">
-                <div class="cmt-game-area">
-                    <div class="cmt-stats">
-                        <div class="cmt-stat-item">
-                            <span class="cmt-stat-label">Satoshis</span>
-                            <span class="cmt-stat-value" id="cmt-satoshis">0</span>
+            <div class="sacig-main-game">
+                <div class="sacig-game-area">
+                    <div class="sacig-stats">
+                        <div class="sacig-stat-item">
+                            <span class="sacig-stat-label">Satoshis</span>
+                            <span class="sacig-stat-value" id="sacig-satoshis">0</span>
                         </div>
-                        <div class="cmt-stat-item">
-                            <span class="cmt-stat-label">Per Click</span>
-                            <span class="cmt-stat-value" id="cmt-clickPower">1</span>
+                        <div class="sacig-stat-item">
+                            <span class="sacig-stat-label">Per Click</span>
+                            <span class="sacig-stat-value" id="sacig-clickPower">1</span>
                         </div>
-                        <div class="cmt-stat-item">
-                            <span class="cmt-stat-label">Per Second</span>
-                            <span class="cmt-stat-value" id="cmt-passiveIncome">0</span>
+                        <div class="sacig-stat-item">
+                            <span class="sacig-stat-label">Per Second</span>
+                            <span class="sacig-stat-value" id="sacig-passiveIncome">0</span>
                         </div>
-                        <div class="cmt-stat-item">
-                            <span class="cmt-stat-label">Miner Rating</span>
-                            <span class="cmt-stat-value" id="cmt-rating">1000</span>
+                        <div class="sacig-stat-item">
+                            <span class="sacig-stat-label">Miner Rating</span>
+                            <span class="sacig-stat-value" id="sacig-rating">1000</span>
                         </div>
                     </div>
 
-                    <div class="cmt-mine-button" id="cmt-mineButton" onclick="cmtMine()">
+                    <div class="sacig-mine-button" id="sacig-mineButton" onclick="sacigMine()">
                         <svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
                             <defs>
-                                <linearGradient id="cmt-coinGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                                <linearGradient id="sacig-coinGrad" x1="0%" y1="0%" x2="100%" y2="100%">
                                     <stop offset="0%" style="stop-color:#00ffff;stop-opacity:1" />
                                     <stop offset="50%" style="stop-color:#ff00ff;stop-opacity:1" />
                                     <stop offset="100%" style="stop-color:#ffff00;stop-opacity:1" />
                                 </linearGradient>
                             </defs>
-                            <circle cx="100" cy="100" r="80" fill="url(#cmt-coinGrad)" opacity="0.2"/>
-                            <circle cx="100" cy="100" r="75" fill="none" stroke="url(#cmt-coinGrad)" stroke-width="4"/>
-                            <path d="M 80 60 L 80 140 M 90 60 L 90 140" stroke="url(#cmt-coinGrad)" stroke-width="3" stroke-linecap="round"/>
+                            <circle cx="100" cy="100" r="80" fill="url(#sacig-coinGrad)" opacity="0.2"/>
+                            <circle cx="100" cy="100" r="75" fill="none" stroke="url(#sacig-coinGrad)" stroke-width="4"/>
+                            <path d="M 80 60 L 80 140 M 90 60 L 90 140" stroke="url(#sacig-coinGrad)" stroke-width="3" stroke-linecap="round"/>
                             <path d="M 70 75 L 120 75 C 130 75 135 80 135 90 C 135 100 130 105 120 105 L 70 105 M 70 105 L 125 105 C 135 105 140 110 140 120 C 140 130 135 135 125 135 L 70 135" 
-                                  fill="none" stroke="url(#cmt-coinGrad)" stroke-width="4" stroke-linecap="round"/>
+                                  fill="none" stroke="url(#sacig-coinGrad)" stroke-width="4" stroke-linecap="round"/>
                         </svg>
                     </div>
                 </div>
 
-                <div class="cmt-upgrades">
+                <div class="sacig-upgrades">
                     <h2>Upgrades</h2>
-                    <div id="cmt-upgradesList"></div>
+                    <div id="sacig-upgradesList"></div>
                 </div>
             </div>
 
-            <div class="cmt-prestige-section">
-                <div class="cmt-prestige-info">
+            <div class="sacig-prestige-section">
+                <div class="sacig-prestige-info">
                     Hard Fork available at 1,000,000 satoshis<br>
                     <span style="font-size: 0.9rem; opacity: 0.7;">Reset with permanent +10% bonus to all production</span>
                 </div>
-                <button class="cmt-prestige-button" id="cmt-prestigeButton" onclick="cmtPrestige()" disabled>
+                <button class="sacig-prestige-button" id="sacig-prestigeButton" onclick="sacigPrestige()" disabled>
                     HARD FORK
                 </button>
             </div>
 
             <?php if (!empty($atts['ad_code'])) : ?>
-                <div class="cmt-ad-container">
-                    <div class="cmt-ad-label">Advertisement</div>
-                    <div class="cmt-ad-content">
+                <div class="sacig-ad-container">
+                    <div class="sacig-ad-label">Advertisement</div>
+                    <div class="sacig-ad-content">
                         <?php echo wp_kses_post($atts['ad_code']); ?>
                     </div>
                 </div>
             <?php else : ?>
-                <div class="cmt-ad-container">
-                    <div class="cmt-ad-label">Advertisement</div>
-                    <div class="cmt-ad-placeholder">
+                <div class="sacig-ad-container">
+                    <div class="sacig-ad-label">Advertisement</div>
+                    <div class="sacig-ad-placeholder">
                         728 x 90 Ad Space
                     </div>
                 </div>
             <?php endif; ?>
 
-            <footer class="cmt-footer">
+            <footer class="sacig-footer">
                 Crypto Idle Game © <?php echo esc_html(gmdate('Y')); ?> | Game auto-saves every 10 seconds
             </footer>
         </div>
 
-        <div class="cmt-save-indicator" id="cmt-saveIndicator">Game Saved</div>
+        <div class="sacig-save-indicator" id="sacig-saveIndicator">Game Saved</div>
 
         <!-- Info Modal -->
-        <div class="cmt-modal" id="cmt-infoModal">
-            <div class="cmt-modal-content">
+        <div class="sacig-modal" id="sacig-infoModal">
+            <div class="sacig-modal-content">
                 <h2>How to Play</h2>
                 <p><strong>Goal:</strong> Build the ultimate crypto mining empire!</p>
                 <p><strong>Click the Bitcoin:</strong> Earn satoshis manually by clicking the glowing Bitcoin symbol.</p>
@@ -206,7 +205,7 @@ class SACIG_Miner_Shortcode {
                 <?php if ($cloud_saves_enabled && is_user_logged_in()): ?>
                     <p><strong>Cloud Saves:</strong> Your progress is automatically saved to the cloud!</p>
                 <?php endif; ?>
-                <button class="cmt-close-modal" onclick="cmtHideModal()">Start Mining!</button>
+                <button class="sacig-close-modal" onclick="sacigHideModal()">Start Mining!</button>
             </div>
         </div>
         
@@ -220,7 +219,7 @@ class SACIG_Miner_Shortcode {
     public function render_leaderboard($atts) {
         // Check if leaderboard is enabled
         if (!get_option('sacig_enable_leaderboard', false)) {
-            return '<p class="cmt-leaderboard-disabled">Leaderboard is not enabled.</p>';
+            return '<p class="sacig-leaderboard-disabled">Leaderboard is not enabled.</p>';
         }
 
         // Parse attributes
@@ -229,7 +228,7 @@ class SACIG_Miner_Shortcode {
                 'limit' => get_option('sacig_leaderboard_limit', 10),
             ),
             $atts,
-            'crypto_miner_leaderboard'
+            'sacig_crypto_idle_leaderboard'
         );
 
         // Get leaderboard data
@@ -264,20 +263,20 @@ class SACIG_Miner_Shortcode {
         // Start output
         ob_start();
         ?>
-        <div class="cmt-leaderboard-container">
-            <h2 class="cmt-leaderboard-title">🏆 Top Miners</h2>
+        <div class="sacig-leaderboard-container">
+            <h2 class="sacig-leaderboard-title">🏆 Top Miners</h2>
             
             <?php if (empty($results)): ?>
-                <p class="cmt-leaderboard-empty">No players yet. Be the first!</p>
+                <p class="sacig-leaderboard-empty">No players yet. Be the first!</p>
             <?php else: ?>
-                <table class="cmt-leaderboard-table">
+                <table class="sacig-leaderboard-table">
                     <thead>
                         <tr>
-                            <th class="cmt-rank">Rank</th>
-                            <th class="cmt-player">Player</th>
-                            <th class="cmt-satoshis">Satoshis</th>
-                            <th class="cmt-prestige">Prestige</th>
-                            <th class="cmt-score">Score</th>
+                            <th class="sacig-rank">Rank</th>
+                            <th class="sacig-player">Player</th>
+                            <th class="sacig-satoshis">Satoshis</th>
+                            <th class="sacig-prestige">Prestige</th>
+                            <th class="sacig-score">Score</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -285,31 +284,31 @@ class SACIG_Miner_Shortcode {
                         $rank = 1;
                         foreach ($results as $row): 
                             $rank_class = '';
-                            if ($rank === 1) $rank_class = 'cmt-rank-1';
-                            elseif ($rank === 2) $rank_class = 'cmt-rank-2';
-                            elseif ($rank === 3) $rank_class = 'cmt-rank-3';
+                            if ($rank === 1) $rank_class = 'sacig-rank-1';
+                            elseif ($rank === 2) $rank_class = 'sacig-rank-2';
+                            elseif ($rank === 3) $rank_class = 'sacig-rank-3';
                             
                             $is_current_user = is_user_logged_in() && get_current_user_id() == $row['user_id'];
                         ?>
-                        <tr class="<?php echo esc_attr($rank_class); ?> <?php echo $is_current_user ? 'cmt-current-user' : ''; ?>">
-                            <td class="cmt-rank">
+                        <tr class="<?php echo esc_attr($rank_class); ?> <?php echo $is_current_user ? 'sacig-current-user' : ''; ?>">
+                            <td class="sacig-rank">
                                 <?php if ($rank <= 3): ?>
-                                    <span class="cmt-medal">
+                                    <span class="sacig-medal">
                                         <?php echo $rank === 1 ? '🥇' : ($rank === 2 ? '🥈' : '🥉'); ?>
                                     </span>
                                 <?php else: ?>
                                     <?php echo esc_html($rank); ?>
                                 <?php endif; ?>
                             </td>
-                            <td class="cmt-player">
+                            <td class="sacig-player">
                                 <?php echo esc_html($row['display_name']); ?>
                                 <?php if ($is_current_user): ?>
-                                    <span class="cmt-you-badge">You</span>
+                                    <span class="sacig-you-badge">You</span>
                                 <?php endif; ?>
                             </td>
-                            <td class="cmt-satoshis"><?php echo esc_html(number_format($row['total_satoshis'], 2)); ?></td>
-                            <td class="cmt-prestige">Level <?php echo esc_html($row['prestige_level']); ?></td>
-                            <td class="cmt-score"><?php echo esc_html(number_format($row['rank_score'], 0)); ?></td>
+                            <td class="sacig-satoshis"><?php echo esc_html(number_format($row['total_satoshis'], 2)); ?></td>
+                            <td class="sacig-prestige">Level <?php echo esc_html($row['prestige_level']); ?></td>
+                            <td class="sacig-score"><?php echo esc_html(number_format($row['rank_score'], 0)); ?></td>
                         </tr>
                         <?php 
                         $rank++;

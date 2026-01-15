@@ -145,7 +145,7 @@ class SACIG_Admin {
         </label>
         <p class="description">
             <?php if ($disabled): ?>
-                <span class="cmt-warning">⚠️ Cloud Saves must be enabled first</span><br>
+                <span class="sacig-warning">⚠️ Cloud Saves must be enabled first</span><br>
             <?php endif; ?>
             Use shortcode: <code>[crypto_miner_leaderboard]</code>
         </p>
@@ -193,31 +193,31 @@ class SACIG_Admin {
         
         settings_errors('sacig_messages');
         ?>
-        <div class="wrap cmt-admin-wrap">
+        <div class="wrap sacig-admin-wrap">
             <h1><?php echo esc_html(get_admin_page_title()); ?></h1>
             
             <!-- Tab Navigation -->
-            <nav class="nav-tab-wrapper cmt-tab-wrapper">
+            <nav class="nav-tab-wrapper sacig-tab-wrapper">
                 <a href="?page=shortcodearcade-crypto-idle-game&tab=general" 
                    class="nav-tab <?php echo $active_tab === 'general' ? 'nav-tab-active' : ''; ?>">
                     <span class="dashicons dashicons-admin-generic"></span> General
                 </a>
                 <a href="?page=shortcodearcade-crypto-idle-game&tab=branding" 
                    class="nav-tab <?php echo $active_tab === 'branding' ? 'nav-tab-active' : ''; ?>">
-                    <span class="dashicons dashicons-art"></span> Branding <span class="cmt-tab-badge">PRO</span>
+                    <span class="dashicons dashicons-art"></span> Branding <span class="sacig-tab-badge">PRO</span>
                 </a>
                 <a href="?page=shortcodearcade-crypto-idle-game&tab=contests" 
                    class="nav-tab <?php echo $active_tab === 'contests' ? 'nav-tab-active' : ''; ?>">
-                    <span class="dashicons dashicons-awards"></span> Contests <span class="cmt-tab-badge">PRO</span>
+                    <span class="dashicons dashicons-awards"></span> Contests <span class="sacig-tab-badge">PRO</span>
                 </a>
                 <a href="?page=shortcodearcade-crypto-idle-game&tab=login" 
                    class="nav-tab <?php echo $active_tab === 'login' ? 'nav-tab-active' : ''; ?>">
-                    <span class="dashicons dashicons-lock"></span> Login Pages <span class="cmt-tab-badge">PRO</span>
+                    <span class="dashicons dashicons-lock"></span> Login Pages <span class="sacig-tab-badge">PRO</span>
                 </a>
             </nav>
             
             <!-- Tab Content -->
-            <div class="cmt-tab-content">
+            <div class="sacig-tab-content">
                 <?php
                 switch ($active_tab) {
                     case 'general':
@@ -246,8 +246,8 @@ class SACIG_Admin {
      */
     private function render_general_tab() {
         ?>
-        <div class="cmt-admin-container">
-            <div class="cmt-admin-main">
+        <div class="sacig-admin-container">
+            <div class="sacig-admin-main">
                 <form action="options.php" method="post">
                     <?php
                     settings_fields('sacig_settings_group');
@@ -256,7 +256,7 @@ class SACIG_Admin {
                     ?>
                 </form>
                 
-                <div class="cmt-info-box">
+                <div class="sacig-info-box">
                     <h3>📋 Shortcodes</h3>
                     <p><strong>Game:</strong> <code>[crypto_miner]</code></p>
                     <?php if (get_option('sacig_enable_leaderboard')): ?>
@@ -265,7 +265,7 @@ class SACIG_Admin {
                 </div>
                 
                 <?php if ( get_option( 'sacig_enable_cloud_saves' ) ) : ?>
-    <div class="cmt-info-box">
+    <div class="sacig-info-box">
         <h3>☁️ Cloud Saves Status</h3>
         <?php
         global $wpdb;
@@ -283,15 +283,15 @@ $count = (int) $wpdb->get_var(
 <?php endif; ?>
             </div>
             
-            <div class="cmt-admin-sidebar">
-                <div class="cmt-sidebar-box">
+            <div class="sacig-admin-sidebar">
+                <div class="sacig-sidebar-box">
                     <h3>ℹ️ About</h3>
                     <p><strong>Shortcode Arcade Crypto Idle Game</strong></p>
                     <p>Version: <?php echo esc_html(SACIG_VERSION); ?></p>
                     <p>An idle clicker game with Elo-balanced progression.</p>
                 </div>
                 
-                <div class="cmt-sidebar-box">
+                <div class="sacig-sidebar-box">
                     <h3>📚 Documentation</h3>
                     <ul>
                         <li><strong>Local Saves:</strong> Uses browser localStorage (default)</li>
@@ -300,7 +300,7 @@ $count = (int) $wpdb->get_var(
                     </ul>
                 </div>
                 
-                <div class="cmt-sidebar-box">
+                <div class="sacig-sidebar-box">
                     <h3>⚠️ Important Notes</h3>
                     <ul>
                         <li>The free version uses standard WordPress user accounts for login.</li>
@@ -312,7 +312,7 @@ $count = (int) $wpdb->get_var(
                 </div>
                 
                 <!-- Upgrade CTA Box -->
-                <div class="cmt-sidebar-box cmt-upgrade-box">
+                <div class="sacig-sidebar-box sacig-upgrade-box">
                     <h3>🚀 Upgrade to Pro</h3>
                     <p>Unlock powerful features:</p>
                     <ul>
@@ -321,7 +321,7 @@ $count = (int) $wpdb->get_var(
                         <li>🔐 Custom Login Pages</li>
                         <li>🎨 White Label Options</li>
                     </ul>
-                    <a href="https://shortcodearcade.com/crypto-miner-tycoon-pro" target="_blank" class="button button-primary button-large cmt-upgrade-button">
+                    <a href="https://shortcodearcade.com/crypto-miner-tycoon-pro" target="_blank" class="button button-primary button-large sacig-upgrade-button">
                         Get Pro - Only $10
                     </a>
                 </div>
@@ -335,45 +335,45 @@ $count = (int) $wpdb->get_var(
      */
     private function render_branding_tab_locked() {
         ?>
-        <div class="cmt-admin-container">
-            <div class="cmt-admin-main">
-                <div class="cmt-pro-placeholder">
-                    <div class="cmt-pro-icon">🎨</div>
+        <div class="sacig-admin-container">
+            <div class="sacig-admin-main">
+                <div class="sacig-pro-placeholder">
+                    <div class="sacig-pro-icon">🎨</div>
                     <h2>Custom Branding</h2>
                     <p>Make the game truly yours with full white-label customization.</p>
                     
-                    <div class="cmt-feature-list">
-                        <div class="cmt-feature-item">
+                    <div class="sacig-feature-list">
+                        <div class="sacig-feature-item">
                             <span class="dashicons dashicons-yes-alt"></span>
                             <div>
                                 <strong>Custom Coin/Token Image:</strong> Replace Bitcoin with your own logo or token
                             </div>
                         </div>
-                        <div class="cmt-feature-item">
+                        <div class="sacig-feature-item">
                             <span class="dashicons dashicons-yes-alt"></span>
                             <div>
                                 <strong>Color Theme Customization:</strong> Set primary, secondary, and accent colors
                             </div>
                         </div>
-                        <div class="cmt-feature-item">
+                        <div class="sacig-feature-item">
                             <span class="dashicons dashicons-yes-alt"></span>
                             <div>
                                 <strong>Custom Game Title & Subtitle:</strong> Personalize the game's branding
                             </div>
                         </div>
-                        <div class="cmt-feature-item">
+                        <div class="sacig-feature-item">
                             <span class="dashicons dashicons-yes-alt"></span>
                             <div>
                                 <strong>Currency Name Override:</strong> Change "Satoshis" to your own currency name
                             </div>
                         </div>
-                        <div class="cmt-feature-item">
+                        <div class="sacig-feature-item">
                             <span class="dashicons dashicons-yes-alt"></span>
                             <div>
                                 <strong>Footer Customization:</strong> Add your own branding to the game footer
                             </div>
                         </div>
-                        <div class="cmt-feature-item">
+                        <div class="sacig-feature-item">
                             <span class="dashicons dashicons-yes-alt"></span>
                             <div>
                                 <strong>Dynamic CSS Theming:</strong> All changes apply instantly without code
@@ -381,14 +381,14 @@ $count = (int) $wpdb->get_var(
                         </div>
                     </div>
                     
-                    <a href="https://shortcodearcade.com/crypto-miner-tycoon-pro" target="_blank" class="button button-primary button-hero cmt-upgrade-cta">
+                    <a href="https://shortcodearcade.com/crypto-miner-tycoon-pro" target="_blank" class="button button-primary button-hero sacig-upgrade-cta">
                         <span class="dashicons dashicons-unlock"></span> Unlock Branding Features - Get Pro
                     </a>
                 </div>
             </div>
             
-            <div class="cmt-admin-sidebar">
-                <div class="cmt-sidebar-box cmt-pro-box">
+            <div class="sacig-admin-sidebar">
+                <div class="sacig-sidebar-box sacig-pro-box">
                     <h3>🎨 Why Custom Branding?</h3>
                     <p>Perfect for:</p>
                     <ul>
@@ -400,7 +400,7 @@ $count = (int) $wpdb->get_var(
                     </ul>
                 </div>
                 
-                <div class="cmt-sidebar-box">
+                <div class="sacig-sidebar-box">
                     <h3>💡 Pro Features Include</h3>
                     <ul>
                         <li>✅ Everything in Free</li>
@@ -421,51 +421,51 @@ $count = (int) $wpdb->get_var(
      */
     private function render_contests_tab_locked() {
         ?>
-        <div class="cmt-admin-container">
-            <div class="cmt-admin-main">
-                <div class="cmt-pro-placeholder">
-                    <div class="cmt-pro-icon">🏆</div>
+        <div class="sacig-admin-container">
+            <div class="sacig-admin-main">
+                <div class="sacig-pro-placeholder">
+                    <div class="sacig-pro-icon">🏆</div>
                     <h2>Timed Contests</h2>
                     <p>Run competitions with leaderboards, prizes, and automatic winner selection.</p>
                     
-                    <div class="cmt-feature-list">
-                        <div class="cmt-feature-item">
+                    <div class="sacig-feature-list">
+                        <div class="sacig-feature-item">
                             <span class="dashicons dashicons-yes-alt"></span>
                             <div>
                                 <strong>Monthly/Weekly Contests:</strong> Create recurring competitions automatically
                             </div>
                         </div>
-                        <div class="cmt-feature-item">
+                        <div class="sacig-feature-item">
                             <span class="dashicons dashicons-yes-alt"></span>
                             <div>
                                 <strong>Custom Contest Periods:</strong> Set your own start and end dates
                             </div>
                         </div>
-                        <div class="cmt-feature-item">
+                        <div class="sacig-feature-item">
                             <span class="dashicons dashicons-yes-alt"></span>
                             <div>
                                 <strong>Prize Management:</strong> Define rewards for 1st, 2nd, 3rd place and beyond
                             </div>
                         </div>
-                        <div class="cmt-feature-item">
+                        <div class="sacig-feature-item">
                             <span class="dashicons dashicons-yes-alt"></span>
                             <div>
                                 <strong>Automatic Winner Selection:</strong> System ranks players when contest ends
                             </div>
                         </div>
-                        <div class="cmt-feature-item">
+                        <div class="sacig-feature-item">
                             <span class="dashicons dashicons-yes-alt"></span>
                             <div>
                                 <strong>Email Notifications:</strong> Winners get notified automatically
                             </div>
                         </div>
-                        <div class="cmt-feature-item">
+                        <div class="sacig-feature-item">
                             <span class="dashicons dashicons-yes-alt"></span>
                             <div>
                                 <strong>Contest Archive:</strong> View historical results and past winners
                             </div>
                         </div>
-                        <div class="cmt-feature-item">
+                        <div class="sacig-feature-item">
                             <span class="dashicons dashicons-yes-alt"></span>
                             <div>
                                 <strong>Achievement Badges:</strong> Reward players with unlockable achievements
@@ -473,14 +473,14 @@ $count = (int) $wpdb->get_var(
                         </div>
                     </div>
                     
-                    <a href="https://shortcodearcade.com/crypto-miner-tycoon-pro" target="_blank" class="button button-primary button-hero cmt-upgrade-cta">
+                    <a href="https://shortcodearcade.com/crypto-miner-tycoon-pro" target="_blank" class="button button-primary button-hero sacig-upgrade-cta">
                         <span class="dashicons dashicons-unlock"></span> Unlock Contest Features - Get Pro
                     </a>
                 </div>
             </div>
             
-            <div class="cmt-admin-sidebar">
-                <div class="cmt-sidebar-box cmt-pro-box">
+            <div class="sacig-admin-sidebar">
+                <div class="sacig-sidebar-box sacig-pro-box">
                     <h3>🎮 Boost Engagement</h3>
                     <p>Contests dramatically increase:</p>
                     <ul>
@@ -492,7 +492,7 @@ $count = (int) $wpdb->get_var(
                     </ul>
                 </div>
                 
-                <div class="cmt-sidebar-box">
+                <div class="sacig-sidebar-box">
                     <h3>💰 Use Cases</h3>
                     <ul>
                         <li>Monthly tournaments</li>
@@ -512,45 +512,45 @@ $count = (int) $wpdb->get_var(
      */
     private function render_login_tab_locked() {
         ?>
-        <div class="cmt-admin-container">
-            <div class="cmt-admin-main">
-                <div class="cmt-pro-placeholder">
-                    <div class="cmt-pro-icon">🔐</div>
+        <div class="sacig-admin-container">
+            <div class="sacig-admin-main">
+                <div class="sacig-pro-placeholder">
+                    <div class="sacig-pro-icon">🔐</div>
                     <h2>Custom Login Pages</h2>
                     <p>Create branded login and registration pages that match your game's aesthetic.</p>
                     
-                    <div class="cmt-feature-list">
-                        <div class="cmt-feature-item">
+                    <div class="sacig-feature-list">
+                        <div class="sacig-feature-item">
                             <span class="dashicons dashicons-yes-alt"></span>
                             <div>
                                 <strong>Custom Login Page:</strong> Replace default WordPress login with branded version
                             </div>
                         </div>
-                        <div class="cmt-feature-item">
+                        <div class="sacig-feature-item">
                             <span class="dashicons dashicons-yes-alt"></span>
                             <div>
                                 <strong>Branded Registration:</strong> Custom signup page matching game theme
                             </div>
                         </div>
-                        <div class="cmt-feature-item">
+                        <div class="sacig-feature-item">
                             <span class="dashicons dashicons-yes-alt"></span>
                             <div>
                                 <strong>Email Verification:</strong> Optional double opt-in for security
                             </div>
                         </div>
-                        <div class="cmt-feature-item">
+                        <div class="sacig-feature-item">
                             <span class="dashicons dashicons-yes-alt"></span>
                             <div>
                                 <strong>Social Login:</strong> Google, Facebook, Twitter integration
                             </div>
                         </div>
-                        <div class="cmt-feature-item">
+                        <div class="sacig-feature-item">
                             <span class="dashicons dashicons-yes-alt"></span>
                             <div>
                                 <strong>Custom Redirects:</strong> Send users to game after login
                             </div>
                         </div>
-                        <div class="cmt-feature-item">
+                        <div class="sacig-feature-item">
                             <span class="dashicons dashicons-yes-alt"></span>
                             <div>
                                 <strong>Password Recovery:</strong> Branded password reset flow
@@ -558,14 +558,14 @@ $count = (int) $wpdb->get_var(
                         </div>
                     </div>
                     
-                    <a href="https://shortcodearcade.com/crypto-miner-tycoon-pro" target="_blank" class="button button-primary button-hero cmt-upgrade-cta">
+                    <a href="https://shortcodearcade.com/crypto-miner-tycoon-pro" target="_blank" class="button button-primary button-hero sacig-upgrade-cta">
                         <span class="dashicons dashicons-unlock"></span> Unlock Login Features - Get Pro
                     </a>
                 </div>
             </div>
             
-            <div class="cmt-admin-sidebar">
-                <div class="cmt-sidebar-box cmt-pro-box">
+            <div class="sacig-admin-sidebar">
+                <div class="sacig-sidebar-box sacig-pro-box">
                     <h3>🎨 Seamless Experience</h3>
                     <p>Benefits of custom login:</p>
                     <ul>
@@ -577,7 +577,7 @@ $count = (int) $wpdb->get_var(
                     </ul>
                 </div>
                 
-                <div class="cmt-sidebar-box">
+                <div class="sacig-sidebar-box">
                     <h3>🔒 Security First</h3>
                     <p>Custom pages include:</p>
                     <ul>
@@ -629,14 +629,14 @@ $count = (int) $wpdb->get_var(
         
         wp_enqueue_style(
             'sacig-admin-css',
-            SACIG_PLUGIN_URL . 'assets/css/cmt-admin.css',
+            SACIG_PLUGIN_URL . 'assets/css/sacig-admin.css',
             array(),
             SACIG_VERSION
         );
 
         wp_enqueue_script(
             'sacig-admin-js',
-            SACIG_PLUGIN_URL . 'assets/js/cmt-admin.js',
+            SACIG_PLUGIN_URL . 'assets/js/sacig-admin.js',
             array('jquery'),
             SACIG_VERSION,
             true
