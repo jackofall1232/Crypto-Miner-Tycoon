@@ -4,7 +4,7 @@ Donate link: https://shortcodearcade.com
 Tags: game, idle game, crypto, clicker game, mining game
 Requires at least: 5.0
 Tested up to: 6.9
-Stable tag: 0.4.5
+Stable tag: 0.4.6
 Requires PHP: 7.4
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
@@ -115,6 +115,15 @@ Local saves are stored in browser localStorage. Cloud saves are stored in WordPr
 
 == Changelog ==
 
+= 0.4.6 - 2026-01-15 =
+* Critical reviewer-risk cleanup and schema unification
+* Fixed JS header and version metadata (0.4.0 → 0.4.6)
+* Unified database schema column naming (total_currency → total_satoshis)
+* Updated all file headers to match exact plugin branding
+* Removed legacy package references and outdated comments
+* Added documentation for frontend globals and localStorage usage
+* No gameplay changes or data migrations required
+
 = 0.4.5 - 2026-01-15 =
 * Completed full namespace and prefixing audit for WordPress.org compliance
 * Updated all shortcodes to use sacig_ prefix for clear attribution
@@ -158,6 +167,9 @@ Local saves are stored in browser localStorage. Cloud saves are stored in WordPr
 * Improved database handling
 
 == Upgrade Notice ==
+
+= 0.4.6 =
+Critical reviewer cleanup - unifies database schema, updates metadata, and removes legacy branding. No gameplay or data changes.
 
 = 0.4.5 =
 Final namespace and prefix audit for WordPress.org compliance. Shortcodes updated to sacig_ prefix. Update shortcode references in your pages. No gameplay or data changes.

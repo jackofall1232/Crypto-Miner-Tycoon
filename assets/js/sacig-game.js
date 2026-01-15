@@ -1,10 +1,18 @@
 /**
- * Crypto Idle Game - Game Logic
- * Version: 0.4.0 - Balanced Edition
+ * Shortcode Arcade Crypto Idle Game - Game Logic
+ * Version: 0.4.6
  *
- * Changes in 0.4.0:
- * - Exponential prestige cost scaling (5x multiplier each fork)
- * - Diminishing returns on duplicate upgrades (80%, 60%, 40%, 20%)
+ * Public window.* globals (intentional for gameplay):
+ * - window.sacigMine() - Mining click handler
+ * - window.sacigBuyUpgrade(id) - Upgrade purchase handler
+ * - window.sacigPrestige() - Prestige/Hard Fork handler
+ * - window.sacigShowModal() - Info modal display
+ * - window.sacigHideModal() - Info modal close
+ *
+ * LocalStorage usage:
+ * - sacigCryptoMinerSave - Game state persistence
+ * - sacigLastSaveTime - Offline progress calculation
+ * - sacigCryptoMinerVisited - First-time user detection
  */
 
 (function() {
@@ -19,7 +27,7 @@
         prestigeLevel: 0,
         prestigeMultiplier: 1,
         upgrades: {},
-        version: '0.4.0'
+        version: '0.4.6'
     };
     
     // Cloud save settings (passed from WordPress)
@@ -538,7 +546,7 @@
                 gameState = Object.assign({}, gameState, loadedState);
                 
                 // Update version
-                gameState.version = '0.4.0';
+                gameState.version = '0.4.6';
                 
                 updateUI();
             } catch (e) {
@@ -566,7 +574,7 @@
                 gameState = Object.assign({}, gameState, data.data);
                 
                 // Update version
-                gameState.version = '0.4.0';
+                gameState.version = '0.4.6';
                 
                 updateUI();
                 console.log('Loaded from cloud');
