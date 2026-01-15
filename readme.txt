@@ -115,12 +115,18 @@ Local saves are stored in browser localStorage. Cloud saves are stored in WordPr
 
 == Changelog ==
 
+= 0.4.3 - 2026-01-14 =
+* Refactored all plugin-specific functions, classes, constants, and options to use a unique, uniform prefix
+* Resolved naming collisions identified during manual review
+* Corrected plugin ZIP filename to meet WordPress.org requirements
+* No gameplay changes
+* No data migrations
+
 = 0.4.2 - 2026-01-13 =
 * Renamed plugin to Shortcode Arcade Crypto Idle Game
-* Updated all admin and frontend UI labels
+* Updated admin and frontend UI labels
 * Updated readme, plugin headers, and branding
 * No gameplay changes
-* No breaking changes or data migrations
 
 = 0.4.0 - 2025-01-06 =
 * Stable release
@@ -138,8 +144,8 @@ Local saves are stored in browser localStorage. Cloud saves are stored in WordPr
 
 == Upgrade Notice ==
 
-= 0.4.2 =
-Branding and naming update for WordPress.org compliance. No functional or data changes.
+= 0.4.3 =
+Internal code refactor for WordPress.org compliance. No functional or data changes.
 
 == Credits ==
 
