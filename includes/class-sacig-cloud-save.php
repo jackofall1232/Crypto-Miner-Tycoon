@@ -242,7 +242,7 @@ class SACIG_Cloud_Save {
 			'base_click_power'   => (float) $save_data['clickPower'],
 			'base_passive_income'=> (float) $save_data['passiveIncome'],
 			'prestige_level'     => (int) $save_data['prestigeLevel'],
-			'total_satoshis'     => (float) $save_data['satoshis'],
+			'total_currency'     => (float) $save_data['satoshis'],
 			'rank_score'         => (float) $rank_score,
 		);
 
@@ -375,9 +375,9 @@ class SACIG_Cloud_Save {
 		// Table names are safely constructed using $wpdb->prefix and $wpdb->users constants.
 		$results = $wpdb->get_results(
 			$wpdb->prepare(
-				"SELECT 
+				"SELECT
 					s.user_id,
-					s.total_satoshis,
+					s.total_currency,
 					s.prestige_level,
 					s.rank_score,
 					s.last_updated,
@@ -407,7 +407,7 @@ class SACIG_Cloud_Save {
 			$leaderboard[] = array(
 				'rank'          => $rank++,
 				'username'      => isset( $row['display_name'] ) ? sanitize_text_field( $row['display_name'] ) : '',
-				'satoshis'      => isset( $row['total_satoshis'] ) ? (float) $row['total_satoshis'] : 0.0,
+				'satoshis'      => isset( $row['total_currency'] ) ? (float) $row['total_currency'] : 0.0,
 				'prestige_level'=> isset( $row['prestige_level'] ) ? (int) $row['prestige_level'] : 0,
 				'rank_score'    => isset( $row['rank_score'] ) ? (float) $row['rank_score'] : 0.0,
 				'last_updated'  => isset( $row['last_updated'] ) ? sanitize_text_field( $row['last_updated'] ) : '',

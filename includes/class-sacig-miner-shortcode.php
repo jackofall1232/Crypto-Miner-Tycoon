@@ -2,7 +2,11 @@
 /**
  * Shortcode Handler Class
  *
- * Handles the [sacig_crypto_idle_game] and [sacig_crypto_idle_leaderboard] shortcodes
+ * Handles the [sacig_crypto_idle_game] and [sacig_crypto_idle_leaderboard] shortcodes.
+ * Renders game UI, manages asset enqueuing, and displays leaderboards.
+ *
+ * @package Shortcode_Arcade_Crypto_Idle_Game
+ * @since 0.4.6
  */
 
 // Exit if accessed directly
@@ -110,7 +114,7 @@ class SACIG_Miner_Shortcode {
             <button class="sacig-info-button" onclick="sacigShowModal()">?</button>
             
             <header class="sacig-header">
-                <h1 class="sacig-title">Crypto Idle Game</h1>
+                <h1 class="sacig-title">Shortcode Arcade Crypto Idle Game</h1>
                 <div class="sacig-subtitle">Click. Mine. Prosper.</div>
             </header>
 
@@ -186,7 +190,7 @@ class SACIG_Miner_Shortcode {
             <?php endif; ?>
 
             <footer class="sacig-footer">
-                Crypto Idle Game © <?php echo esc_html(gmdate('Y')); ?> | Game auto-saves every 10 seconds
+                Shortcode Arcade Crypto Idle Game © <?php echo esc_html(gmdate('Y')); ?> | Game auto-saves every 10 seconds
             </footer>
         </div>
 
@@ -243,9 +247,9 @@ class SACIG_Miner_Shortcode {
         // Table names are safely constructed using $wpdb->prefix and $wpdb->users constants.
         $results = $wpdb->get_results(
             $wpdb->prepare(
-                "SELECT 
+                "SELECT
                     s.user_id,
-                    s.total_satoshis,
+                    s.total_currency,
                     s.prestige_level,
                     s.rank_score,
                     s.last_updated,
@@ -306,7 +310,7 @@ class SACIG_Miner_Shortcode {
                                     <span class="sacig-you-badge">You</span>
                                 <?php endif; ?>
                             </td>
-                            <td class="sacig-satoshis"><?php echo esc_html(number_format($row['total_satoshis'], 2)); ?></td>
+                            <td class="sacig-satoshis"><?php echo esc_html(number_format($row['total_currency'], 2)); ?></td>
                             <td class="sacig-prestige">Level <?php echo esc_html($row['prestige_level']); ?></td>
                             <td class="sacig-score"><?php echo esc_html(number_format($row['rank_score'], 0)); ?></td>
                         </tr>
