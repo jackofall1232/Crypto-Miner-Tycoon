@@ -41,7 +41,7 @@ class SACIG_Miner_Shortcode {
             // Enqueue game CSS
             wp_enqueue_style(
                 'sacig-game-css',
-                SACIG_PLUGIN_URL . 'assets/css/game.css',
+                SACIG_PLUGIN_URL . 'assets/css/sacig-game.css',
                 array(),
                 SACIG_VERSION
             );
@@ -50,7 +50,7 @@ class SACIG_Miner_Shortcode {
             if (has_shortcode($post->post_content, 'sacig_crypto_idle_game')) {
                 wp_enqueue_script(
                     'sacig-game-js',
-                    SACIG_PLUGIN_URL . 'assets/js/game.js',
+                    SACIG_PLUGIN_URL . 'assets/js/sacig-game.js',
                     array(),
                     SACIG_VERSION,
                     true
