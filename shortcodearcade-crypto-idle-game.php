@@ -118,7 +118,7 @@ final class SACIG_Bootstrap {
 			base_click_power decimal(20,6) DEFAULT 1,
 			base_passive_income decimal(20,6) DEFAULT 0,
 			prestige_level int DEFAULT 0,
-			total_currency decimal(30,6) DEFAULT 0,
+			total_satoshis decimal(30,6) DEFAULT 0,
 			rank_score decimal(30,6) DEFAULT 0,
 			last_updated datetime DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
 			PRIMARY KEY  (user_id),
